@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "Oink",
+  name: "Menu",
   props: {
     settings: String,
     banner: String,
