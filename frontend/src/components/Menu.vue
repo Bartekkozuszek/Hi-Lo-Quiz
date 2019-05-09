@@ -3,7 +3,7 @@
         <div id="title">
              <select id="subject">
                     <option value="22">{{settings}}</option>
-					</select><h1>{{banner}}</h1><button onclick="start()" class="select-btn" id="sbt1">{{newGame}}</button>
+					</select><h1>{{banner}}</h1><button class="select-btn" id="sbt1">{{newGame}}</button>
         </div>
     </header>
 </template>
