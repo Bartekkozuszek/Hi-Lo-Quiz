@@ -34,7 +34,7 @@ export default new Vuex.Store({
         losses:7,
         description:"testPlayer and template",
         image:null,
-        timeleft:totalMatchTime,
+        timeleft:1337, //totalMatchTime,
         },
         {
           name: "botTemplate",
@@ -43,7 +43,7 @@ export default new Vuex.Store({
           losses:300,
           description:"testBot and template",
           image:null,
-          timeleft:totalMatchTime,
+          timeleft:1337, //totalMatchTime,
           move() {
               let lastMove= state.moveHistory[moveHistory.length-1];
               let newMove= {
