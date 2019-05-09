@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h3> {{currentQuestion }} </h3>
+    <div class="question">
+        <h3> {{currentQuestion}} </h3>
     </div>
 </template>
 
@@ -15,4 +15,9 @@
     }
 </script>
 
-<style></style>
+<style>
+    .question {
+        border: thin solid black;
+        background-color: lemonchiffon
+    }
+</style>
