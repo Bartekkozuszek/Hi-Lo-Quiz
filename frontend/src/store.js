@@ -70,6 +70,20 @@ export default new Vuex.Store({
           state.currentQuestion.answer){
             state.gameState=3;
       }else{
+        if(state.moveHistory[moveHistory.length].guess>currentQuestion.answer
+          && state.moveHistory[moveHistory.length].guess<
+          state.moveHistory[moveHistory.length].high
+        ){
+          state.moveHistory[moveHistory.length].high=
+          state.moveHistory[moveHistory.length].guess;
+        }else if(state.moveHistory[moveHistory.length].guess>
+        state.moveHistory[moveHistory.length].low){
+          state.moveHistory[moveHistory.length].low=
+          state.moveHistory[moveHistory.length].guess;
+        }
+
+
+
         //if last player
         if(state.currentPlayerIndex==state.sessionPlayersArray.length-1){
           state.currentPlayerIndex=0;
