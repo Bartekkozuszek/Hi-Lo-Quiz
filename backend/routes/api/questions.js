@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   const newQuestion = new Question(req.body)
-  newQuestion.save().then(function(result, err) {
+  newQuestion.save().then((result, err) => {
     if (err) {
       res.status(400).json({ msg: 'Error' })
     } else {
