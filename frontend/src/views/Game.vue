@@ -2,7 +2,7 @@
     <div class="question">
         <question-display></question-display>
         <answer></answer>
-        <h3> {{currentQuestion}} </h3>
+
     </div>
 
 </template>
