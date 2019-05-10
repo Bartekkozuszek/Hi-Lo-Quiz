@@ -5,17 +5,11 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view />
-      <question-display></question-display>
   </div>
 </template>
 
 <script>
-    import QuestionDisplay from './components/QuestionDisplay.vue';
-
-    export default {
-        name: 'app',
-        components: { QuestionDisplay }
-    }
+  
 </script>
 
 <style>
