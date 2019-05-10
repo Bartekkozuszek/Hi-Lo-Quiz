@@ -17,9 +17,50 @@ const Question = mongoose.model('Question', {
 
 mongoose.connect(uri, { useNewUrlParser: true })
 
+router.get('/category/', function(req, res, next) {
+  res.json({ msg: 'Must select a category' })
+})
+
+router.get('/category/:category', function(req, res, next) {
+  Question.find({ category: req.params.category }).then((question, err) => {
+    if (err) {
+      res.status(400).json({ msg: 'Must select a category' })
+    } else {
+      res.json(question)
+    }
+  })
+})
+
+router.get('/author/', function(req, res, next) {
+  res.json({ msg: 'Must select a author' })
+})
+
+router.get('/author/:author', function(req, res, next) {
+  Question.find({ author: req.params.author }).then((question, err) => {
+    if (err) {
+      res.status(400).json({ msg: 'Must select a author' })
+    } else {
+      res.json(question)
+    }
+  })
+})
+
 router.get('/', function(req, res, next) {
+  console.log(req.query.amount)
+
   Question.find().then(questions => res.json(questions))
 })
+
+router.get('/:id', function(req, res, next) {
+  
+    Question.findById(req.params.id).then((question,err) => {
+      if (err) {
+        res.status(400).json({ msg: 'hit' })
+      }else{
+        res.json(question)
+      }
+    })
+  })
 
 router.post('/', function(req, res, next) {
   const newQuestion = new Question(req.body)
