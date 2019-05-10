@@ -1,21 +1,22 @@
 <template>
     <div>
-        <input v-model="guess" placeholder="edit me" @click="submitAnswer(guess)">
-        <p>Message is: {{ guess }}</p>
+        <input v-model="guess" v-on:keyup.enter="submitAnswer">
+        <p>Message is: {{guess}} </p>
     </div>
 </template>
 
 <script>
     export default {
         name: "Answer",
-        computed: {
-            guess() {
-                return this.$store.getters.lastMove.guess
+        data() {
+            return {
+                guess : ""
             }
         },
-        method : {
-            submitAnswer(payload) {
-                this.$store.dispatch('addMove', {guess: payload, timeTook: 10})
+        methods : {
+            submitAnswer() {
+                let newMove = {guess : this.guess, timeTook: 10}
+                this.$store.dispatch('addMove', newMove)
                 this.$store.dispatch('turnFinished')
             }
         }

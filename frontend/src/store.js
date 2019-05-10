@@ -39,7 +39,7 @@ export default new Vuex.Store({
         image:null,
         timeleft:1337, //totalMatchTime,
         move() {
-            let lastMove= state.moveHistory[moveHistory.length-1];
+            let lastMove= this.state.moveHistory[this.state.moveHistory.length-1];
             let newMove= {
               guess: lastMove.high-1,
               timeTook:2//*timeoutMultiplier();
@@ -71,7 +71,7 @@ export default new Vuex.Store({
       return state.timeoutMultiplier;
     },
     lastMove(state){
-      return state.moveHistory[moveHistory.length-1];
+      return state.moveHistory[state.moveHistory.length-1];
     },
     currentPlayer(state){
       return state.sessionPlayersArray[state.currentPlayerIndex];
@@ -83,10 +83,10 @@ export default new Vuex.Store({
   actions: {
     //TODO DO THIS
     toggleBotChosen({state}, payloadIndex){
-      let selectedBot =state.loadedBots[payloadindex];
-      if(typeOf(state.sessionPlayersArray.find(o => o.id ===
-      selectedBot.id)) == undefined ){
-        state.sessionPlayersArray.splice(indexOf(selectedBot));
+      let selectedBot =state.loadedBots[payloadIndex];
+      if(typeof state.sessionPlayersArray.find(o => o.id ===
+      selectedBot.id) == "undefined"){
+        state.sessionPlayersArray.splice(state.sessionPlayersArray.indexOf(selectedBot));
       }else{
         state.sessionPlayersArray.push(selectedBot);
       }
@@ -99,13 +99,13 @@ export default new Vuex.Store({
         high:state.currentQuestion.high
       })
     },
-    turnFinished({state, getters}){
+    turnFinished({state, getters, dispatch}){
       //if someone won:
       if(getters.lastMove().guess==
           state.currentQuestion.answer){
             state.gameState=3;
       }else{
-        if(getters.lastMove().guess>currentQuestion.answer&&
+        if(getters.lastMove().guess> state.currentQuestion.answer&&
            getters.lastMove().guess < getters.lastMove().high){
           getters.lastMove().high = getters.lastMove().guess;
         }else if(getters.lastMove().guess > getters.lastMove().low){
@@ -120,7 +120,7 @@ export default new Vuex.Store({
         }
         //if bots turn
         if(!getters.currentPlayer().isPlayer){
-          addMove(getters.currentPlayer().move)
+          dispatch('addMove(getters.currentPlayer().move)')
           //recursive
           state.turnFinished();
         }
