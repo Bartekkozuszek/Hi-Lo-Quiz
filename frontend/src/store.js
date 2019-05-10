@@ -61,19 +61,25 @@ export default new Vuex.Store({
     },
     moveHistory: {
       question:null,
-      moves:[]
+      moves:[
+        {
+         low:1,
+         high:10
+        }
+
+      ]
     },
     sessionPlayersArray:[
       ]
   },
   getters: {
-    timeoutMultiplier(state){
+    timeOutMultiplier: state => {
       return state.timeoutMultiplier;
     },
-    lastMove(state){
-      return state.moveHistory[state.moveHistory.length-1];
+    lastMove: state => {
+       return state.moveHistory.moves[state.moveHistory.moves.length-1]
     },
-    currentPlayer(state){
+    currentPlayer: state => {
       return state.sessionPlayersArray[state.currentPlayerIndex];
     },
   },
@@ -101,15 +107,15 @@ export default new Vuex.Store({
     },
     turnFinished({state, getters, dispatch}){
       //if someone won:
-      if(getters.lastMove().guess==
+      if(getters.lastMove.guess==
           state.currentQuestion.answer){
             state.gameState=3;
       }else{
-        if(getters.lastMove().guess> state.currentQuestion.answer&&
-           getters.lastMove().guess < getters.lastMove().high){
-          getters.lastMove().high = getters.lastMove().guess;
-        }else if(getters.lastMove().guess > getters.lastMove().low){
-          getters.lastMove().low = getters.lastMove().guess;
+        if(getters.lastMove.guess> state.currentQuestion.answer&&
+           getters.lastMove.guess < getters.lastMove.high){
+          getters.lastMove.high = getters.lastMove.guess;
+        }else if(getters.lastMove.guess > getters.lastMove.low){
+          getters.lastMove.low = getters.lastMove.guess;
         }
 
         //if last player
@@ -127,12 +133,14 @@ export default new Vuex.Store({
       }
     },
     addMove({state, getters}, newMove){
+        console.log(getters.lastMove.high)
         //pushes last object in array to the same array
-        state.moveHistory.push(getters.lastMove());
+        state.moveHistory.push(getters.lastMove);
         //forEach Propertyname in newMove
         Object.keys(newMove).forEach(function (element){
           //set movehistory properties to newMove properties
-          getters.lastMove()[element]=newMove[element];
+          console.log(getters.lastMove)
+          getters.lastMove[element]=newMove[element];
         })
     }
   }
