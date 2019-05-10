@@ -46,7 +46,11 @@ router.get('/author/:author', function(req, res, next) {
 })
 
 router.get('/', function(req, res, next) {
-  console.log(req.query.amount)
+  // TODO TEMP TEMP
+  if (req.query.amount) {
+    console.log(req.query.amount)  
+  }
+  
 
   Question.find().then(questions => res.json(questions))
 })
