@@ -6,6 +6,7 @@
     </div>
     <div>
       <Menu banner="Hi-Lo-Pros" settings="Options" newGame="New game" />
+        <setupgame v-show="gameState == 1"></setupgame>
       <game></game>
     </div>
 
@@ -16,15 +17,21 @@
 
   // @ is an alias to /src
   import Menu from "@/components/Menu.vue";
-  import Game from "./views/Game";
-
+    import Game from "./views/Game";
+    import Setupgame from "./views/Setup-game.vue";
 
   export default {
     name: "test",
     components: {
       Game,
-      Menu,
-    }
+        Menu,
+      Setupgame
+        },
+        computed: {
+            gameState() {
+                return this.$store.gameState
+            }
+        }
   };
   
 </script>
