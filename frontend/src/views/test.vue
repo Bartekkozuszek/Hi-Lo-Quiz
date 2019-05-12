@@ -1,5 +1,5 @@
 <template>
-  <Menu banner="Hi-Lo-Pros"settings="Options" newGame="New game" />
+  <Menu user="Guest" settings="options" newGame="New game" />
  </template>
 
 <script>
