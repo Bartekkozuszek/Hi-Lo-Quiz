@@ -4,28 +4,13 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <div>
-      <Menu banner="Hi-Lo-Pros" settings="Options" newGame="New game" />
-      <game></game>
-    </div>
+    <router-view></router-view>
 
   </div>
 </template>
 
 <script>
 
-  // @ is an alias to /src
-  import Menu from "@/components/Menu.vue";
-  import Game from "./views/Game";
-
-
-  export default {
-    name: "test",
-    components: {
-      Game,
-      Menu,
-    }
-  };
   
 </script>
 
