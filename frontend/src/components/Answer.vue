@@ -25,9 +25,8 @@ export default {
         width: "75%",
         height: 4,
         direction: "ltr",
-        //TODO: Importera min och value här om vi ska ha det
         min: 0,
-        max: 100,
+        max: 10,
         interval: 1,
         disabled: false,
         clickable: true,
@@ -39,8 +38,8 @@ export default {
   methods: {
     submitAnswer() {
       let newMove = { guess: this.guess, timeTook: 10 };
-      this.$store.dispatch("addMove", newMove);
-      this.$store.dispatch("turnFinished");
+      this.$store.dispatch("addMove", newMove).then(this.$store.dispatch("turnFinished"));
+
     }
   }
 };
