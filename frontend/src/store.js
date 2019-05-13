@@ -92,7 +92,10 @@ export default new Vuex.Store({
     }
   },
   mutations: {},
-  actions: {
+    actions: {
+        changeGameState({ state }, context ) {
+            state.gameState = context
+        },
     toggleBotChosen({ state }, payloadIndex) {
       let selectedBot = state.loadedBots[payloadIndex];
       if (

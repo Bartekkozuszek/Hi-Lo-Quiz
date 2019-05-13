@@ -1,6 +1,6 @@
 <template>
     <div id="setup">
-        <button class="startButton" >Start!</button>
+        <button @click="startGame" class="startButton" >Start!</button>
         <div><h4>Bots coming soon here</h4></div>
     </div>
 </template>
@@ -13,7 +13,7 @@
         },
         methods: {
             startGame() {
-
+                this.$store.dispatch('changeGameState', 2)
             }
         }
     }

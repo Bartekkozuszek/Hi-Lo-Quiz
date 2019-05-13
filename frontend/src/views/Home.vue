@@ -2,7 +2,7 @@
   <div>
     <Menu banner="Hi-Lo-Pros" settings="Options" newGame="New game" />
     <setupgame v-if="gameState === 1"></setupgame>
-    <game></game>
+    <game v-else-if="gameState === 2"></game>
   </div>
 </template>
 
