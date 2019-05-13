@@ -1,9 +1,13 @@
+
 <template>
   
 
 <div class="flex-container">
 
-		<div><h1>Select-Bots-Here</h1></div>
+		<div>
+		<Bot />
+		
+		</div>
 		
 		
 		</div>
@@ -12,12 +16,16 @@
 </template>
 
 <script>
+import Bot from "./Bot.vue";
 export default {
   name: "SelectBots",
   props: {
     user: String,
     settings: String,
 	newGame: String
+  },
+    components: {
+    Bot
   }
 };
 </script>
@@ -75,13 +83,14 @@ select {
   display: flex;
   justify-content: center;
   background-color: green;
-  justify-content: space-between;
+padding-bottom:50vh;
   text-align: center;
 }
 
 .flex-container > div {
+  display: flex;
 flex: 2;
-padding-bottom: 50vh;
+  justify-content: center;
   text-align: center;
 
 }
