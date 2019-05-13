@@ -4,9 +4,12 @@ var router = express.Router()
 const uri = 'mongodb://localhost:27017/test_lobsters_questions'
 const mongoose = require('mongoose')
 
+var ValidationError = mongoose.Error.ValidationError
+var ValidatorError = mongoose.Error.ValidatorError
+
 const QuestionSchema = new mongoose.Schema({
-  question: { type: String, required: true },
-  answer: { type: Number, required: true },
+  question: { type: String, required: [true, 'Question is required'] },
+  answer: { type: Number, required: [true, 'Answer is required'] },
   approved: { type: Boolean, required: false },
   userSubmitted: { type: Boolean, required: false },
   author: { type: String, required: false },
@@ -18,6 +21,21 @@ const QuestionSchema = new mongoose.Schema({
 })
 
 const Question = mongoose.model('Question', QuestionSchema)
+
+QuestionSchema.pre('save', function(next) {
+  // if (/someregex/i.test(this.email)) {
+  //   var error = new ValidationError(this);
+  //   error.errors.email = new ValidatorError('email', 'Email is not valid', 'notvalid', this.email);
+  //   return next(error);
+  // }
+
+  next()
+})
+
+var ValidationErrors = {
+  REQUIRED: 'required',
+  NOTVALID: 'notvalid'
+}
 
 mongoose.connect(uri, { useNewUrlParser: true })
 
@@ -50,10 +68,6 @@ router.get('/author/:author', function(req, res, next) {
 })
 
 router.get('/', function(req, res, next) {
-  // TODO TEMP TEMP
-  if (req.query.amount) {
-    console.log(req.query.amount)
-  }
   Question.find().then(questions => res.json(questions))
 })
 
@@ -68,14 +82,29 @@ router.get('/:id', function(req, res, next) {
 })
 
 router.post('/', function(req, res, next) {
-  const newQuestion = new Question(req.body)
+  var sanitized = {
+    question: req.body.question,
+    answer: req.body.answer,
+    approved: req.user && req.user.isAdmin ? true : false,
+    userSubmitted: req.user && req.user.isAdmin ? false : true,
+    author: req.user ? req.user.name : '',
+    category: req.body.category,
+    reviewedBy: req.user && req.user.isAdmin ? req.user.name : '',
+    imageUrl: req.body.imageUrl,
+    low: req.body.low,
+    high: req.body.high
+  }
+  const newQuestion = new Question(sanitized)
 
-  newQuestion.save().then(( err) => {
+  newQuestion.save(function(err) {
     if (err) {
-      console.log(err)
-      res.status(400).json({ msg: 'Error' })
+      var errMessage = ''
+      for (var errName in err.errors) {
+        errMessage += err.errors[errName].message
+      }
+      res.status(400).json({ msg: errMessage })
     } else {
-      res.json(result)
+      res.json(newQuestion)
     }
   })
 })
