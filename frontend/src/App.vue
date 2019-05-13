@@ -6,10 +6,9 @@
     </div>
     <div>
       <Menu banner="Hi-Lo-Pros" settings="Options" newGame="New game" />
-        <setupgame v-show="gameState == 1"></setupgame>
+        <setupgame v-if="gameState == 1"></setupgame>
       <game></game>
     </div>
-
   </div>
 </template>
 
@@ -29,7 +28,7 @@
         },
         computed: {
             gameState() {
-                return this.$store.gameState
+                return this.$store.state.gameState
             }
         }
   };
