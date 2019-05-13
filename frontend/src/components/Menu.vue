@@ -55,19 +55,20 @@ select {
 	display: inline;
 	padding: 1vh;
 	background-color:purple;
-
-
+max-height:5.4vh;
+	
 	text-decoration: none;
 	border: none;
 	}
 
 .select-btn {
+	max-height:5.4vh;
 	color: WHITE;
 	font-size: 3vh;
 	display: inline;
 	padding: 1vh;
 	background-color:purple;
-
+	
 	text-decoration: none;
 	border: none;
 	}
