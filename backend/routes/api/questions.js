@@ -15,8 +15,18 @@ mongoose.connection.on(
   console.error.bind(console, 'connection error:')
 )
 
+router.use(function(req, res, next) {
+  // TODO temp for now
+  req.user = {
+    isAdmin: false,
+    name: 'TEMPUser'
+  }
+  next()
+})
+
 router.get('/', function(req, res, next) {
-  Question.find().then(questions => res.json(questions))
+  var approvedQuery = req.user.isAdmin ? {} : { approved: true }
+  Question.find(approvedQuery).then(questions => res.json(questions))
 })
 
 router.get('/:id', function(req, res, next) {
@@ -58,6 +68,7 @@ router.post('/', function(req, res, next) {
 })
 
 router.put('/:id', function(req, res, next) {
+  // TODO temp for now, all edits from this temp admin
   req.user = {
     isAdmin: true,
     name: 'TEMPAdminName'
