@@ -16,11 +16,12 @@ mongoose.connection.on(
 )
 
 router.use(function(req, res, next) {
+  console.log(req.user)
   // TODO temp for now
-  req.user = {
-    isAdmin: false,
-    name: 'TEMPUser'
-  }
+  // req.user = {
+  //   isAdmin: false,
+  //   name: 'TEMPUser'
+  // }
   next()
 })
 
