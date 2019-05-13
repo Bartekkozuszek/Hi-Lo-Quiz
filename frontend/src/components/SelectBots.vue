@@ -1,5 +1,5 @@
 <template>
-    <selectbots class="selectbots">
+  
 
 <div class="flex-container">
 
@@ -8,7 +8,7 @@
 		
 		</div>
 
-    </selectbots>
+ 
 </template>
 
 <script>

@@ -28,7 +28,6 @@ export default {
 header{
 
 
-	padding: 1vh;
 	text-align: center;
 
 	}
@@ -37,7 +36,7 @@ h1 {
 	color: green;
 	font-size: 4vh;
 	display: inline;
-	padding: 1vh;
+	
 
 
 	}

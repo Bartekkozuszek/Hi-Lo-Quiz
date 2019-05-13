@@ -13,7 +13,7 @@ import SelectBots from "@/components/SelectBots.vue";
 export default {
   name: "test",
   components: {
-    Menu,SelectBots
+    Menu,SelectBots,
   }
 };
 </script>
