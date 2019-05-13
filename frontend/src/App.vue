@@ -8,7 +8,17 @@
   </div>
 </template>
 
-<script></script>
+<script>
+  export default {
+    name: "App",
+    components: {
+    },
+    created() {
+      this.$store.dispatch('toggleBotChosen', 0)
+    }
+  };
+
+</script>
 
 <style>
 #app {
