@@ -68,7 +68,6 @@ export default new Vuex.Store({
     sessionPlayersArray: [
       //obs! just nu mockdata från currentUser
       {
-        currentUser: {
           id: 0,
           databaseId: null,
           name: "guest",
@@ -79,7 +78,7 @@ export default new Vuex.Store({
           image: null,
           timeleft: 1337 //totalMatchTime,
         }
-      }
+
     ]
   },
   getters: {
@@ -90,8 +89,8 @@ export default new Vuex.Store({
       return state.moveHistory.moves[state.moveHistory.moves.length - 1];
     },
     currentPlayer: state => {
-      return state.sessionPlayersArray[state.currentPlayerIndex].currentUser
-        .isPlayer;
+      return state.sessionPlayersArray[state.currentPlayerIndex]
+
     }
   },
   mutations: {},
