@@ -7,16 +7,18 @@ const router = express.Router()
 
 router.post('/login', function(req, res) {
   /*
-   * Check if the username and password is correct
+   * Check if the name and password is correct
    */
-  if (req.body.username === 'admin' && req.body.password === 'admin') {
+  if (req.body.name === 'admin' && req.body.password === 'admin') {
     res.json({
       id: 1,
-      username: 'admin',
+      name: 'admin',
       isAdmin: true,
       jwt: jwt.sign(
         {
-          id: 1
+          id: 1,
+          name: 'admin',
+          isAdmin: true
         },
         config.JWT_SECRET,
         { expiresIn: 60 * 60 }
@@ -24,12 +26,12 @@ router.post('/login', function(req, res) {
     })
   } else {
     /*
-     * If the username or password was wrong, return 401 ( Unauthorized )
+     * If the name or password was wrong, return 401 ( Unauthorized )
      * status code and JSON error message
      */
     res.status(401).json({
       error: {
-        message: 'Wrong username or password!'
+        message: 'Wrong name or password!'
       }
     })
   }
