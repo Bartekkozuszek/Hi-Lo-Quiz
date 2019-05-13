@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menu banner="Hi-Lo-Pros" settings="Options" newGame="New game" />
+    <Menu user="Guest" settings="Options" />
     <game></game>
   </div>
 </template>
