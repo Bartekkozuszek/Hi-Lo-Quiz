@@ -1,6 +1,7 @@
 <template>
   <div>
     <Menu banner="Hi-Lo-Pros" settings="Options" newGame="New game" />
+    <setupgame v-if="gameState === 1"></setupgame>
     <game></game>
   </div>
 </template>
@@ -8,14 +9,21 @@
 <script>
 // @ is an alias to /src
 import Menu from "@/components/Menu.vue";
-import Game from "./Game";
+    import Game from "./Game";
+    import Setupgame from "./Setup-game.vue";
 
 export default {
   name: "Home",
   components: {
     Game,
-    Menu
-  }
+      Menu,
+    Setupgame
+        },
+        computed: {
+            gameState() {
+                return this.$store.state.gameState
+            }
+        }
 };
 </script>
 
