@@ -17,11 +17,6 @@ mongoose.connection.on(
 
 router.use(function(req, res, next) {
   console.log(req.user)
-  // TODO temp for now
-  // req.user = {
-  //   isAdmin: false,
-  //   name: 'TEMPUser'
-  // }
   next()
 })
 
@@ -45,7 +40,10 @@ router.post('/', function(req, res, next) {
     question: req.body.question,
     answer: req.body.answer,
     approved: req.user && req.user.isAdmin ? true : false,
-    userSubmitted: req.user && req.user.isAdmin ? false : true,
+    userSubmitted:
+      req.user && req.user.isAdmin != undefined && req.user.isAdmin
+        ? false
+        : true,
     author: req.user ? req.user.name : '',
     category: req.body.category,
     reviewedBy: req.user && req.user.isAdmin ? req.user.name : '',
@@ -69,11 +67,6 @@ router.post('/', function(req, res, next) {
 })
 
 router.put('/:id', function(req, res, next) {
-  // TODO temp for now, all edits from this temp admin
-  req.user = {
-    isAdmin: true,
-    name: 'TEMPAdminName'
-  }
   if (req.user && req.user.isAdmin) {
     var sanitized = helpers.editQuestion(req)
     Question.findByIdAndUpdate(
