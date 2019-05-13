@@ -5,7 +5,7 @@
 <div class="flex-container">
 
 		<div>
-		<Bot />
+		<Bot v-for="value in count" />
 		
 		</div>
 		
@@ -24,6 +24,11 @@ export default {
     settings: String,
 	newGame: String
   },
+   data: function () {
+  return {
+    count:[0,0,0,0,0,0,0]
+  }
+},
     components: {
     Bot
   }
