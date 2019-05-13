@@ -1,20 +1,19 @@
 <template>
-    <header class="header">
-    <div id="title"><h1>Hi-Lo-Pros</h1></div> 
-<div class="flex-container">
-  <div><button class="select-btn" id="sbt1">{{user}}</button></div>
-  <div> <select id="subject">
-                    <option>{{settings}}</option>
-					</select></div>
+  
 
-  <div><button class="select-btn" id="sbt1">Login</button></div>  
-</div>
-    </header>
+
+
+		<div><h1>Bot</h1></div>
+		
+		
+	
+
+ 
 </template>
 
 <script>
 export default {
-  name: "Menu",
+  name: "Bot",
   props: {
     user: String,
     settings: String,
@@ -25,19 +24,20 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-header{
+selectbots{
 
 
+	padding: 1vh;
 	text-align: center;
 
 	}
 	
 h1 {
-	color: green;
+	color: orange;
 	font-size: 4vh;
 	display: inline;
-	
-
+	padding: 1vh;
+  text-align: center;
 
 	}
 
@@ -55,39 +55,33 @@ select {
 	display: inline;
 	padding: 1vh;
 	background-color:purple;
-max-height:5.4vh;
-	
+
+
 	text-decoration: none;
 	border: none;
 	}
-	select:hover { 
-  background-color: aqua;
-}
+
 .select-btn {
-	max-height:5.4vh;
 	color: WHITE;
 	font-size: 3vh;
 	display: inline;
 	padding: 1vh;
 	background-color:purple;
-	
+
 	text-decoration: none;
 	border: none;
 	}
-
-	button:hover { 
-  background-color: aqua;
-}
-	
-	.flex-container {
+.flex-container {
   display: flex;
   justify-content: center;
-  background-color: pink;
+  background-color: green;
   justify-content: space-between;
+  text-align: center;
 }
 
 .flex-container > div {
-
+flex: 2;
+padding-bottom: 50vh;
   text-align: center;
 
 }
