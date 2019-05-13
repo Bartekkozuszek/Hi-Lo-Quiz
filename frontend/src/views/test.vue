@@ -1,6 +1,6 @@
 <template>
   <div id="wrap">
-  <Menu user="Guest" settings="options" newGame="New game" />
+  <Menu user="Guest" settings="Options" newGame="New game" />
  <SelectBots />
  </div>
  </template>
