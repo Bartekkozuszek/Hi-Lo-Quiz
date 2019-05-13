@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+
     menu: ["Theme", "animations"],
 
     timeoutMultiplier: 1,
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     currentQuestion: {
       userSubmitted: false,
       author: "guest",
+
       question: "How many developers work in the group six lobsters?",
       answer: 7,
       low: 1,
@@ -62,7 +64,9 @@ export default new Vuex.Store({
           low: 1,
           high: 10
         }
+
       ]
+
     },
     sessionPlayersArray: [
       //obs! just nu mockdata från currentUser

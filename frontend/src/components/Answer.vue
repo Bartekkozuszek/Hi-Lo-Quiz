@@ -1,7 +1,9 @@
 <template>
+
   <div>
     <div class="answer-slider-container">
       <vue-slider v-model="guess" v-bind="options"></vue-slider>
+
     </div>
     <!--Just nu submitbutton för enkelhetens skull men sen fixa så att värdet skickas ändå om tiden går ut-->
     <button id="submit-button" v-on:click="submitAnswer">Submit</button>
@@ -10,6 +12,7 @@
 </template>
 
 <script>
+
 import VueSlider from "vue-slider-component";
 import "vue-slider-component/theme/default.css";
 export default {
@@ -39,7 +42,6 @@ export default {
     submitAnswer() {
       let newMove = { guess: this.guess, timeTook: 10 };
       this.$store.dispatch("addMove", newMove).then(this.$store.dispatch("turnFinished"));
-
     }
   }
 };
