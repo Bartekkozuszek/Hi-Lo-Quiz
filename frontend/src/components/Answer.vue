@@ -14,6 +14,9 @@
     <br />
     <input :value="guess" />
     <button id="submit-button" v-on:click="submitAnswer">Submit</button>
+    <button id="change-question" v-on:click="assignQuestion">
+      Assign new Question
+    </button>
   </div>
 </template>
 
@@ -29,9 +32,10 @@ export default {
     return {
       value: null,
       guess: null,
+      previousLow: 1,
       options: {
         dotSize: 20,
-        width: "75%",
+        width: "90%",
         height: 5,
         direction: "ltr",
         interval: 1,
@@ -46,10 +50,18 @@ export default {
   },
   computed: {
     min() {
-      return this.$store.getters.lastMove.low + 1;
+      return (
+        this.$store.state.moveHistory.moves[
+          this.$store.state.moveHistory.moves.length - 1
+        ].low + 1
+      );
     },
     max() {
-      return this.$store.getters.lastMove.high - 1;
+      return (
+        this.$store.state.moveHistory.moves[
+          this.$store.state.moveHistory.moves.length - 1
+        ].high - 1
+      );
     }
   },
   methods: {
@@ -64,16 +76,23 @@ export default {
     updateValue() {
       if (this.max - this.min > 1) {
         this.options.max = this.max;
+        this.guess = Math.round(this.previousLow + (this.options.max - this.options.previousLow) / 2)
         this.options.min = this.min;
+        this.previousLow = this.min;
         this.$nextTick(() => {
           this.$refs.slider.setValue(
-            Math.round(this.min + (this.max - this.min) / 2)
+            Math.round(
+              this.options.min + (this.options.max - this.options.min) / 2
+            )
           );
         });
       }
+    },
+    assignQuestion() {
+      this.$store.dispatch("assignQuestion", 1).then(this.updateValue());
     }
   },
-  created() {
+  mounted() {
     this.updateValue();
   }
 };
