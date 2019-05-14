@@ -20,9 +20,30 @@ router.use(function(req, res, next) {
   next()
 })
 
-router.get('/', function(req, res, next) {
-  var approvedQuery = req.user.isAdmin ? {} : { approved: true }
-  Question.find(approvedQuery).then(questions => res.json(questions))
+router.get('/', async function(req, res, next) {
+      
+      // make req params into query objects
+      let amount = req.query.amount ? parseInt(req.query.amount) : await Question.countDocuments()
+      let category = req.query.category ? {category: {$eq: req.query.category}} : {}
+      let author = req.query.author ? {author: {$eq: req.query.author}} : {}
+      //let approved = req.query.approved ? {approved: {$eq: (req.query.approved === "true")}} : {}// convert string to boolean
+      var approved = req.user.isAdmin ? {} : { approved: true }
+      let userSubmitted = req.query.userSubmitted ? {userSubmitted: {$eq: (req.query.userSubmitted === "true")}} : {}// convert string to boolean
+      let reviewedBy = req.query.reviewedBy ? {reviewedBy: {$eq: req.query.reviewedBy}} : {}
+      
+      let query = [{
+        $match: {$and: [// match any query objects included in this array
+          author, 
+          category,
+          approved,
+          userSubmitted,
+          reviewedBy
+          ]}},
+          {$sample: {size: amount}}// randomize and get correct amount of Questions
+          ]
+
+      Question.aggregate(query)
+        .then(result => res.json(result))
 })
 
 router.get('/:id', function(req, res, next) {
@@ -53,7 +74,9 @@ router.post('/', function(req, res, next) {
   }
   const newQuestion = new Question(sanitized)
 
+
   newQuestion.save(function(err) {
+
     if (err) {
       var errMessage = ''
       for (var errName in err.errors) {
@@ -61,7 +84,9 @@ router.post('/', function(req, res, next) {
       }
       res.status(400).json({ msg: errMessage })
     } else {
+   
       res.json(newQuestion)
+
     }
   })
 })
