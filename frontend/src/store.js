@@ -1,5 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import avatar1 from "../public/images/avatar1.jpg";
+import avatar2 from "../public/images/avatar2.jpg";
+import avatar3 from "../public/images/avatar3.jpg";
 
 Vue.use(Vuex);
 
@@ -174,18 +177,19 @@ export default new Vuex.Store({
     ],
     loadedBots: [
       {
-        name: "botTemplate",
+        name: "PontusBot",
         isPlayer: false,
         wins: 100,
         losses: 300,
+        catchphrase:"Im gonna get you!",
         description: "testBot and template",
-        image: null,
+        image: avatar2,
         enabled: false,
         timeleft: 1337, //totalMatchTime,
         move(allMoves) {
           let newMove = {
             guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
-            timeTook: 2 //*timeoutMultiplier();
+            timeTook: 2000 //*timeoutMultiplier();
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
@@ -222,7 +226,7 @@ export default new Vuex.Store({
         wins: 5,
         losses: 7,
         description: "testPlayer and template",
-        image: null,
+        image: avatar1,
         timeleft: 1337 //totalMatchTime,
       }
     ]
@@ -319,9 +323,11 @@ export default new Vuex.Store({
           console.log("jag körs inte va??");
           let botMove = getters.currentPlayer.move(state.moveHistory);
           dispatch("addMove", ({ state, getters }, botMove));
+          setTimeout(function(){
+            //recursive
+            dispatch("turnFinished", { state, getters, dispatch });
+          }, getters.lastMove.timeTook);
 
-          //recursive
-          dispatch("turnFinished", { state, getters, dispatch });
         }
       }
     },
