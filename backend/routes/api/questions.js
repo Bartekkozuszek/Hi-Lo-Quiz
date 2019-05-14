@@ -13,12 +13,13 @@ mongoose.connect(uri, { useNewUrlParser: true })
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
 
 router.use(function(req, res, next) {
-  console.log(req.user)
+  
   //Can use this to override temporary when testing
   // req.user = {
   //   name: 'Admin',
   //   isAdmin: true
   // }
+  console.log(req.user)
   next()
 })
 
