@@ -1,7 +1,7 @@
 <template>
   <div>
     <Menu user="guest" settings="Options"/>
-    <setupgame v-if="gameState === 1"></setupgame>
+    <setup-game v-if="gameState === 1"></setup-game>
     <game v-else-if="gameState === 2"></game>
   </div>
 </template>
@@ -10,14 +10,14 @@
 // @ is an alias to /src
 import Menu from "@/components/Menu.vue";
     import Game from "./Game";
-    import Setupgame from "./Setup-game.vue";
+    import SetupGame from "./Setup-game.vue";
 
 export default {
   name: "Home",
   components: {
     Game,
       Menu,
-    Setupgame
+    SetupGame
         },
         computed: {
             gameState() {
