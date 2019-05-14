@@ -94,6 +94,19 @@ padding-bottom:50vh;
 	margin:auto;
   }
 
+  @media screen and (orientation: portrait) {
+  .flex-container {
+	width:100%;
+  }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
 .flex-container > div {
   display: flex;
 
