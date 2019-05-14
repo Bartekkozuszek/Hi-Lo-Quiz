@@ -4,10 +4,10 @@
 
 <div class="flex-container">
 
-		<div>
+		
 		<Bot v-for="value in count" />
 		
-		</div>
+		
 		
 		
 		</div>
@@ -26,7 +26,7 @@ export default {
   },
    data: function () {
   return {
-    count:[0,0,0,0,0,0,0]
+    count:[0,0,0,0,0,0]
   }
 },
     components: {
@@ -90,7 +90,9 @@ select {
   background-color: green;
 padding-bottom:50vh;
   text-align: center;
-}
+	width:50%;
+	margin:auto;
+  }
 
 .flex-container > div {
   display: flex;

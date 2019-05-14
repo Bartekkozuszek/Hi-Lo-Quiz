@@ -1,7 +1,10 @@
 <template>
   <div>
     <Menu user="Guest" settings="Options" />
-    <game></game>
+   <SelectBots />
+	<game></game>
+	
+  
   </div>
 </template>
 
@@ -9,12 +12,14 @@
 // @ is an alias to /src
 import Menu from "@/components/Menu.vue";
 import Game from "./Game";
-
+import SelectBots from "@/components/SelectBots.vue";
 export default {
   name: "Home",
   components: {
     Game,
-    Menu
+    Menu,
+	SelectBots
+	
   }
 };
 </script>
