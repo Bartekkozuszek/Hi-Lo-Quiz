@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menu banner="Hi-Lo-Pros" settings="Options" newGame="New game" />
+    <Menu user="guest" settings="Options"/>
     <setupgame v-if="gameState === 1"></setupgame>
     <game v-else-if="gameState === 2"></game>
   </div>
