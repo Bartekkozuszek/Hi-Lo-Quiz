@@ -1,43 +1,56 @@
-<template>
-    <header class="header">
-    <div id="title"><h1>Hi-Lo-Pros</h1></div> 
-<div class="flex-container">
-  <div><button class="select-btn" id="sbt1">{{user}}</button></div>
-  <div> <select id="subject">
-                    <option>{{settings}}</option>
-					</select></div>
 
-  <div><button class="select-btn" id="sbt1">Login</button></div>  
-</div>
-    </header>
+<template>
+  
+
+<div class="flex-container">
+
+		<div>
+		<Bot v-for="value in count" />
+		
+		</div>
+		
+		
+		</div>
+
+ 
 </template>
 
 <script>
+import Bot from "./Bot.vue";
 export default {
-  name: "Menu",
+  name: "SelectBots",
   props: {
     user: String,
     settings: String,
 	newGame: String
+  },
+   data: function () {
+  return {
+    count:[0,0,0,0,0,0,0]
+  }
+},
+    components: {
+    Bot
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-header{
+selectbots{
 
 
+	padding: 1vh;
 	text-align: center;
 
 	}
 	
 h1 {
-	color: green;
+	color: orange;
 	font-size: 4vh;
 	display: inline;
-	
-
+	padding: 1vh;
+  text-align: center;
 
 	}
 
@@ -55,39 +68,34 @@ select {
 	display: inline;
 	padding: 1vh;
 	background-color:purple;
-max-height:5.4vh;
-	
+
+
 	text-decoration: none;
 	border: none;
 	}
-	select:hover { 
-  background-color: aqua;
-}
+
 .select-btn {
-	max-height:5.4vh;
 	color: WHITE;
 	font-size: 3vh;
 	display: inline;
 	padding: 1vh;
 	background-color:purple;
-	
+
 	text-decoration: none;
 	border: none;
 	}
-
-	button:hover { 
-  background-color: aqua;
-}
-	
-	.flex-container {
+.flex-container {
   display: flex;
   justify-content: center;
-  background-color: pink;
-  justify-content: space-between;
+  background-color: green;
+padding-bottom:50vh;
+  text-align: center;
 }
 
 .flex-container > div {
-
+  display: flex;
+flex: 2;
+  justify-content: center;
   text-align: center;
 
 }

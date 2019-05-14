@@ -5,7 +5,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-
     menu: ["Theme", "animations"],
 
     timeoutMultiplier: 1,
@@ -34,15 +33,14 @@ export default new Vuex.Store({
         losses: 300,
         description: "testBot and template",
         image: null,
+        enabled: false,
         timeleft: 1337, //totalMatchTime,
-        move() {
-          let lastMove = this.state.moveHistory[
-            this.state.moveHistory.length - 1
-          ];
+        move(allMoves) {
           let newMove = {
-            guess: lastMove.high - 1,
+            guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
             timeTook: 2 //*timeoutMultiplier();
           };
+          console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
         }
       }
@@ -65,24 +63,21 @@ export default new Vuex.Store({
           low: 1,
           high: 10
         }
-
       ]
-
     },
     sessionPlayersArray: [
       //obs! just nu mockdata från currentUser
       {
-          id: 0,
-          databaseId: null,
-          name: "guest",
-          isPlayer: true,
-          wins: 5,
-          losses: 7,
-          description: "testPlayer and template",
-          image: null,
-          timeleft: 1337 //totalMatchTime,
-        }
-
+        id: 0,
+        databaseId: null,
+        name: "guest",
+        isPlayer: true,
+        wins: 5,
+        losses: 7,
+        description: "testPlayer and template",
+        image: null,
+        timeleft: 1337 //totalMatchTime,
+      }
     ]
   },
   getters: {
@@ -93,24 +88,24 @@ export default new Vuex.Store({
       return state.moveHistory.moves[state.moveHistory.moves.length - 1];
     },
     currentPlayer: state => {
-      return state.sessionPlayersArray[state.currentPlayerIndex]
-
+      return state.sessionPlayersArray[state.currentPlayerIndex];
     }
   },
   mutations: {},
   actions: {
-    //TODO DO THIS
     toggleBotChosen({ state }, payloadIndex) {
       let selectedBot = state.loadedBots[payloadIndex];
       if (
         typeof state.sessionPlayersArray.find(o => o.id === selectedBot.id) ==
         "undefined"
       ) {
+        state.sessionPlayersArray.push(selectedBot);
+        selectedBot.enabled = true;
+      } else {
+        selectedBot.enabled = false;
         state.sessionPlayersArray.splice(
           state.sessionPlayersArray.indexOf(selectedBot)
         );
-      } else {
-        state.sessionPlayersArray.push(selectedBot);
       }
     },
     assignQuestion({ state, question }) {
@@ -125,14 +120,40 @@ export default new Vuex.Store({
       //if someone won:
       if (getters.lastMove.guess == state.currentQuestion.answer) {
         state.gameState = 3;
+        console.log(getters.currentPlayer.name + " won!!!!");
       } else {
+        //too high in bounds
         if (
           getters.lastMove.guess > state.currentQuestion.answer &&
-          getters.lastMove.guess < getters.lastMove.high
+          getters.lastMove.guess <
+            state.moveHistory.moves[state.moveHistory.moves.length - 2].high
         ) {
+          getters.lastMove.low =
+            state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
           getters.lastMove.high = getters.lastMove.guess;
-        } else if (getters.lastMove.guess > getters.lastMove.low) {
+          //too low inbounds
+        } else if (
+          getters.lastMove.guess < state.currentQuestion.answer &&
+          getters.lastMove.guess >
+            state.moveHistory.moves[state.moveHistory.moves.length - 2].low
+        ) {
+          getters.lastMove.high =
+            state.moveHistory.moves[state.moveHistory.moves.length - 2].high;
           getters.lastMove.low = getters.lastMove.guess;
+
+          //too high out of bounds
+        } else if (getters.lastMove.guess > state.currentQuestion.answer) {
+          getters.lastMove.low =
+            state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
+          getters.lastMove.high =
+            state.moveHistory.moves[state.moveHistory.moves.length - 2].high;
+        }
+        //to low out of bounds
+        else if (getters.lastMove.guess < state.currentQuestion.answer) {
+          getters.lastMove.high =
+            state.moveHistory.moves[state.moveHistory.moves.length - 2].high;
+          getters.lastMove.low =
+            state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
         }
 
         //if last player
@@ -143,21 +164,18 @@ export default new Vuex.Store({
         }
         //Obs, Går inte att skriva !getters.currentPlayer.isPlayer av någon anledning
         if (getters.currentPlayer.isPlayer === false) {
-          dispatch("addMove", ({ state, getters }, getters.currentPlayer.move));
+          console.log("jag körs inte va??");
+          let botMove = getters.currentPlayer.move(state.moveHistory);
+          dispatch("addMove", ({ state, getters }, botMove));
+
           //recursive
           dispatch("turnFinished", { state, getters, dispatch });
         }
       }
     },
-    addMove({ state, getters }, newMove) {
-      console.log("counter");
+    addMove({ state }, newMove) {
       //pushes last object in array to the same array
-      state.moveHistory.moves.push(getters.lastMove);
-      //forEach Propertyname in newMove
-      Object.keys(newMove).forEach(function(element) {
-        //set movehistory properties to newMove properties
-        getters.lastMove[element] = newMove[element];
-      });
+      state.moveHistory.moves.push(newMove);
     }
   }
 });
