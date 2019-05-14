@@ -12,7 +12,7 @@ export default new Vuex.Store({
     //1:Game starting
     //2:Game in Progress
     //3:Game Over
-    gameState: 0,
+    gameState: 1,
     totalMatchTime: 50,
     currentPlayerIndex: 0,
     currentQuestion: {
@@ -92,7 +92,10 @@ export default new Vuex.Store({
     }
   },
   mutations: {},
-  actions: {
+    actions: {
+        changeGameState({ state }, context ) {
+            state.gameState = context
+        },
     toggleBotChosen({ state }, payloadIndex) {
       let selectedBot = state.loadedBots[payloadIndex];
       if (
