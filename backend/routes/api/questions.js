@@ -35,47 +35,64 @@ router.get('/category/:category', function(req, res, next) {
   })
 })
 
-router.get('/author/', function(req, res, next) {
-  res.json({ msg: 'Must select a author' })
+
+router.get('/', async function(req, res, next) {
+      
+      // make req params into query objects
+      let amount = req.query.amount ? parseInt(req.query.amount) : await Question.countDocuments()
+      let category = req.query.category ? {category: {$eq: req.query.category}} : {}
+      let author = req.query.author ? {author: {$eq: req.query.author}} : {}
+      let approved = req.query.approved ? {approved: {$eq: (req.query.approved === "true")}} : {}// convert string to boolean
+      let userSubmitted = req.query.userSubmitted ? {userSubmitted: {$eq: (req.query.userSubmitted === "true")}} : {}// convert string to boolean
+      let reviewedBy = req.query.reviewedBy ? {reviewedBy: {$eq: req.query.reviewedBy}} : {}
+      
+      let query = [{
+        $match: {$and: [// match any query objects included in this array
+          author, 
+          category,
+          approved,
+          userSubmitted,
+          reviewedBy
+          ]}},
+          {$sample: {size: amount}}// randomize and get correct amount of Questions
+          ]
+
+      Question.aggregate(query)
+        .then(result => res.json(result))
 })
 
-router.get('/author/:author', function(req, res, next) {
-  Question.find({ author: req.params.author }).then((question, err) => {
-    if (err) {
-      res.status(400).json({ msg: 'Must select a author' })
-    } else {
-      res.json(question)
-    }
-  })
-})
+//--------------------------------------------------
+// router.get('/', function(req, res, next) {
+  
+//   Question.countDocuments()
+//     .then(count => {
+//       let amount = req.query.amount ? parseInt(req.query.amount) : parseInt(count)
+//       let category = req.query.category ? {category: {$eq: req.query.category}} : {}
+//       let author = req.query.author ? {author: {$eq: req.query.author}} : {}
+    
+//       let query = [{
+//         $match: {$and: [
+//           author, 
+//           category
+//           ]}},
+//           {$sample: {size: amount}}
+//           ]
 
-router.get('/', function(req, res, next) {
-  // TODO TEMP TEMP
-  if (req.query.amount) {
-    console.log(req.query.amount)
-  }
-  Question.find().then(questions => res.json(questions))
-})
+//       Question.aggregate(query)
+//         .then(result => res.json(result))
+//   })
+// })
 
-router.get('/:id', function(req, res, next) {
-  Question.findById(req.params.id).then((question, err) => {
-    if (err) {
-      res.status(400).json({ msg: 'hit' })
-    } else {
-      res.json(question)
-    }
-  })
-})
 
 router.post('/', function(req, res, next) {
   const newQuestion = new Question(req.body)
 
-  newQuestion.save().then(( err) => {
+  newQuestion.save().then(( err, result) => {
     if (err) {
       console.log(err)
       res.status(400).json({ msg: 'Error' })
     } else {
-      res.json(result)
+      res.json(result)  
     }
   })
 })
