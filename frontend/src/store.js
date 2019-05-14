@@ -256,17 +256,12 @@ export default new Vuex.Store({
       }
     },
     assignQuestion({state}, index) {
-      console.log(index);
-      console.log("a");
       state.currentQuestion = state.loadedQuestions[index];
-      console.log("b");
       state.moveHistory.question = state.loadedQuestions[index].question;
-      console.log("c");
       state.moveHistory.moves.push({
         low: state.currentQuestion.low,
         high: state.currentQuestion.high
       });
-      console.log("d");
     },
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
@@ -316,7 +311,6 @@ export default new Vuex.Store({
         }
         //Obs, Går inte att skriva !getters.currentPlayer.isPlayer av någon anledning
         if (getters.currentPlayer.isPlayer === false) {
-          console.log("jag körs inte va??");
           let botMove = getters.currentPlayer.move(state.moveHistory);
           dispatch("addMove", ({ state, getters }, botMove));
 

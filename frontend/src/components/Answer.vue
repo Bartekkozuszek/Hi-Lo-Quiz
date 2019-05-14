@@ -1,7 +1,8 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
+    {{show}}
     <div class="answer-slider-container">
-      <vue-slider ref="slider" v-model="guess" v-bind="options">
+      <vue-slider v-if="show" ref="slider" v-model="guess" v-bind="options">
         <template v-slot:mark="{ pos, label }">
           <div class="custom-mark" :style="{ left: `${pos}%` }">
             {{ label }}
@@ -30,8 +31,8 @@ export default {
   },
   data() {
     return {
-      value: null,
-      guess: null,
+      guess: 0,
+      show: true,
       previousLow: 1,
       options: {
         dotSize: 20,
@@ -44,24 +45,23 @@ export default {
         marks: true,
         duration: 0.2,
         lazy: false,
-        adsorb: true
+        adsorb: true,
+
       }
     };
   },
   computed: {
     min() {
-      return (
-        this.$store.state.moveHistory.moves[
+      let num = this.$store.state.moveHistory.moves[
           this.$store.state.moveHistory.moves.length - 1
         ].low + 1
-      );
+      return num
     },
     max() {
-      return (
-        this.$store.state.moveHistory.moves[
+      let num = this.$store.state.moveHistory.moves[
           this.$store.state.moveHistory.moves.length - 1
         ].high - 1
-      );
+      return num;
     }
   },
   methods: {
@@ -76,20 +76,38 @@ export default {
     updateValue() {
       if (this.max - this.min > 1) {
         this.options.max = this.max;
-        this.guess = Math.round(this.previousLow + (this.options.max - this.options.previousLow) / 2)
         this.options.min = this.min;
-        this.previousLow = this.min;
         this.$nextTick(() => {
           this.$refs.slider.setValue(
-            Math.round(
-              this.options.min + (this.options.max - this.options.min) / 2
-            )
+                  Math.round(this.min + (this.max - this.min) / 2)
           );
         });
       }
     },
+    async updateValueForSubmit() {
+      if (this.max - this.min > 1) {
+        this.options.max = this.max;
+        console.log('max', this.options.max)
+        this.guess = this.guess+1;
+        await this.$nextTick(() => {
+         this.guess = Math.round(this.previousLow + (this.options.max - this.previousLow) / 2)
+        })
+        console.log('guess', this.guess)
+        console.log('min ' + this.min)
+        console.log('options min ' + this.options.min)
+        this.options.min = this.min;
+        console.log('guess', this.guess)
+        this.guess = this.guess+1
+        console.log('min', this.options.min)
+        await this.$nextTick(() => {
+          this.guess =  this.guess = Math.round(this.options.min + (this.options.max - this.options.min) / 2)
+        })
+
+      }
+
+    },
     assignQuestion() {
-      this.$store.dispatch("assignQuestion", 1).then(this.updateValue());
+      this.$store.dispatch("assignQuestion", 1).then(this.updateValueForSubmit);
     }
   },
   mounted() {
