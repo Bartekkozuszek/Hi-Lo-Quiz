@@ -1,15 +1,19 @@
 <template>
-    <header class="header">
-    <div id="title"><h1>Hi-Lo-Pros</h1></div> 
-<div class="flex-container">
-  <div><button class="select-btn" id="sbt1">{{user}}</button></div>
-  <div> <select id="subject">
-                    <option>{{settings}}</option>
-					</select></div>
+  <header class="header">
+    <div id="title"><h1>Hi-Lo-Pros</h1></div>
+    <div class="flex-container">
+      <div>
+        <button class="select-btn" id="sbt1">{{ user }}</button>
+      </div>
+      <div>
+        <select id="subject">
+          <option>{{ settings }}</option>
+        </select>
+      </div>
 
-  <div><button class="select-btn" id="sbt1">Login</button></div>  
-</div>
-    </header>
+      <div><button class="select-btn" id="sbt1">Login</button></div>
+    </div>
+  </header>
 </template>
 
 <script>
@@ -18,68 +22,60 @@ export default {
   props: {
     user: String,
     settings: String,
-	newGame: String
+    newGame: String
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-header{
+header {
+  text-align: center;
+}
 
-
-	text-align: center;
-
-	}
-	
 h1 {
-	color: green;
-	font-size: 4vh;
-	display: inline;
-	
-
-
-	}
+  color: green;
+  font-size: 4vh;
+  display: inline;
+}
 
 #title {
-
-
-	background-color: yellow;
-	font-family: 'Days One', sans-serif;
-	font-size: 3vh;
-	}
+  background-color: yellow;
+  font-family: "Days One", sans-serif;
+  font-size: 3vh;
+}
 
 select {
-	color: WHITE;
-	font-size: 3vh;
-	display: inline;
-	padding: 1vh;
-	background-color:purple;
-max-height:5.4vh;
-	
-	text-decoration: none;
-	border: none;
-	}
-	select:hover { 
+  color: WHITE;
+  font-size: 3vh;
+  display: inline;
+  padding: 1vh;
+  background-color: purple;
+  max-height: 5.4vh;
+
+  text-decoration: none;
+  border: none;
+}
+select:hover {
   background-color: aqua;
 }
 .select-btn {
-	max-height:5.4vh;
-	color: WHITE;
-	font-size: 3vh;
-	display: inline;
-	padding: 1vh;
-	background-color:purple;
-	
-	text-decoration: none;
-	border: none;
-	}
+  max-height: 5.4vh;
+  color: WHITE;
+  font-size: 3vh;
+  display: inline;
+  padding: 1vh;
+  background-color: purple;
 
-	button:hover { 
+  text-decoration: none;
+  border: none;
+}
+
+button:hover {
   background-color: aqua;
 }
-	
-	.flex-container {
+
+.flex-container {
   display: flex;
   justify-content: center;
   background-color: pink;
@@ -87,8 +83,6 @@ max-height:5.4vh;
 }
 
 .flex-container > div {
-
   text-align: center;
-
 }
 </style>

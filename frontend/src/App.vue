@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
     <router-view />
   </div>
 </template>
@@ -24,7 +23,6 @@ export default {
   color: #2c3e50;
 }
 #nav {
-
 }
 #nav a {
   font-weight: bold;
