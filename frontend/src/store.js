@@ -43,8 +43,6 @@ export default new Vuex.Store({
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
         }
-        }, {
-            name: "blab"
         }
     ],
     currentUser: {

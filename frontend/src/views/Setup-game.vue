@@ -3,13 +3,13 @@
         <button @click="startGame" class="startButton">Start!</button>
         <div class="loadedBots" v-for="bot in bots">{{bot.name}}</div>
         <!--<div><select-bots v-show="select"></select-bots></div>-->
-        <div><span @click="selectPlayers">Change players</span></div>
+        <div ><router-link class="link" to="/bots">Change players</router-link></div>
 
     </div>
 </template>
 
 <script>
-    import SelectBots from '@/components/SelectBots.vue'
+    import SelectBots from './SelectBots.vue'
     export default {
         name: 'SetupGame',
         components: {
@@ -25,13 +25,16 @@
         },
         computed: {
             bots() {
-                return this.$store.state.loadedBots
+                return this.$store.state.sessionPlayersArray
             }
         }
     }
 </script>
 
 <style scoped>
+    .link {
+        color: white
+    }
     .loadedBots {
         color: white
     }
