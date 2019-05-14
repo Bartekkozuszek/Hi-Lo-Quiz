@@ -14,8 +14,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 *{
-margin-left:5vh;
-margin-right:5vh;
+margin-left:2vh;
+margin-right:2vh;
 }
 p {
 	
@@ -30,8 +30,8 @@ margin:2vh;
 
 
 
-height:5%;
-width:5%;
+height:100%;
+width:100%;
 
 
 

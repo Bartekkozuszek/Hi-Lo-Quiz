@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Bot from "./Bot.vue";
+import Bot from "@/components/Bot.vue";
 export default {
   name: "SelectBots",
   props: {
@@ -96,7 +96,7 @@ padding-bottom:50vh;
 
 .flex-container > div {
   display: flex;
-flex: 2;
+
   justify-content: center;
   text-align: center;
 

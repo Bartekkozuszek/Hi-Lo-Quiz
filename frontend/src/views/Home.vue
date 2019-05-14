@@ -12,7 +12,7 @@
 // @ is an alias to /src
 import Menu from "@/components/Menu.vue";
 import Game from "./Game";
-import SelectBots from "@/components/SelectBots.vue";
+import SelectBots from "@/views/SelectBots.vue";
 export default {
   name: "Home",
   components: {
