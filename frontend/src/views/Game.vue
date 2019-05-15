@@ -1,30 +1,25 @@
 <template>
-    <div class="question">
-        <question-display></question-display>
-        <answer></answer>
-
-    </div>
-
+  <div>
+    <question-display></question-display>
+    <GameTable></GameTable>
+    <answer></answer>
+  </div>
 </template>
 
 <script>
-    import QuestionDisplay from "../components/QuestionDisplay.vue"
-    import Answer from "../components/Answer.vue"
+import QuestionDisplay from "../components/QuestionDisplay.vue";
+import Answer from "../components/Answer.vue";
+import GameTable from "../components/GameTable.vue";
 
-    export default {
-        name: "Game",
-        computed:{
-        },
-        components : {
-            QuestionDisplay,
-            Answer
-        }
-    }
+export default {
+  name: "Game",
+  computed: {},
+  components: {
+    QuestionDisplay,
+    Answer,
+    GameTable
+  }
+};
 </script>
 
-<style>
-    .question {
-        border: thin solid black;
-        background-color: lemonchiffon
-    }
-</style>
+<style></style>
