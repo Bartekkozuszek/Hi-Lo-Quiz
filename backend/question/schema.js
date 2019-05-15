@@ -7,6 +7,7 @@ module.exports = {
   category: { type: String, required: false },
   reviewedBy: { type: String, required: false },
   imageUrl: { type: String, required: false },
+  learnMore: { type: String, required: false },
   low: { type: Number, required: false },
   high: { type: Number, required: false }
 }

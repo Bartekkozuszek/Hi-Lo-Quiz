@@ -1,4 +1,5 @@
-// From https://github.com/juffalow/express-jwt-example
+// Parts from https://github.com/juffalow/express-jwt-example
+// But updated with cookies
 
 var jwt = require('jsonwebtoken')
 var config = require('../jwt.js')
@@ -10,7 +11,8 @@ router.post('/login', function(req, res) {
    * Check if the name and password is correct
    */
   if (req.body.name === 'admin' && req.body.password === 'admin') {
-    res.json({
+    var expireTime = 60 * 60
+    var user = {
       id: 1,
       name: 'admin',
       isAdmin: true,
@@ -21,9 +23,15 @@ router.post('/login', function(req, res) {
           isAdmin: true
         },
         config.JWT_SECRET,
-        { expiresIn: 60 * 60 }
+        { expiresIn: expireTime }
       )
+    }
+    //Set JWT token as cookie
+    res.cookie('access_token', user.jwt, {
+      expires: new Date(Date.now() + 900000),
+      httpOnly: true
     })
+    res.json(user)
   } else {
     /*
      * If the name or password was wrong, return 401 ( Unauthorized )

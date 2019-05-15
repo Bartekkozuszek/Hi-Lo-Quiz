@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -10,6 +10,7 @@ export default {
   components: {},
   created() {
     this.$store.dispatch("toggleBotChosen", 0);
+    this.$store.dispatch("toggleBotChosen", 1);
   }
 };
 </script>
@@ -23,6 +24,7 @@ export default {
   color: #2c3e50;
 }
 #nav {
+
 }
 #nav a {
   font-weight: bold;
