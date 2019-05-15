@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import avatar1 from "../public/images/avatar1.jpg";
-import avatar2 from "../public/images/avatar2.jpg";
-import avatar3 from "../public/images/avatar3.jpg";
+import avatar1 from "../public/images/avatar1test.png";
+import avatar2 from "../public/images/avatar2test.png";
+import avatar3 from "../public/images/avatar3test.png";
 
 Vue.use(Vuex);
 
@@ -186,7 +186,7 @@ export default new Vuex.Store({
         catchphrase: "Doh!",
         description: "testBot and template",
         image: avatar3,
-        enabled: true,
+        enabled: false,
         timeleft: 1337, //totalMatchTime,
         move(allMoves) {
           let newMove = {
@@ -346,7 +346,7 @@ export default new Vuex.Store({
             console.log("KOM IN i 2");
             state.currentPlayerIndex++;
 
-            console.log(getters.currentPlayer.isPlayer);
+           // console.log(getters.currentPlayer.isPlayer);
             //Obs, Går inte att skriva !getters.currentPlayer.isPlayer av någon anledning
             if (getters.currentPlayer.isPlayer === false) {
               console.log("jag körs inte va??");
@@ -368,7 +368,7 @@ export default new Vuex.Store({
 
 
 
-    
+
 
 
 

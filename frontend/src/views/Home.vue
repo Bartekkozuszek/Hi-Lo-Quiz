@@ -3,6 +3,7 @@
     <Menu user="guest" settings="Options"/>
     <setupgame v-if="gameState === 1"></setupgame>
     <game v-else-if="gameState === 2"></game>
+    <WinScreen v-else-if="gameState === 3"></WinScreen>
   </div>
 </template>
 
@@ -11,12 +12,14 @@
 import Menu from "@/components/Menu.vue";
     import Game from "./Game";
     import Setupgame from "./Setup-game.vue";
+    import WinScreen from "./Win-screen";
 
 export default {
   name: "Home",
   components: {
     Game,
       Menu,
+    WinScreen,
     Setupgame
         },
         computed: {
