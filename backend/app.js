@@ -14,6 +14,14 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+//make all req query params lowercase
+app.use(function(req, res, next) {
+  for (var key in req.query) {
+    req.query[key.toLowerCase()] = req.query[key]
+  }
+  next()
+})
+
 var log = function(entry) {
   fs.appendFileSync('/tmp/sample-app.log', new Date().toISOString() + ' - ' + entry + '\n')
 }
