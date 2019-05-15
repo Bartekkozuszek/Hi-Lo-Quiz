@@ -16,6 +16,7 @@ export default new Vuex.Store({
     //2:Game in Progress
     //3:Game Over
     gameState: 1,
+    animatingCharacters:false,
     totalMatchTime: 50,
     currentPlayerIndex: 0,
     currentQuestion: {
@@ -177,8 +178,29 @@ export default new Vuex.Store({
     ],
     loadedBots: [
       {
+        name: "BartekBot",
+        isPlayer: false,
+        id:1,
+        wins: 100,
+        losses: 300,
+        catchphrase: "Doh!",
+        description: "testBot and template",
+        image: avatar3,
+        enabled: true,
+        timeleft: 1337, //totalMatchTime,
+        move(allMoves) {
+          let newMove = {
+            guess: allMoves.moves[allMoves.moves.length - 1].low + 1,
+            timeTook: 2000 //*timeoutMultiplier();
+          };
+          console.log("botten " + this.name + "gissar: " + newMove.guess);
+          return newMove;
+        }
+      },
+      {
         name: "PontusBot",
         isPlayer: false,
+        id:2,
         wins: 100,
         losses: 300,
         catchphrase:"Im gonna get you!",
@@ -194,7 +216,8 @@ export default new Vuex.Store({
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
         }
-      }
+      },
+
     ],
     currentUser: {
       id: 0,
@@ -229,6 +252,7 @@ export default new Vuex.Store({
         image: avatar1,
         timeleft: 1337 //totalMatchTime,
       }
+
     ]
   },
   getters: {
@@ -315,28 +339,55 @@ export default new Vuex.Store({
             state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
         }
 
-        //if last player
-        if (state.currentPlayerIndex == state.sessionPlayersArray.length - 1) {
-          state.currentPlayerIndex = 0;
-        } else {
-          state.currentPlayerIndex++;
-        }
-        //Obs, Går inte att skriva !getters.currentPlayer.isPlayer av någon anledning
-        if (getters.currentPlayer.isPlayer === false) {
-          console.log("jag körs inte va??");
-          let botMove = getters.currentPlayer.move(state.moveHistory);
-          dispatch("addMove", ({ state, getters }, botMove));
-          setTimeout(function(){
-            //recursive
-            dispatch("turnFinished", { state, getters, dispatch });
-          }, getters.lastMove.timeTook);
 
-        }
+
+
+        state.animatingCharacters=true;
+        setTimeout(function(){
+          if (state.currentPlayerIndex == state.sessionPlayersArray.length - 1) {
+            console.log("KOM IN i 1");
+            state.currentPlayerIndex = 0;
+          } else {
+            console.log("KOM IN i 2");
+            state.currentPlayerIndex++;
+
+            console.log(getters.currentPlayer.isPlayer);
+            //Obs, Går inte att skriva !getters.currentPlayer.isPlayer av någon anledning
+            if (getters.currentPlayer.isPlayer === false) {
+              console.log("jag körs inte va??");
+              let botMove = getters.currentPlayer.move(state.moveHistory);
+              dispatch("addMove", ({ state, getters }, botMove));
+              setTimeout(function(){
+                //recursive
+                dispatch("turnFinished", { state, getters, dispatch });
+              }, getters.lastMove.timeTook);
+
+            }
+          }
+          state.animatingCharacters=false;
+
+
+
+        }, 1000);
+
+
+
+
+        //if last player
+
+
+
+
       }
     },
     addMove({ state }, newMove) {
       //pushes last object in array to the same array
       state.moveHistory.moves.push(newMove);
-    }
+    },
+      toggleAnimations({ state }){
+          const root = document.documentElement;
+
+          root.style.setProperty('--animationTime', state.timeoutMultiplier )
+      }
   }
 });
