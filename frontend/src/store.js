@@ -91,7 +91,11 @@ export default new Vuex.Store({
       return state.sessionPlayersArray[state.currentPlayerIndex];
     }
   },
-  mutations: {},
+    mutations: {
+        renderQuestions(state, payload) {
+            state.loadedQuestions = payload
+        }
+    },
     actions: {
         changeGameState({ state }, context ) {
             state.gameState = context
@@ -180,5 +184,12 @@ export default new Vuex.Store({
       //pushes last object in array to the same array
       state.moveHistory.moves.push(newMove);
     }
-  }
+    },
+    getQuestions({ commit }) {
+        Vue.axios.get('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions').
+            then(response => {
+                let data = response.data
+                commit('renderQuestions', data)
+            }).catch((err) => console.log(err))
+    }
 });

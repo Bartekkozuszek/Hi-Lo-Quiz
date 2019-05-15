@@ -18,11 +18,10 @@
         methods: {
             startGame() {
                 this.$store.dispatch('changeGameState', 2)
+                this.$store.dispatch('getQuestions')
+
             },
-            selectPlayers() {
-                console.log('click')
-            }
-        },
+           },
         computed: {
             bots() {
                 return this.$store.state.sessionPlayersArray
