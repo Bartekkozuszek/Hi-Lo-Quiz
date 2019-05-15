@@ -16,10 +16,10 @@ mongoose.connection.on('error', console.error.bind(console, 'connection error:')
 router.use(function(req, res, next) {
   
   //Can use this to override temporary when testing
-  req.user = {
-   name: 'user1',
-   isAdmin: true
-  }
+  //req.user = {
+  // name: 'user1',
+  // isAdmin: true
+  //}
 
   console.log(req.user)
   next()
@@ -96,7 +96,6 @@ router.post('/', function(req, res, next) {
     approved: req.user && req.user.isAdmin ? true : false,
     userSubmitted: req.user && req.user.isAdmin != undefined && req.user.isAdmin ? false : true,
     submitterUserName: req.user ? req.user.name : '',
-    //author: req.user ? req.user.name : '',
     author: req.body.author ? req.body.author : '',
     category: req.body.category,
     reviewedBy: req.user && req.user.isAdmin ? req.user.name : '',
