@@ -4,6 +4,7 @@ module.exports = {
   approved: { type: Boolean, required: false, default: false },
   userSubmitted: { type: Boolean, required: false },
   author: { type: String, required: false },
+  submitterUserName: { type: String, required: false },
   category: { type: String, required: false },
   reviewedBy: { type: String, required: false },
   imageUrl: { type: String, required: false },
