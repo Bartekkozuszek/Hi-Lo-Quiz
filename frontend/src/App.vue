@@ -10,6 +10,7 @@ export default {
   components: {},
   created() {
     this.$store.dispatch("toggleBotChosen", 0);
+    this.$store.dispatch("toggleBotChosen", 1);
   }
 };
 </script>
