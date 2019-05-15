@@ -1,7 +1,7 @@
 <template>
   <div>
     <Menu user="guest" settings="Options"/>
-    <setupgame v-if="gameState === 1"></setupgame
+    <setupgame v-if="gameState === 1"></setupgame>
     <game v-else-if="gameState === 2"></game>
   </div>
 </template>

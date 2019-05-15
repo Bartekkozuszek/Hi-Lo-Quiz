@@ -1,5 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import avatar1 from "../public/images/avatar1.jpg";
+import avatar2 from "../public/images/avatar2.jpg";
+import avatar3 from "../public/images/avatar3.jpg";
 
 Vue.use(Vuex);
 
@@ -12,7 +15,8 @@ export default new Vuex.Store({
     //1:Game starting
     //2:Game in Progress
     //3:Game Over
-    gameState: 0,
+    gameState: 1,
+    animatingCharacters:false,
     totalMatchTime: 50,
     currentPlayerIndex: 0,
     currentQuestion: {
@@ -24,26 +28,196 @@ export default new Vuex.Store({
       low: 1,
       high: 10
     },
-    loadedQuestions: [],
+    loadedQuestions: [
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "history",
+        question: "In what year was Gothenburg founded?",
+        answer: 1621,
+        low: 1000,
+        high: 2000,
+        learnMore: "https://en.wikipedia.org/wiki/Gothenburg"
+      },
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "records",
+        question:
+          "is how many meters tall is Burj Khalifa, the highest building in the world?",
+        answer: 828,
+        low: 100,
+        high: 1000,
+        learnMore:
+          "https://www.guinnessworldrecords.com/records/hall-of-fame/burj-khalifa-tallest-building-in-the-world"
+      },
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "records",
+        question:
+          "The Longest human tunnel travelled through by a skateboarding dog contained how many persons?",
+        answer: 30,
+        low: 1,
+        high: 100,
+        learnMore:
+          "https://www.guinnessworldrecords.com/records/hall-of-fame/otto-the-skateboarding-bulldog"
+      },
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "records",
+        question: "How many centimeters tall is the worlds tallest living man?",
+        answer: 251,
+        low: 200,
+        high: 300,
+        learnMore:
+          "https://www.guinnessworldrecords.com/records/hall-of-fame/sultan-kosen-tallest-living-man"
+      },
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "records",
+        question: "How old was the youngest Nobel Prize winner ever?",
+        answer: 17,
+        low: 5,
+        high: 70,
+        learnMore:
+          "https://www.guinnessworldrecords.com/records/hall-of-fame/malala-yousafzai-youngest-nobel-prize-winner"
+      },
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "records",
+        question: "How old was the youngest Nobel Prize winner ever?",
+        answer: 17,
+        low: 5,
+        high: 70,
+        learnMore:
+          "https://www.guinnessworldrecords.com/records/hall-of-fame/malala-yousafzai-youngest-nobel-prize-winner"
+      },
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "history",
+        question: "in what year did Cristopher Columbus find America?",
+        answer: 1492,
+        low: 1000,
+        high: 2000,
+        learnMore:
+          "https://www.history.com/topics/exploration/christopher-columbus"
+      },
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "history",
+        question:
+          "in what year did Charles Darwin publish On the Origin of Species?",
+        answer: 1859,
+        low: 1800,
+        high: 1950,
+        learnMore:
+          "http://darwin-online.org.uk/EditorialIntroductions/Freeman_OntheOriginofSpecies.html"
+      },
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "random",
+        question:
+          "What Percentage Of Americans Have Served In The Military?(rounded to whole percents)",
+        answer: 7,
+        low: 0,
+        high: 100,
+        learnMore:
+          "https://fivethirtyeight.com/features/what-percentage-of-americans-have-served-in-the-military/"
+      },
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "random",
+        question:
+          "What Percentage of the water on Earth is drinkable?(rounded to whole percents)",
+        answer: 0,
+        low: 0,
+        high: 100,
+        learnMore:
+          "https://www.worldatlas.com/articles/what-percentage-of-the-earth-s-water-is-drinkable.html"
+      },
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "record",
+        question:
+          "How many flavours does the biggest ice cream bar in Europe offer?",
+        answer: 331,
+        low: 50,
+        high: 500,
+        learnMore: "http://www.glassmagasinet.se/"
+      },
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "history",
+        question:
+          "In what year did The Simpsons first air on American Television?",
+        answer: 1989,
+        low: 1940,
+        high: 1990,
+        learnMore: "https://simpsons.fandom.com/wiki/History_of_The_Simpsons"
+      },
+      {
+        userSubmitted: false,
+        author: "Pontus Fredriksson",
+        category: "history",
+        question: "It-högskolan was founded in what year?",
+        answer: 2012,
+        low: 2000,
+        high: 2018,
+        learnMore: "No."
+      }
+    ],
     loadedBots: [
       {
-        name: "botTemplate",
+        name: "BartekBot",
         isPlayer: false,
+        id:1,
         wins: 100,
         losses: 300,
+        catchphrase: "Doh!",
         description: "testBot and template",
-        image: null,
+        image: avatar3,
+        enabled: true,
+        timeleft: 1337, //totalMatchTime,
+        move(allMoves) {
+          let newMove = {
+            guess: allMoves.moves[allMoves.moves.length - 1].low + 1,
+            timeTook: 2000 //*timeoutMultiplier();
+          };
+          console.log("botten " + this.name + "gissar: " + newMove.guess);
+          return newMove;
+        }
+      },
+      {
+        name: "PontusBot",
+        isPlayer: false,
+        id:2,
+        wins: 100,
+        losses: 300,
+        catchphrase:"Im gonna get you!",
+        description: "testBot and template",
+        image: avatar2,
         enabled: false,
         timeleft: 1337, //totalMatchTime,
         move(allMoves) {
           let newMove = {
             guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
-            timeTook: 2 //*timeoutMultiplier();
+            timeTook: 2000 //*timeoutMultiplier();
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
         }
-      }
+      },
+
     ],
     currentUser: {
       id: 0,
@@ -75,9 +249,10 @@ export default new Vuex.Store({
         wins: 5,
         losses: 7,
         description: "testPlayer and template",
-        image: null,
+        image: avatar1,
         timeleft: 1337 //totalMatchTime,
       }
+
     ]
   },
   getters: {
@@ -92,7 +267,10 @@ export default new Vuex.Store({
     }
   },
   mutations: {},
-  actions: {
+    actions: {
+        changeGameState({ state }, context ) {
+            state.gameState = context
+        },
     toggleBotChosen({ state }, payloadIndex) {
       let selectedBot = state.loadedBots[payloadIndex];
       if (
@@ -108,13 +286,13 @@ export default new Vuex.Store({
         );
       }
     },
-    assignQuestion({ state, question }) {
-      (state.currentQuestion = question),
-        (state.moveHistory.length = 0),
-        state.moveHistory.push({
-          low: state.currentQuestion.low,
-          high: state.currentQuestion.high
-        });
+    assignQuestion({ state }, index) {
+      state.currentQuestion = state.loadedQuestions[index];
+      state.moveHistory.question = state.loadedQuestions[index].question;
+      state.moveHistory.moves.push({
+        low: state.currentQuestion.low,
+        high: state.currentQuestion.high
+      });
     },
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
@@ -156,26 +334,55 @@ export default new Vuex.Store({
             state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
         }
 
-        //if last player
-        if (state.currentPlayerIndex == state.sessionPlayersArray.length - 1) {
-          state.currentPlayerIndex = 0;
-        } else {
-          state.currentPlayerIndex++;
-        }
-        //Obs, Går inte att skriva !getters.currentPlayer.isPlayer av någon anledning
-        if (getters.currentPlayer.isPlayer === false) {
-          console.log("jag körs inte va??");
-          let botMove = getters.currentPlayer.move(state.moveHistory);
-          dispatch("addMove", ({ state, getters }, botMove));
 
-          //recursive
-          dispatch("turnFinished", { state, getters, dispatch });
-        }
+
+
+        state.animatingCharacters=true;
+        setTimeout(function(){
+          if (state.currentPlayerIndex == state.sessionPlayersArray.length - 1) {
+            console.log("KOM IN i 1");
+            state.currentPlayerIndex = 0;
+          } else {
+            console.log("KOM IN i 2");
+            state.currentPlayerIndex++;
+
+            console.log(getters.currentPlayer.isPlayer);
+            //Obs, Går inte att skriva !getters.currentPlayer.isPlayer av någon anledning
+            if (getters.currentPlayer.isPlayer === false) {
+              console.log("jag körs inte va??");
+              let botMove = getters.currentPlayer.move(state.moveHistory);
+              dispatch("addMove", ({ state, getters }, botMove));
+              setTimeout(function(){
+                //recursive
+                dispatch("turnFinished", { state, getters, dispatch });
+              }, getters.lastMove.timeTook);
+
+            }
+          }
+          state.animatingCharacters=false;
+
+
+
+        }, 1000);
+
+
+
+
+    
+
+
+
+
       }
     },
     addMove({ state }, newMove) {
       //pushes last object in array to the same array
       state.moveHistory.moves.push(newMove);
-    }
+    },
+      toggleAnimations({ state }){
+          const root = document.documentElement;
+
+          root.style.setProperty('--animationTime', state.timeoutMultiplier )
+      }
   }
 });
