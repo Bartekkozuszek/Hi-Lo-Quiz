@@ -8,6 +8,6 @@ module.exports = {
   reviewedBy: { type: String, required: false },
   imageUrl: { type: String, required: false },
   learnMore: { type: String, required: false },
-  low: { type: Number, required: false },
-  high: { type: Number, required: false }
+  low: { type: Number, required: false, min: [0, 'Low must not be negative'] },
+  high: { type: Number, required: false, min: [0, 'High must not be negative'] }
 }
