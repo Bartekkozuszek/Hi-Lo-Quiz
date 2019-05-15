@@ -16,10 +16,10 @@ mongoose.connection.on('error', console.error.bind(console, 'connection error:')
 router.use(function(req, res, next) {
   
   //Can use this to override temporary when testing
-  req.user = {
-    name: 'Admin',
-    isAdmin: true
-  }
+  //req.user = {
+  //  name: 'Admin',
+  //  isAdmin: true
+  //}
 
   console.log(req.user)
   next()
@@ -45,17 +45,18 @@ router.get('/authors', function(req, res, next) {
 
 router.get('/', async function(req, res, next) {
   // make req params into query objects
-  try{
-    amount = req.query.amount ? parseInt(req.query.amount) : await Question.countDocuments()
-  }catch(e){
-    res.json({msg : e.message})
-  }
+  
   let category = req.query.category ? { category: { $eq: req.query.category } } : {}
   let author = req.query.author ? { author: { $eq: req.query.author } } : {}
   var approved = req.user.isAdmin ? {} : { approved: true }
   let userSubmitted = req.query.userSubmitted ? { userSubmitted: { $eq: req.query.userSubmitted === 'true' } } : {} // convert string to boolean
   let reviewedBy = req.query.reviewedBy ? { reviewedBy: { $eq: req.query.reviewedBy } } : {}
-
+  try{
+    amount = req.query.amount ? parseInt(req.query.amount) : await Question.countDocuments()
+  }catch(e){
+    res.json({msg : e.message})
+  }
+  
   let query = [
     {
       $match: {
