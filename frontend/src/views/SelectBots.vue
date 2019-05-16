@@ -1,4 +1,4 @@
-
+ 
 <template>
   
 
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Bot from "./Bot.vue";
+import Bot from "@/components/Bot.vue";
 export default {
   name: "SelectBots",
   props: {
