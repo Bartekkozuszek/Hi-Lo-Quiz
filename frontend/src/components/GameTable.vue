@@ -2,19 +2,27 @@
     <div id="table-component">
         <div class="tableSlot tableSlot1" v-bind:class="{slot1Animate: this.$store.state.animatingCharacters}">
             <img :src="slot1Image"></img>
-            <p>{{whatPlayer(1).name}}</p>
+            <p class="namebtn"
+               :style="{'background-image': `url(${require('../../public/images/btnwood.jpg')})`}"
+            >{{whatPlayer(1).name}}</p>
         </div>
         <div class="tableSlot tableSlot2" v-bind:class="{slot2Animate: this.$store.state.animatingCharacters}">
             <img :src="slot2Image"></img>
-            <p>{{whatPlayer(2).name}}</p>
+            <p class="namebtn"
+               :style="{'background-image': `url(${require('../../public/images/btnwood.jpg')})`}"
+            >{{whatPlayer(2).name}}</p>
         </div>
         <div class="tableSlot tableSlot3" v-bind:class="{slot3Animate: this.$store.state.animatingCharacters}">
             <img :src="slot3Image"></img>
-            <p>{{whatPlayer(3).name}}</p>
+            <p class="namebtn"
+               :style="{'background-image': `url(${require('../../public/images/btnwood.jpg')})`}"
+            >{{whatPlayer(3).name}}</p>
         </div>
         <div class="tableSlot tableSlot4" v-bind:class="{slot4Animate: this.$store.state.animatingCharacters}">
             <img :src="slot4Image"></img>
-            <p>{{whatPlayer(4).name}}</p>
+            <p class="namebtn"
+               :style="{'background-image': `url(${require('../../public/images/btnwood.jpg')})`}"
+            >{{whatPlayer(4).name}}</p>
         </div>
     </div>
 </template>
@@ -73,34 +81,66 @@
     }
     .tableSlot1{
         position: fixed;
+        /*filter: grayscale(100%);*/
+        opacity:0.4;
         left:0%;
     }
     .tableSlot2{
         position: fixed;
-        left:32%;
+        left:38%;
     }
     .tableSlot3{
         position: fixed;
+        /*filter: grayscale(100%);*/
+        opacity: 0.4;
         left:80%;
     }
     .tableSlot4{
         position: fixed;
+        /*filter: grayscale(100%);*/
+        opacity:0;
         left:140%;
     }
     .slot1Animate{
         left:-30%;
-        transition: all 0.5s ease;
+        opacity:0;
+        transition: all 1s ease;
     }
     .slot2Animate{
         left:0%;
-        transition: all 0.5s ease;
+        opacity:0.4;
+
+        /*filter: grayscale(100%);*/
+
+        transition: all 1s ease;
     }
     .slot3Animate{
-        left:32%;
-        transition: all 0.5s ease;
+        left:38%;
+        /*filter: grayscale(0%);*/
+        opacity: 1;
+        transition: all 1s ease;
     }
     .slot4Animate{
         left:80%;
-        transition: all 0.5s ease;
+        opacity:0.4;
+        transition: all 1s ease;
     }
+    .namebtn{
+        display: inline-block;
+        padding: 11px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-family: "Avenir", Helvetica, Arial, sans-serif;
+        color: beige;
+        border: 1px solid #a0a08d;
+        width: 250px;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: 0.4s;
+        cursor: pointer;
+    }
+
+
 </style>

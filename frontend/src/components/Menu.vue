@@ -3,8 +3,9 @@
     <div id="title"><h1>Hi-Lo-Pros</h1></div> 
 <div class="flex-container">
   <div><button class="select-btn" id="sbt1">{{user}}</button></div>
-  <div> <select id="subject">
+  <div> <select id="subject" v-on:change="goToLink">
                     <option>{{settings}}</option>
+      <option v-bind:value="rules.value">{{rules.name}}</option>
 					</select></div>
 
   <div><button class="select-btn" id="sbt1">Login</button></div>  
@@ -18,8 +19,23 @@ export default {
   props: {
     user: String,
     settings: String,
-	newGame: String
-  }
+	newGame: String,
+  },
+    data: function() {
+      return {
+        rules: {
+            name: "rules",
+            value: 1
+        }
+      };
+    },
+    methods : {
+      goToLink: function(event){
+          if (event.target.value == 1) {
+              this.$router.push({path: '/rules'})
+          }
+      }
+    }
 };
 </script>
 

@@ -1,9 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
-    {{ show }}
     <div class="answer-slider-container">
       <vue-slider
-        v-if="show"
         ref="slider"
         v-model="guess"
         v-bind="options"
@@ -40,7 +38,6 @@ export default {
   data: function() {
     return {
       guess: 0,
-      show: true,
       selected: "",
       marks: val => {
         let diff = this.options.max - this.options.min;
