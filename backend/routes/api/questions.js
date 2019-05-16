@@ -48,7 +48,7 @@ router.get('/', async function(req, res, next) {
   
   let category = req.query.category ? { category: { $eq: req.query.category } } : {}
   let author = req.query.author ? { author: { $eq: req.query.author } } : {}
-  var approved = req.user.isAdmin? { approved: { $eq: req.query.approved === 'true' } } : { approved: true }
+  var approved = req.user.isAdmin && req.query.approved ? { approved: req.query.approved === 'true' } : { approved: true }
   let userSubmitted = req.query.userSubmitted ? { userSubmitted: { $eq: req.query.userSubmitted === 'true' } } : {} // convert string to boolean
   let reviewedBy = req.query.reviewedBy ? { reviewedBy: { $eq: req.query.reviewedBy } } : {}
   try{
