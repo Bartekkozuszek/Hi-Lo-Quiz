@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <div>
+  <div class="answer-container">
     <div class="answer-slider-container">
       <vue-slider ref="slider" v-model="guess" v-bind="options" :marks="marks">
         <template v-slot:mark="{ pos, label }">
@@ -167,6 +167,11 @@ export default {
 </script>
 
 <style>
+
+  .answer-container {
+    margin-top: 50px;
+  }
+
 .answer-slider-container {
   display: flex;
   justify-content: center;
