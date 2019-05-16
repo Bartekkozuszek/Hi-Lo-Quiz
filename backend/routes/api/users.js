@@ -3,10 +3,11 @@ const uri = 'mongodb://localhost:27017/test_lobsters_questions'
 
 const express = require('express')
 const router = express.Router()
-const schema = require('../../user/schema')
+//const schema = require('../../user/schema')
 const mongoose = require('mongoose')
-const UserSchema = new mongoose.Schema(schema)
-const User = mongoose.model('User', UserSchema)
+//const UserSchema = new mongoose.Schema(schema)
+//const User = mongoose.model('User', UserSchema)
+const User = require('../../user/user')
 
 mongoose.connect(uri, { useNewUrlParser: true })
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
@@ -24,8 +25,9 @@ router.get('/', function(req, res, next){
 router.post('/', function(req, res, next){
 
     let userProps = {
-        name: req.body.name,
-        displayName: req.body.displayName,
+        userName: req.body.userName,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         password: req.body.password,
         isAdmin: req.body.isAdmin
     }

@@ -28,7 +28,8 @@ var log = function(entry) {
 
 app.use('/api', require('./auth/auth'))
 
-app.use('/', require('./auth/user'))
+//app.use('/', require('./auth/user'))
+app.use('/', require('./routes/login'))
 
 app.use('/api/v1/questions', require('./routes/api/questions'))
 
