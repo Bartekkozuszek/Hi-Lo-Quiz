@@ -10,7 +10,8 @@ mongoose.connect(uri, { useNewUrlParser: true })
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
 
 router.get('/', function(req, res, next){
-    User.find(function(err, result){
+    //let query = 
+    User.find({},{ password: 0 }, function(err, result){
         if(err){
             res.json({msg: err.message})
         }else{
