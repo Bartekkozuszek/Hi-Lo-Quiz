@@ -4,7 +4,11 @@
         
         <div class="botContainer" v-dragscroll.x="true">
             <div></div>
-            <div class="loadedBots" v-for="bot in bots"> <img class="image" v-bind:src="bot.image" /></div>
+            <div class="loadedBots" v-for="bot in bots"
+                 :style="{'background-image': `url(${require('../../public/images/header1.png')})`}"
+                 >
+                <img class="image" v-bind:src="bot.image"> {{bot.name}}
+            </div>
             <div></div>
         </div>
         <div class="link"><router-link  to="/bots">Change players</router-link></div>
@@ -58,17 +62,19 @@
     }
     .image{
         grid-column: 2 / -2;
-        width: 100%;
+        height: 9vw;
     }
     .link {
         color: white;
         padding: 2em;
     }
     .loadedBots {
+        height: 90%;
         color: white;
         display: inline;
         border: thick;
         background-color: darkseagreen;
+        font-size: 2vw;
     }
     #setup {
         background-image: linear-gradient(#1e1c1c, #645c5c);

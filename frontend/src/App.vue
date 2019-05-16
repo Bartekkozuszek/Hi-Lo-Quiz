@@ -11,7 +11,7 @@ export default {
   created() {
     this.$store.dispatch("toggleBotChosen", 0);
       this.$store.dispatch("toggleBotChosen", 1);
-         // this.$store.dispatch("toggleBotChosen", 2);
+         this.$store.dispatch("toggleBotChosen", 2);
   }
 };
 </script>

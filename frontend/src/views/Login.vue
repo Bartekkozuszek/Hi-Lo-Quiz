@@ -6,7 +6,7 @@
         <label>Password:</label><br />
         <input /><br />
                  <footer>
-                     <button @click="cancel">Cancel</button>
+                     <button>Cancel</button>
                      <button>OK</button>
                  </footer>
     </div>
