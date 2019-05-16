@@ -38,6 +38,12 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
+UserSchema.methods.presentable = function(){
+    var presentableUser = this.toObject()
+    delete presentableUser.password
+    return presentableUser
+}
+
 var User = mongoose.model('User', UserSchema)
 
 module.exports = User

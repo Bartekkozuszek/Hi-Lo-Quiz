@@ -38,7 +38,7 @@ router.post('/', function(req, res, next){
                 if(err){
                     res.status(400).json({msg: err.message})
                 }else{
-                    res.status(201).json(newUser)
+                    res.status(201).json(newUser.presentable())
                 }
             })
         }else{
@@ -57,7 +57,7 @@ router.delete('/:id', async function(req, res, next){
       if(removedUser === null){
         res.status(404).end()
       }else{
-        res.status(200).json(removedUser)
+        res.status(200).json(removedUser.presentable())
       }
 })
 
