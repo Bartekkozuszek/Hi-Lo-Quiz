@@ -3,10 +3,7 @@ const uri = 'mongodb://localhost:27017/test_lobsters_questions'
 
 const express = require('express')
 const router = express.Router()
-//const schema = require('../../user/schema')
 const mongoose = require('mongoose')
-//const UserSchema = new mongoose.Schema(schema)
-//const User = mongoose.model('User', UserSchema)
 const User = require('../../user/user')
 
 mongoose.connect(uri, { useNewUrlParser: true })
@@ -32,7 +29,7 @@ router.post('/', function(req, res, next){
         isAdmin: req.body.isAdmin
     }
     let newUser = new User(userProps)
-    
+
     newUser.save(function(err){
         if(err){
             res.status(400).json({msg: err.message})

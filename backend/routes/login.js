@@ -27,7 +27,8 @@ router.post('/login', function(req, res) {
           var expireTime = 60 * 60
           user.jwt = jwt.sign({
               id: user.id,
-              name: 'admin',
+              userName: user.userName,
+              role: 'admin',
               isAdmin: true
             },
             config.JWT_SECRET,

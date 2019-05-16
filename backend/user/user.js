@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-
+// move content of this file to schema
 let mongoose = require('mongoose')
 let bcrypt = require('bcrypt')
 let SALT_WORK_FACTOR = 10

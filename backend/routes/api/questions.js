@@ -48,7 +48,7 @@ router.get('/', async function(req, res, next) {
   
   let category = req.query.category ? { category: { $eq: req.query.category } } : {}
   let author = req.query.author ? { author: { $eq: req.query.author } } : {}
-  var approved = req.user.isAdmin ? {} : { approved: true }
+  var approved = req.user.isAdmin? { approved: { $eq: req.query.approved === 'true' } } : { approved: true }
   let userSubmitted = req.query.userSubmitted ? { userSubmitted: { $eq: req.query.userSubmitted === 'true' } } : {} // convert string to boolean
   let reviewedBy = req.query.reviewedBy ? { reviewedBy: { $eq: req.query.reviewedBy } } : {}
   try{
@@ -95,10 +95,10 @@ router.post('/', function(req, res, next) {
     answer: req.body.answer,
     approved: req.user && req.user.isAdmin ? true : false,
     userSubmitted: req.user && req.user.isAdmin != undefined && req.user.isAdmin ? false : true,
-    submitterUserName: req.user ? req.user.name : '',
+    submitterUserName: req.user ? req.user.userName : '',
     author: req.body.author ? req.body.author : '',
     category: req.body.category,
-    reviewedBy: req.user && req.user.isAdmin ? req.user.name : '',
+    reviewedBy: req.user && req.user.isAdmin ? req.user.userName : '',
     imageUrl: req.body.imageUrl,
     learnMore: req.body.learnMore,
     low: req.body.low,
