@@ -281,6 +281,22 @@ export default new Vuex.Store({
     lastMove: state => {
       return state.moveHistory.moves[state.moveHistory.moves.length - 1];
     },
+      min : (state,getters) => {
+          let temp = getters.lastMove.low;
+          if (typeof temp !== 'undefined') {
+              return temp
+          }
+          else return state.moveHistory.moves[state.moveHistory.moves.length - 2].low
+
+      },
+      max : (state,getters) => {
+          let temp = getters.lastMove.high;
+          if (typeof temp !== 'undefined') {
+              return temp
+          }
+          else return state.moveHistory.moves[state.moveHistory.moves.length - 2].high
+      },
+
     currentPlayer: state => {
       return state.sessionPlayersArray[state.currentPlayerIndex];
     }
