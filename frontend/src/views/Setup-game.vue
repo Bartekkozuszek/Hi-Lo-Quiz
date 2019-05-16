@@ -1,7 +1,7 @@
 <template>
     <div id="setup">
         <button @click="startGame" class="startButton">Start!</button>
-        <div class="loadedBots" v-for="bot in bots">{{bot.name}} {{bot.catchphrase }}</div>
+        <div class="loadedBots" v-for="bot in bots">{{bot.name}} {{bot.image }}</div>
         <div ><router-link class="link" to="/bots">Change players</router-link></div>
 
     </div>
@@ -12,9 +12,9 @@
     
     export default {
         name: 'SetupGame',
-        mounted() {
-            this.$store.dispatch('loadQuestions')
-        },
+        //mounted() {
+        //    this.$store.dispatch('loadQuestions')
+        //},
         components: {
             SelectBots
         },
