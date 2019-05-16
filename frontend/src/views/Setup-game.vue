@@ -1,5 +1,7 @@
 <template>
-    <div id="setup">
+    <div id="setup"
+          :style="{'background-image': `url(${require('../../public/images/background1.jpg')})`}"
+    >
         <button @click="startGame" class="startButton">Start!</button>
         
         <div class="botContainer" v-dragscroll.x="true">
@@ -78,12 +80,16 @@
     }
     #setup {
         background-image: linear-gradient(#1e1c1c, #645c5c);
-        height: 20em;
+        height: 35.5em;
+        background-size:100vh;
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat;
+        background-color:#2C231C;
     }
     .startButton{
         margin: 2em;
         padding: 1em;
-        width: 60%;
+        width: 40%;
         background-color: lightsteelblue;
         font-size: large;
     }
