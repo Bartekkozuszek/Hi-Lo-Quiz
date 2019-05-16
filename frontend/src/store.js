@@ -218,7 +218,26 @@ export default new Vuex.Store({
           return newMove;
         }
       },
-
+        {
+            name: "PetrosBot",
+            isPlayer: false,
+            id: 3,
+            wins: 100,
+            losses: 300,
+            catchphrase: "Im gonna get you!",
+            description: "testBot and template",
+            image: avatar2,
+            enabled: false,
+            timeleft: 1337, //totalMatchTime,
+            move(allMoves) {
+                let newMove = {
+                    guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
+                    timeTook: 2000 //*timeoutMultiplier();
+                };
+                console.log("botten " + this.name + "gissar: " + newMove.guess);
+                return newMove;
+            }
+        }
     ],
     currentUser: {
       id: 0,

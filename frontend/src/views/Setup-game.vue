@@ -1,7 +1,12 @@
 <template>
     <div id="setup">
         <button @click="startGame" class="startButton">Start!</button>
-        <div class="loadedBots" v-for="bot in bots"> <img class="image" v-bind:src="bot.image" /></div>
+        
+        <div class="botContainer" v-dragscroll.x="true">
+            <div></div>
+            <div class="loadedBots" v-for="bot in bots"> <img class="image" v-bind:src="bot.image" /></div>
+            <div></div>
+        </div>
         <div class="link"><router-link  to="/bots">Change players</router-link></div>
    
     </div>
@@ -9,8 +14,11 @@
 
 <script>
     import SelectBots from './SelectBots.vue';
-    
+    import { dragscroll } from 'vue-dragscroll';
     export default {
+        directives: {
+            dragscroll
+        },
         name: 'SetupGame',
         //mounted() {
         //    this.$store.dispatch('loadQuestions')
@@ -34,8 +42,22 @@
 </script>
 
 <style scoped>
+    .botContainer {
+        width: 42vw;
+        margin-left: auto;
+        margin-right: auto;
+        height:12vw;
+        display:grid;
+        grid-template-columns: 1vw repeat(4, 12vw) 1vw;
+        grid-template-rows: minmax(150px, 1fr);
+        grid-column-gap: 1vw;
+        background-color:black;
+        overflow: hidden;
+       
+    }
     .image{
-        width: 20%;
+        grid-column: 2 / -2;
+        width: 100%;
     }
     .link {
         color: white;
@@ -44,8 +66,6 @@
     .loadedBots {
         color: white;
         display: inline;
-        padding-top: 2em;
-        margin-bottom: 3em;
         border: thick;
         background-color: darkseagreen;
     }
