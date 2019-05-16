@@ -32,6 +32,7 @@ router.post('/', function(req, res, next){
         isAdmin: req.body.isAdmin
     }
     let newUser = new User(userProps)
+    
     newUser.save(function(err){
         if(err){
             res.status(400).json({msg: err.message})
