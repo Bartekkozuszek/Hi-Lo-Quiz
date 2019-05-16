@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home";
 import Rules from "./components/Rules";
 import SelectBots from "./views/SelectBots.vue"
+import Login from "./views/Login.vue"
 
 Vue.use(Router);
 
@@ -26,7 +27,11 @@ export default new Router({
       name: "rules",
       component: Rules
     },
-
+      {
+          path: "/login",
+          name: "login",
+          component: Login
+      },
     {
       path: "/about",
       name: "about",

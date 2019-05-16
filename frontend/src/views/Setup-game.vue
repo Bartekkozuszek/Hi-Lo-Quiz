@@ -2,7 +2,7 @@
     <div id="setup">
         <button @click="startGame" class="startButton">Start!</button>
         <div class="loadedBots" v-for="bot in bots"> <img class="image" v-bind:src="bot.image" /></div>
-        <div ><router-link class="link" to="/bots">Change players</router-link></div>
+        <div class="link"><router-link  to="/bots">Change players</router-link></div>
    
     </div>
 </template>
@@ -38,12 +38,15 @@
     }
     .link {
         color: white;
+        padding: 2em;
     }
     .loadedBots {
         color: white;
         display: inline;
         padding-top: 2em;
         margin-bottom: 3em;
+        border: thick;
+        background-color: darkseagreen;
     }
     #setup {
         background-image: linear-gradient(#1e1c1c, #645c5c);

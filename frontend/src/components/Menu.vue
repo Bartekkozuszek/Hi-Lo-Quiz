@@ -8,7 +8,7 @@
       <option v-bind:value="rules.value">{{rules.name}}</option>
 					</select></div>
 
-  <div><button class="select-btn" id="sbt1">Login</button></div>  
+  <div><button class="select-btn" id="sbt1"><router-link to="/Login">Login</router-link></button></div>  
 </div>
     </header>
 </template>
