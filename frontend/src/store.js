@@ -3,8 +3,9 @@ import Vuex from "vuex";
 import avatar1 from "../public/images/avatar1.jpg";
 import avatar2 from "../public/images/avatar2.jpg";
 import avatar3 from "../public/images/avatar3.jpg";
+import axios from "axios";
 
-Vue.use(Vuex);
+Vue.use(Vuex, axios);
 
 export default new Vuex.Store({
   state: {
@@ -266,8 +267,18 @@ export default new Vuex.Store({
       return state.sessionPlayersArray[state.currentPlayerIndex];
     }
   },
-  mutations: {},
+    mutations: {
+        setQuestions(state, loadedQuestions) {
+            state.loadedQuestions.push(loadedQuestions)
+        }
+    },
     actions: {
+        async loadQuestions({ commit }) {
+            axios.get('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions')
+                .then(r => r.data).then(loadedQuestions => {
+                    commit('setQuestions', loadedQuestions)
+                }).catch(error => { console.log(error) })
+        },
         changeGameState({ state }, context ) {
             state.gameState = context
         },

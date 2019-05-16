@@ -1,24 +1,26 @@
 <template>
     <div id="setup">
         <button @click="startGame" class="startButton">Start!</button>
-        <div class="loadedBots" v-for="bot in bots">{{bot.name}}</div>
-        <!--<div><select-bots v-show="select"></select-bots></div>-->
+        <div class="loadedBots" v-for="bot in bots">{{bot.name}} {{bot.catchphrase }}</div>
         <div ><router-link class="link" to="/bots">Change players</router-link></div>
 
     </div>
 </template>
 
 <script>
-    import SelectBots from './SelectBots.vue'
+    import SelectBots from './SelectBots.vue';
+    
     export default {
         name: 'SetupGame',
+        mounted() {
+            this.$store.dispatch('loadQuestions')
+        },
         components: {
             SelectBots
         },
         methods: {
             startGame() {
                 this.$store.dispatch('changeGameState', 2)
-                this.$store.dispatch('getQuestions')
 
             },
            },
