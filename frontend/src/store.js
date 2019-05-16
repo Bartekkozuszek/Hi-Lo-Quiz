@@ -17,7 +17,7 @@ export default new Vuex.Store({
     //2:Game in Progress
     //3:Game Over
     gameState: 1,
-    animatingCharacters:false,
+    animatingCharacters: false,
     totalMatchTime: 50,
     currentPlayerIndex: 0,
     currentQuestion: {
@@ -181,7 +181,7 @@ export default new Vuex.Store({
       {
         name: "BartekBot",
         isPlayer: false,
-        id:1,
+        id: 1,
         wins: 100,
         losses: 300,
         catchphrase: "Doh!",
@@ -201,10 +201,10 @@ export default new Vuex.Store({
       {
         name: "PontusBot",
         isPlayer: false,
-        id:2,
+        id: 2,
         wins: 100,
         losses: 300,
-        catchphrase:"Im gonna get you!",
+        catchphrase: "Im gonna get you!",
         description: "testBot and template",
         image: avatar2,
         enabled: false,
@@ -218,26 +218,26 @@ export default new Vuex.Store({
           return newMove;
         }
       },
-        {
-            name: "PetrosBot",
-            isPlayer: false,
-            id: 3,
-            wins: 100,
-            losses: 300,
-            catchphrase: "Im gonna get you!",
-            description: "testBot and template",
-            image: avatar2,
-            enabled: false,
-            timeleft: 1337, //totalMatchTime,
-            move(allMoves) {
-                let newMove = {
-                    guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
-                    timeTook: 2000 //*timeoutMultiplier();
-                };
-                console.log("botten " + this.name + "gissar: " + newMove.guess);
-                return newMove;
-            }
+      {
+        name: "PetrosBot",
+        isPlayer: false,
+        id: 3,
+        wins: 100,
+        losses: 300,
+        catchphrase: "Im gonna get you!",
+        description: "testBot and template",
+        image: avatar2,
+        enabled: false,
+        timeleft: 1337, //totalMatchTime,
+        move(allMoves) {
+          let newMove = {
+            guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
+            timeTook: 2000 //*timeoutMultiplier();
+          };
+          console.log("botten " + this.name + "gissar: " + newMove.guess);
+          return newMove;
         }
+      }
     ],
     currentUser: {
       id: 0,
@@ -272,7 +272,6 @@ export default new Vuex.Store({
         image: avatar1,
         timeleft: 1337 //totalMatchTime,
       }
-
     ]
   },
   getters: {
@@ -286,21 +285,21 @@ export default new Vuex.Store({
       return state.sessionPlayersArray[state.currentPlayerIndex];
     }
   },
-    mutations: {
-        //setQuestions(state, loadedQuestions) {
-        //    state.loadedQuestions.push(loadedQuestions)
-        //}
+  mutations: {
+    //setQuestions(state, loadedQuestions) {
+    //    state.loadedQuestions.push(loadedQuestions)
+    //}
+  },
+  actions: {
+    //async loadQuestions({ commit }) {
+    //    axios.get('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions')
+    //        .then(r => r.data).then(loadedQuestions => {
+    //            commit('setQuestions', loadedQuestions)
+    //        }).catch(error => { console.log(error) })
+    //},
+    changeGameState({ state }, context) {
+      state.gameState = context;
     },
-    actions: {
-        //async loadQuestions({ commit }) {
-        //    axios.get('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions')
-        //        .then(r => r.data).then(loadedQuestions => {
-        //            commit('setQuestions', loadedQuestions)
-        //        }).catch(error => { console.log(error) })
-        //},
-        changeGameState({ state }, context ) {
-            state.gameState = context
-        },
     toggleBotChosen({ state }, payloadIndex) {
       let selectedBot = state.loadedBots[payloadIndex];
       if (
@@ -313,11 +312,14 @@ export default new Vuex.Store({
         selectedBot.enabled = false;
         state.sessionPlayersArray.splice(
           state.sessionPlayersArray.indexOf(selectedBot)
-          );
-        }
-        document.documentElement.style.setProperty('--playerAmount', state.sessionPlayersArray.length)
+        );
+      }
+      document.documentElement.style.setProperty(
+        "--playerAmount",
+        state.sessionPlayersArray.length
+      );
     },
-        assignQuestion({ state }, index) {
+    assignQuestion({ state }, index) {
       state.currentPlayerIndex = 0;
       state.currentQuestion = state.loadedQuestions[index];
       state.moveHistory.question = state.loadedQuestions[index].question;
@@ -366,55 +368,42 @@ export default new Vuex.Store({
             state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
         }
 
-
-
-
-        state.animatingCharacters=true;
-        setTimeout(function(){
-          if (state.currentPlayerIndex == state.sessionPlayersArray.length - 1) {
+        state.animatingCharacters = true;
+        setTimeout(function() {
+          if (
+            state.currentPlayerIndex ==
+            state.sessionPlayersArray.length - 1
+          ) {
             console.log("KOM IN i 1");
             state.currentPlayerIndex = 0;
           } else {
             console.log("KOM IN i 2");
             state.currentPlayerIndex++;
 
-           // console.log(getters.currentPlayer.isPlayer);
+            // console.log(getters.currentPlayer.isPlayer);
             //Obs, Går inte att skriva !getters.currentPlayer.isPlayer av någon anledning
             if (getters.currentPlayer.isPlayer === false) {
               console.log("jag körs inte va??");
               let botMove = getters.currentPlayer.move(state.moveHistory);
               dispatch("addMove", ({ state, getters }, botMove));
-              setTimeout(function(){
+              setTimeout(function() {
                 //recursive
                 dispatch("turnFinished", { state, getters, dispatch });
               }, getters.lastMove.timeTook);
-
             }
           }
-          state.animatingCharacters=false;
-
-
-
+          state.animatingCharacters = false;
         }, 1000);
-
-
-
-
-
-
-
-
-
       }
     },
     addMove({ state }, newMove) {
       //pushes last object in array to the same array
       state.moveHistory.moves.push(newMove);
     },
-      toggleAnimations({ state }){
-          const root = document.documentElement;
+    toggleAnimations({ state }) {
+      const root = document.documentElement;
 
-          root.style.setProperty('--animationTime', state.timeoutMultiplier )
-      }
+      root.style.setProperty("--animationTime", state.timeoutMultiplier);
+    }
   }
 });

@@ -1,12 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
     <div class="answer-slider-container">
-      <vue-slider
-        ref="slider"
-        v-model="guess"
-        v-bind="options"
-        :marks="marks"
-      >
+      <vue-slider ref="slider" v-model="guess" v-bind="options" :marks="marks">
         <template v-slot:mark="{ pos, label }">
           <div class="custom-mark" :style="{ left: `${pos}%` }">
             {{ label }}
