@@ -58,16 +58,10 @@ export default {
   },
   computed: {
     min() {
-      let num = this.$store.state.moveHistory.moves[
-        this.$store.state.moveHistory.moves.length - 1
-      ].low;
-      return num;
+      return this.$store.getters.min
     },
     max() {
-      let num = this.$store.state.moveHistory.moves[
-        this.$store.state.moveHistory.moves.length - 1
-      ].high;
-      return num;
+      return this.$store.getters.max
     },
     loadedQuestions() {
       return this.$store.state.loadedQuestions;
@@ -79,6 +73,22 @@ export default {
         })
         .indexOf(this.selected);
       return pos;
+    },
+    moves() {
+      return this.$store.state.moveHistory.moves
+    },
+    lastMove() {
+      return this.$store.getters.lastMove    }
+  },
+  //Körs när moves arrayen uppdateras
+  watch :  {
+    min() {
+      this.updateValue()
+      console.log("min ändras och är" +this.min)
+    },
+    max() {
+      this.updateValue()
+      console.log("max ändras och är" + this.max)
     }
   },
   methods: {
@@ -95,11 +105,24 @@ export default {
       if (this.max + 1 - (this.min - 1) > 1) {
         this.options.max = this.max;
         this.options.min = this.min;
-        this.$nextTick(() => {
-          this.$refs.slider.setValue(
-            Math.round(this.min + (this.max - this.min) / 2)
-          );
-        });
+        let temp = this.lastMove;
+        //If satsen uppdaterar slidern och sen sätter värdet
+        if (typeof temp.guess !='undefined') {
+          if (temp.guess<=this.options.max-1)
+          this.guess = temp.guess+1
+          else
+            this.guess = temp.guess-1
+
+          this.guess = temp.guess
+
+        }
+        if (this.$store.getters.currentPlayer.isPlayer) {
+          this.$nextTick(() => {
+            this.$refs.slider.setValue(
+                    Math.round(this.min + (this.max - this.min) / 2)
+            );
+          });
+        }
       }
     },
 
