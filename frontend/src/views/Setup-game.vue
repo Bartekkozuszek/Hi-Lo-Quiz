@@ -20,6 +20,7 @@
         },
         methods: {
             startGame() {
+                this.$store.dispatch('assignQuestion', 4)
                 this.$store.dispatch('changeGameState', 2)
 
             },

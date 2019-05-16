@@ -297,7 +297,8 @@ export default new Vuex.Store({
         );
       }
     },
-    assignQuestion({ state }, index) {
+        assignQuestion({ state }, index) {
+      state.currentPlayerIndex = 0;
       state.currentQuestion = state.loadedQuestions[index];
       state.moveHistory.question = state.loadedQuestions[index].question;
       state.moveHistory.moves.push({

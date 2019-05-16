@@ -6,12 +6,22 @@
         <label>Password:</label><br />
         <input /><br />
                  <footer>
-                     <button>Cancel</button>
+                     <button @click="cancel">Cancel</button>
                      <button>OK</button>
                  </footer>
     </div>
 </template>
 
-<script></script>
+<script>
+
+    //export default {
+    //    name: Login,
+    //        methods: {
+    //            cancel() {
+
+    //            }
+    //        }
+    //    }
+</script>
 
 <style></style>
