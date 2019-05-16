@@ -29,14 +29,22 @@ router.post('/', function(req, res, next){
         isAdmin: req.body.isAdmin
     }
     let newUser = new User(userProps)
-
-    newUser.save(function(err){
+    User.findOne({userName: req.body.userName}, function(err, result){
         if(err){
-            res.status(400).json({msg: err.message})
+            res.json({msg: err.message})
+        }if(!result){
+            newUser.save(function(err){
+                if(err){
+                    res.status(400).json({msg: err.message})
+                }else{
+                    res.status(201).json(newUser)
+                }
+            })
         }else{
-            res.status(201).json(newUser)
+            res.status(406).json({msg: 'Username already taken'})
         }
     })
+    
 })
 
 router.delete('/:id', async function(req, res, next){
