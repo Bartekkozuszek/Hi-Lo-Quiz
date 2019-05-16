@@ -4,9 +4,11 @@ module.exports = {
   approved: { type: Boolean, required: false, default: false },
   userSubmitted: { type: Boolean, required: false },
   author: { type: String, required: false },
+  submitterUserName: { type: String, required: false },
   category: { type: String, required: false },
   reviewedBy: { type: String, required: false },
   imageUrl: { type: String, required: false },
-  low: { type: Number, required: false },
-  high: { type: Number, required: false }
+  learnMore: { type: String, required: false },
+  low: { type: Number, required: false, min: [0, 'Low must not be negative'] },
+  high: { type: Number, required: false, min: [0, 'High must not be negative'] }
 }

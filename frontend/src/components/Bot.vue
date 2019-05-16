@@ -21,20 +21,11 @@ p {
 	
   font-size: 5vh;
 	
-
 	}
-
 #bot{
 margin:2vh;
-
-
-
-
 height:100%;
 width:100%;
-
-
-
 }
 img{
 height:100%;
