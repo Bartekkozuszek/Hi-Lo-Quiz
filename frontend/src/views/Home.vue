@@ -1,8 +1,9 @@
 <template>
   <div>
     <Menu user="guest" settings="Options"/>
-    <setup-game v-if="gameState === 1"></setup-game>
+    <setupgame v-if="gameState === 1"></setupgame>
     <game v-else-if="gameState === 2"></game>
+    <WinScreen v-else-if="gameState === 3"></WinScreen>
   </div>
 </template>
 
@@ -10,14 +11,16 @@
 // @ is an alias to /src
 import Menu from "@/components/Menu.vue";
     import Game from "./Game";
-    import SetupGame from "./Setup-game.vue";
+    import Setupgame from "./Setup-game.vue";
+    import WinScreen from "./Win-screen";
 
 export default {
   name: "Home",
   components: {
     Game,
       Menu,
-    SetupGame
+    WinScreen,
+    Setupgame
         },
         computed: {
             gameState() {

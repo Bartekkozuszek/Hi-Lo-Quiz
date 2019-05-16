@@ -16,10 +16,10 @@ mongoose.connection.on('error', console.error.bind(console, 'connection error:')
 router.use(function(req, res, next) {
   
   //Can use this to override temporary when testing
-  // req.user = {
-  //   name: 'Admin',
-  //   isAdmin: true
-  // }
+  //req.user = {
+  // name: 'Admin',
+  // isAdmin: true
+  //}
   console.log(req.user)
   next()
 })
@@ -29,7 +29,6 @@ router.get('/', async function(req, res, next) {
   let amount = req.query.amount ? parseInt(req.query.amount) : await Question.countDocuments()
   let category = req.query.category ? { category: { $eq: req.query.category } } : {}
   let author = req.query.author ? { author: { $eq: req.query.author } } : {}
-  //let approved = req.query.approved ? {approved: {$eq: (req.query.approved === "true")}} : {}// convert string to boolean
   var approved = req.user.isAdmin ? {} : { approved: true }
   let userSubmitted = req.query.userSubmitted ? { userSubmitted: { $eq: req.query.userSubmitted === 'true' } } : {} // convert string to boolean
   let reviewedBy = req.query.reviewedBy ? { reviewedBy: { $eq: req.query.reviewedBy } } : {}
@@ -49,7 +48,6 @@ router.get('/', async function(req, res, next) {
     },
     { $sample: { size: amount } } // randomize and get correct amount of Questions
   ]
-
   Question.aggregate(query).then(result => res.json(result))
 })
 
@@ -87,7 +85,7 @@ router.post('/', function(req, res, next) {
       }
       res.status(400).json({ msg: errMessage })
     } else {
-      res.json(newQuestion)
+      res.status(201).json(newQuestion)
     }
   })
 })
@@ -104,6 +102,15 @@ router.put('/:id', function(req, res, next) {
       .catch(err => res.status(400).json({ msg: `Didn't edit. ${err.message}` }))
   } else {
     res.status(401).json({ msg: 'Must be admin to edit' })
+  }
+})
+
+router.delete('/:id', async function(req, res, next) {
+  removedQuestion = await Question.findByIdAndRemove(req.params.id)
+  if(removedQuestion === null){
+    res.status(404).end()
+  }else{
+    res.status(200).json(removedQuestion)
   }
 })
 
