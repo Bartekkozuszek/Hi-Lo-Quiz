@@ -313,8 +313,9 @@ export default new Vuex.Store({
         selectedBot.enabled = false;
         state.sessionPlayersArray.splice(
           state.sessionPlayersArray.indexOf(selectedBot)
-        );
-      }
+          );
+        }
+        document.documentElement.style.setProperty('--playerAmount', state.sessionPlayersArray.length)
     },
         assignQuestion({ state }, index) {
       state.currentPlayerIndex = 0;

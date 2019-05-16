@@ -36,7 +36,8 @@
         computed: {
             bots() {
                 return this.$store.state.sessionPlayersArray
-            }
+            },
+
         }
     }
 </script>
@@ -48,7 +49,7 @@
         margin-right: auto;
         height:12vw;
         display:grid;
-        grid-template-columns: 1vw repeat(4, 12vw) 1vw;
+        grid-template-columns: 1vw repeat(var(--playerAmount), 12vw) 1vw;
         grid-template-rows: minmax(150px, 1fr);
         grid-column-gap: 1vw;
         background-color:black;
