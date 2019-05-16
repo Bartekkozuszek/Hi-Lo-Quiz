@@ -1,9 +1,9 @@
 <template>
     <div id="setup">
         <button @click="startGame" class="startButton">Start!</button>
-        <div class="loadedBots" v-for="bot in bots">{{bot.name}} {{bot.image }}</div>
+        <div class="loadedBots" v-for="bot in bots"> <img class="image" v-bind:src="bot.image" /></div>
         <div ><router-link class="link" to="/bots">Change players</router-link></div>
-
+   
     </div>
 </template>
 
@@ -33,19 +33,26 @@
 </script>
 
 <style scoped>
+    .image{
+        width: 20%;
+    }
     .link {
-        color: white
+        color: white;
     }
     .loadedBots {
-        color: white
+        color: white;
+        display: inline;
+        padding-top: 2em;
+        margin-bottom: 3em;
     }
     #setup {
         background-image: linear-gradient(#1e1c1c, #645c5c);
         height: 20em;
     }
     .startButton{
+        margin: 2em;
         padding: 1em;
-        width: 50%;
+        width: 60%;
         background-color: lightsteelblue;
         font-size: large;
     }
