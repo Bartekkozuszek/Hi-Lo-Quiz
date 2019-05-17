@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import avatar1 from "../public/images/avatar1test.png";
 import avatar2 from "../public/images/avatar2test.png";
 import avatar3 from "../public/images/avatar3test.png";
-//import axios from "axios";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -302,17 +302,19 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    //setQuestions(state, loadedQuestions) {
-    //    state.loadedQuestions.push(loadedQuestions)
-    //}
+    setQuestions(state, loadedQuestions) {
+        state.loadedQuestions = loadedQuestions
+    }
   },
   actions: {
-    //async loadQuestions({ commit }) {
-    //    axios.get('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions')
-    //        .then(r => r.data).then(loadedQuestions => {
-    //            commit('setQuestions', loadedQuestions)
-    //        }).catch(error => { console.log(error) })
-    //},
+    async loadQuestions({ commit, dispatch },amount) {
+        axios.get('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions?amount=1')
+            .then(r => r.data).then(loadedQuestions => {
+                commit('setQuestions', loadedQuestions)
+            }).then(()=>{
+          dispatch('assignQuestion',0)
+        }).catch(error => { console.log(error) })
+    },
     changeGameState({ state }, context) {
       state.gameState = context;
     },
@@ -335,14 +337,14 @@ export default new Vuex.Store({
         state.sessionPlayersArray.length
       );
     },
-    assignQuestion({ state }, index) {
+   assignQuestion({ state,dispatch,commit }, index) {
       state.currentPlayerIndex = 0;
       state.currentQuestion = state.loadedQuestions[index];
       state.moveHistory.question = state.loadedQuestions[index].question;
-      state.moveHistory.moves.push({
+      state.moveHistory.moves=[{
         low: state.currentQuestion.low,
         high: state.currentQuestion.high
-      });
+      }];
     },
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
@@ -390,12 +392,13 @@ export default new Vuex.Store({
             state.currentPlayerIndex ==
             state.sessionPlayersArray.length - 1
           ) {
-            console.log("KOM IN i 1");
             state.currentPlayerIndex = 0;
-          } else {
-            console.log("KOM IN i 2");
-            state.currentPlayerIndex++;
+            state.animatingCharacters = false;
 
+          } else {
+            state.currentPlayerIndex++;
+            state.animatingCharacters = false;
+          }
             // console.log(getters.currentPlayer.isPlayer);
             //Obs, Går inte att skriva !getters.currentPlayer.isPlayer av någon anledning
             if (getters.currentPlayer.isPlayer === false) {
@@ -407,8 +410,7 @@ export default new Vuex.Store({
                 dispatch("turnFinished", { state, getters, dispatch });
               }, getters.lastMove.timeTook);
             }
-          }
-          state.animatingCharacters = false;
+
         }, 1000);
       }
     },
