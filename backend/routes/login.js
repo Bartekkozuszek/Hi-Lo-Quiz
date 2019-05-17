@@ -23,13 +23,20 @@ router.post('/login', function(req, res) {
     //compare login password with stored password
     user.comparePassword(password, function(err, isMatch){
       if(isMatch && isMatch == true){
+        var role = ""
+        var isAdmin = false
         if(user.isAdmin && user.isAdmin == true){
-          var expireTime = 60 * 60
+          role = 'Admin'
+          isAdmin = true
+        }else{
+          role = 'User'
+        }
+        var expireTime = 60 * 60
           user.jwt = jwt.sign({
               id: user.id,
               userName: user.userName,
-              role: 'admin',
-              isAdmin: true
+              role: role,
+              isAdmin: isAdmin
             },
             config.JWT_SECRET,
             { expiresIn: expireTime }
@@ -38,7 +45,6 @@ router.post('/login', function(req, res) {
             expires: new Date(Date.now() + 900000),
             httpOnly: true
           })
-        }  
         res.status(202).json({msg: 'password match'})
       }else{
         res.status(401).json({msg: 'no password match'})
