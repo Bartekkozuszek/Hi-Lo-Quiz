@@ -1,7 +1,8 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div class="answer-container">
-    <div class="answer-slider-container">
-      <vue-slider ref="slider" v-model="guess" v-bind="options" :marks="marks">
+    <div class="answer-slider-container" v-bind:class="{boxShadowClass: isPlayer}">
+      <vue-slider ref="slider" v-model="guess" v-bind="options" :marks="marks" :clickable="showSubmit"
+      >
         <template v-slot:mark="{ pos, label }">
           <div class="custom-mark" :style="{ left: `${pos}%` }">
             {{ label }}
@@ -13,7 +14,7 @@
     <div>Make your choice!</div>
     <br />
     <input :value="guess" />
-    <button id="submit-button" v-on:click="submitAnswer">Submit</button>
+    <button v-if="showSubmit" id="submit-button" v-on:click="submitAnswer">Submit</button>
     Assign new Question:
     <select v-model="selected" @change="assignQuestion">
       <option v-for="(o, index) in loadedQuestions">{{ o.question }}</option>
@@ -23,7 +24,7 @@
 
 <script>
 import VueSlider from "vue-slider-component";
-import "vue-slider-component/theme/default.css";
+import "vue-slider-component/theme/material.css";
 export default {
   name: "Answer",
   components: {
@@ -50,9 +51,9 @@ export default {
         height: 5,
         direction: "ltr",
         disabled: false,
-        clickable: true,
+        clickable: this.showSubmit,
         duration: 0.2,
-        lazy: false
+        lazy: false,
       }
     };
   },
@@ -78,7 +79,17 @@ export default {
       return this.$store.state.moveHistory.moves
     },
     lastMove() {
-      return this.$store.getters.lastMove    }
+      return this.$store.getters.lastMove    },
+
+    isPlayer() {
+      document.documentElement.style.setProperty("--glowOn", "0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0.19)" );
+      return this.$store.getters.currentPlayer.isPlayer
+    },
+    showSubmit() {
+      if(this.$store.state.animatingCharacters===false && this.isPlayer)
+        return true
+      else return false
+    }
   },
   //Körs när moves arrayen uppdateras
   watch :  {
@@ -102,6 +113,7 @@ export default {
     //Sets guess to average rounded up to nearest int
     //Kollar så att det finns 2 eller mer platser kvar, annars sker ingen uppdatering.
     updateValue() {
+
       if (this.max + 1 - (this.min - 1) > 1) {
         this.options.max = this.max;
         this.options.min = this.min;
@@ -184,7 +196,6 @@ export default {
   },
   mounted() {
     this.updateValue();
-    //this.updateMarks()
   }
 };
 </script>
@@ -192,7 +203,7 @@ export default {
 <style>
 
   .answer-container {
-    margin-top: 50px;
+    margin-top: 100px;
   }
 
 .answer-slider-container {
@@ -200,7 +211,15 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 30px;
+  background-image: url('../../public/images/btnwood.jpg')
 }
+
+.boxShadowClass {
+
+  box-shadow: 0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
 
 #submit-button {
   margin: 10px;
@@ -212,5 +231,11 @@ export default {
   top: 15px;
   transform: translateX(-50%);
   white-space: nowrap;
+
 }
+vue-slider > *{
+  background-color: lightgreen !important;;
+
+}
+
 </style>
