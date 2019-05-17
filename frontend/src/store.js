@@ -18,6 +18,7 @@ export default new Vuex.Store({
     //3:Game Over
     gameState: 1,
     animatingCharacters: false,
+    watchAnswers: false,
     totalMatchTime: 50,
     currentPlayerIndex: 0,
     currentQuestion: {
@@ -254,8 +255,8 @@ export default new Vuex.Store({
       question: null,
       moves: [
         {
-          low: 1,
-          high: 10
+          low: 0,
+          high: 1000000
         }
       ]
     },
@@ -286,7 +287,8 @@ export default new Vuex.Store({
           if (typeof temp !== 'undefined') {
               return temp
           }
-          else return state.moveHistory.moves[state.moveHistory.moves.length - 2].low
+          else if (typeof state.moveHistory.moves[state.moveHistory.moves.length - 2].low !== 'undefined') return state.moveHistory.moves[state.moveHistory.moves.length - 2].low
+        else return 0
 
       },
       max : (state,getters) => {
@@ -294,7 +296,8 @@ export default new Vuex.Store({
           if (typeof temp !== 'undefined') {
               return temp
           }
-          else return state.moveHistory.moves[state.moveHistory.moves.length - 2].high
+          else if (typeof state.moveHistory.moves[state.moveHistory.moves.length - 2].high !== 'undefined') return state.moveHistory.moves[state.moveHistory.moves.length - 2].high
+        else return 999
       },
 
     currentPlayer: state => {
@@ -307,13 +310,16 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async loadQuestions({ commit, dispatch },amount) {
-        axios.get('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions?amount=1')
+    async loadQuestions({ commit, dispatch, state },amount) {
+        axios.get('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions?amount=10')
             .then(r => r.data).then(loadedQuestions => {
                 commit('setQuestions', loadedQuestions)
             }).then(()=>{
           dispatch('assignQuestion',0)
-        }).catch(error => { console.log(error) })
+        }).then(()=>
+            state.wantAnswers = true
+        ).catch(error => { console.log(error) })
+
     },
     changeGameState({ state }, context) {
       state.gameState = context;

@@ -33,7 +33,7 @@ export default {
 
   data: function() {
     return {
-      guess: 0,
+      guess: 1,
       selected: "",
       marks: val => {
         let diff = this.options.max - this.options.min;
@@ -89,17 +89,38 @@ export default {
       if(this.$store.state.animatingCharacters===false && this.isPlayer)
         return true
       else return false
+    },
+    currentQuestion() {
+      return this.$store.state.currentQuestion
+    },
+    wantAnswers() {
+      return this.$store.state.wantAnswers
     }
   },
   //Körs när moves arrayen uppdateras
   watch :  {
     min() {
-      this.updateValue()
-      console.log("min ändras och är" +this.min)
+      if (this.$store.state.wantAnswers) {
+        console.log("min ändras och är" + this.min)
+        this.updateValue()
+
+      }
     },
     max() {
+      if (this.$store.state.wantAnswers) {
+        console.log("max ändras och är" + this.max)
+        this.updateValue()
+
+      }
+
+    },
+    currentQuestion() {
+      console.log("currentquestion ändras")
+      this.updateValueForSubmit
+    },
+    wantAnswers() {
+      console.log("want answer watcher körs")
       this.updateValue()
-      console.log("max ändras och är" + this.max)
     }
   },
   methods: {
@@ -112,26 +133,28 @@ export default {
     },
     //Sets guess to average rounded up to nearest int
     //Kollar så att det finns 2 eller mer platser kvar, annars sker ingen uppdatering.
-    updateValue() {
-
-      if (this.max + 1 - (this.min - 1) > 1) {
+   async updateValue() {
+      console.log("updatevalue körs och this.min och this.max : " + this.min + " " + this.max)
+      if (this.max + 1 - (this.min - 1) > 1 && this.$store.state.wantAnswers) {
         this.options.max = this.max;
         this.options.min = this.min;
         let temp = this.lastMove;
         //If satsen uppdaterar slidern och sen sätter värdet
-        if (typeof temp.guess !='undefined') {
-          if (temp.guess<=this.options.max-1)
-          this.guess = temp.guess+1
-          else
-            this.guess = temp.guess-1
+        if (typeof temp.guess != "undefined") {
+          if (temp.guess<=this.options.max-1) {
+            this.guess = temp.guess + 1
+          }
+          else {
+            this.guess = temp.guess - 1
+          }
 
           this.guess = temp.guess
 
         }
-        if (this.$store.getters.currentPlayer.isPlayer) {
-          this.$nextTick(() => {
-            this.$refs.slider.setValue(
-                    Math.round(this.min + (this.max - this.min) / 2)
+        else {
+          await this.$nextTick(() => {
+            this.guess = this.guess = Math.round(
+                    this.options.min + (this.options.max - this.options.min) / 2
             );
           });
         }
@@ -150,10 +173,7 @@ export default {
         this.options.max = this.max;
         if (
           this.guess <
-          this.$store.state.moveHistory.moves[
-            this.$store.state.moveHistory.moves.length - 2
-          ].max -
-            1
+          this.max -1
         )
           this.guess++;
         else this.guess--;
@@ -166,11 +186,8 @@ export default {
       } else if (this.max < this.options.max) {
         this.options.min = this.min;
         if (
-          this.guess <
-          this.$store.state.moveHistory.moves[
-            this.$store.state.moveHistory.moves.length - 2
-          ].max -
-            1
+                this.guess <
+                this.max -1
         )
           this.guess++;
         else this.guess--;
