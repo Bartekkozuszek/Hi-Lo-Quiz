@@ -1,74 +1,115 @@
 <template>
-    <header class="header">
-        <div id="title">
-             <select id="subject">
-                    <option value="22">{{settings}}</option>
-					</select><h1>{{banner}}</h1><button class="select-btn" id="sbt1">{{newGame}}</button>
-        </div>
-    </header>
+  <header class="header">
+    <div id="title"><h1>Hi-Lo-Pros</h1></div>
+    <div class="flex-container">
+      <div>
+        <button class="select-btn" id="sbt1">{{ user }}</button>
+      </div>
+      <div>
+        <select id="subject" v-on:change="goToLink">
+          <option>{{ settings }}</option>
+          <option v-bind:value="start.value">{{ start.name }}</option>
+          <option v-bind:value="rules.value">{{ rules.name }}</option>
+        </select>
+      </div>
+
+      <div>
+        <button class="select-btn" id="sbt1">
+          <router-link to="/Login">Login</router-link>
+        </button>
+      </div>
+    </div>
+  </header>
 </template>
 
 <script>
 export default {
   name: "Menu",
   props: {
+    user: String,
     settings: String,
-    banner: String,
-	newGame: String
+    newGame: String
+  },
+  data: function() {
+    return {
+      rules: {
+        name: "rules",
+        value: 2
+      },
+      start: {
+        name: "startpage",
+        value: 1
+      }
+    };
+  },
+  methods: {
+    goToLink: function(event) {
+      if (event.target.value == 1) {
+        this.$router.push({ path: "/" });
+      } else if (event.target.value == 2) {
+        this.$router.push({ path: "/rules" });
+      }
+    }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-header{
-background: pink;
+header {
+  text-align: center;
+}
 
-	padding: 1vh;
-	text-align: center;
-
-	}
-	
 h1 {
-	color: WHITE;
-	font-size: 3vh;
-	display: inline;
-	padding: 1vh;
-
-	margin-top:1vh;
-	margin-left:5vh;
-	}
+  color: green;
+  font-size: 4vh;
+  display: inline;
+}
 
 #title {
-	margin-left: auto;
-	margin-right: auto;
-	display: inline;
-	color: WHITE;
-	font-family: 'Days One', sans-serif;
-	font-size: 3vh;
-	}
+  background-color: yellow;
+  font-family: "Days One", sans-serif;
+  font-size: 3vh;
+}
 
 select {
-	color: WHITE;
-	font-size: 3vh;
-	display: inline;
-	padding: 1vh;
-	background-color:purple;
-	margin-top:1vh;
-	margin-left:5vh;
-	text-decoration: none;
-	border: none;
-	}
+  color: WHITE;
+  font-size: 3vh;
+  display: inline;
+  padding: 1vh;
+  background-color: purple;
+  max-height: 5.4vh;
 
+  text-decoration: none;
+  border: none;
+}
+select:hover {
+  background-color: aqua;
+}
 .select-btn {
-	color: WHITE;
-	font-size: 3vh;
-	display: inline;
-	padding: 1vh;
-	background-color:purple;
-	margin-top:1vh;
-	margin-left:5vh;
-	text-decoration: none;
-	border: none;
-	}
+  max-height: 5.4vh;
+  color: WHITE;
+  font-size: 3vh;
+  display: inline;
+  padding: 1vh;
+  background-color: purple;
+
+  text-decoration: none;
+  border: none;
+}
+
+button:hover {
+  background-color: aqua;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  background-color: pink;
+  justify-content: space-between;
+}
+
+.flex-container > div {
+  text-align: center;
+}
 </style>
