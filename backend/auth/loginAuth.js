@@ -10,7 +10,7 @@ module.exports = async function(req, res, next) {
   } else {
     console.log('access_token found')
     user = jwt.verify(cookie, config.JWT_SECRET)
-    res.json({ msg: 'allready logged in as: ' + user.userName + ' (' + user.role + ')' })
+    res.json({ msg: 'already logged in as: ' + user.userName + ' (' + user.role + ')' })
     return
   }
 }

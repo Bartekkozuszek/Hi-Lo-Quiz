@@ -45,12 +45,23 @@ router.post('/login', function(req, res) {
             expires: new Date(Date.now() + 900000),
             httpOnly: true
           })
-        res.status(202).json({msg: 'password match'})
+        res.status(202).json({msg: 'Logged in as: ' + user.userName})
       }else{
         res.status(401).json({msg: 'no password match'})
       }
     })
   })
+})
+
+router.get('/logout', function(req, res){
+    let test = jwt.sign({},
+    'secret'
+  )
+  res.cookie('access_token', test,{
+    expires: new Date(Date.now() -10000),
+    httpOnly: true
+  })
+  res.json({msg: 'logged out'})
 })
 
 module.exports = router
