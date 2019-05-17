@@ -1,6 +1,10 @@
 <template>
-  <div class="thisDiv":style="{'background-image':
-   `url(${require('../../public/images/background2fixed.jpg')})`}">
+  <div
+    class="thisDiv"
+    :style="{
+      'background-image': `url(${require('../../public/images/background2fixed.jpg')})`
+    }"
+  >
     <question-display></question-display>
     <GameTable></GameTable>
     <answer></answer>
@@ -24,10 +28,9 @@ export default {
 </script>
 
 <style>
-
-  .thisDiv{
-    height:87vh;
-    background-position: center;
-    background-size: 310vh;
-  }
+.thisDiv {
+  height: 87vh;
+  background-position: center;
+  background-size: 310vh;
+}
 </style>

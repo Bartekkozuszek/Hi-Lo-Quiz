@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Menu user="guest" settings="Options"/>
     <setupgame v-if="gameState === 1"></setupgame>
     <game v-else-if="gameState === 2"></game>
     <WinScreen v-else-if="gameState === 3"></WinScreen>
@@ -9,24 +8,21 @@
 
 <script>
 // @ is an alias to /src
-import Menu from "@/components/Menu.vue";
-    import Game from "./Game";
-    import Setupgame from "./Setup-game.vue";
-    import WinScreen from "./Win-screen";
-
+import Game from "./Game";
+import Setupgame from "./Setup-game.vue";
+import WinScreen from "./Win-screen";
 export default {
   name: "Home",
   components: {
     Game,
-      Menu,
     WinScreen,
     Setupgame
-        },
-        computed: {
-            gameState() {
-                return this.$store.state.gameState
-            }
-        }
+  },
+  computed: {
+    gameState() {
+      return this.$store.state.gameState;
+    }
+  }
 };
 </script>
 
