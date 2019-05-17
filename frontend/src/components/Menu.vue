@@ -1,6 +1,5 @@
 <template>
   <header class="header">
-    <div id="title"><h1>Hi-Lo-Pros</h1></div>
     <div class="flex-container">
       <div>
         <button class="select-btn" id="sbt1">{{ user }}</button>
