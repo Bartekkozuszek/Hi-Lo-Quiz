@@ -1,18 +1,18 @@
 
 <template>
-  
+  <div id="wrap">
 
-<div class="flex-container">
+<div class="flex-container">	
+		<Bot v-for='loadedBots, index in loadedBots' 
+		v-bind:key='index' v-bind:bot='loadedBots' 
+		v-bind:index='index'
+		/>
 
-		
-		<Bot v-for="value in count" />
-		
-		
-		
-		
 		</div>
-
- 
+ <button class="select-btn" id="sbt1"> 
+ <router-link to="/"><h1>DONE!</h1></router-link>
+        </button>
+ </div>
 </template>
 
 <script>
@@ -23,20 +23,28 @@ export default {
     user: String,
     settings: String,
 	newGame: String
-  },
-   data: function () {
-  return {
-    count:[0,0,0,0,0,0]
-  }
-},
-    components: {
-    Bot
-  }
-};
+
+	},
+    computed: {
+        //Fetch values from vuex
+		loadedBots: function() {
+            return this.$store.state.loadedBots
+        }}
+		,
+	components: {
+		Bot
+	  
+	}
+}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#wrap{
+background-color: orange;
+}
+
 selectbots{
 
 
@@ -80,15 +88,18 @@ select {
 	display: inline;
 	padding: 1vh;
 	background-color:purple;
-
+min-height: 20vh;
 	text-decoration: none;
 	border: none;
+	width: 100%;
 	}
+
+
 .flex-container {
-  display: flex;
+
   justify-content: center;
   background-color: green;
-padding-bottom:50vh;
+min-height: 75vh;
   text-align: center;
 	width:50%;
 	margin:auto;
