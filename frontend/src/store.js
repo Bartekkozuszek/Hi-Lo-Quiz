@@ -18,6 +18,7 @@ export default new Vuex.Store({
     //3:Game Over
     gameState: 1,
     animatingCharacters: false,
+    wantAnswers: false,
     totalMatchTime: 50,
     currentPlayerIndex: 0,
     currentQuestion: {
@@ -254,8 +255,8 @@ export default new Vuex.Store({
       question: null,
       moves: [
         {
-          low: 1,
-          high: 10
+          low: 0,
+          high: 200
         }
       ]
     },
@@ -281,21 +282,28 @@ export default new Vuex.Store({
     lastMove: state => {
       return state.moveHistory.moves[state.moveHistory.moves.length - 1];
     },
-      min : (state,getters) => {
-          let temp = getters.lastMove.low;
-          if (typeof temp !== 'undefined') {
-              return temp
-          }
-          else return state.moveHistory.moves[state.moveHistory.moves.length - 2].low
-
-      },
-      max : (state,getters) => {
-          let temp = getters.lastMove.high;
-          if (typeof temp !== 'undefined') {
-              return temp
-          }
-          else return state.moveHistory.moves[state.moveHistory.moves.length - 2].high
-      },
+    min: (state, getters) => {
+      let temp = getters.lastMove.low;
+      if (typeof temp !== "undefined") {
+        return temp;
+      } else if (
+        typeof state.moveHistory.moves[state.moveHistory.moves.length - 2]
+          .low !== "undefined"
+      )
+        return state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
+      else return 0;
+    },
+    max: (state, getters) => {
+      let temp = getters.lastMove.high;
+      if (typeof temp !== "undefined") {
+        return temp;
+      } else if (
+        typeof state.moveHistory.moves[state.moveHistory.moves.length - 2]
+          .high !== "undefined"
+      )
+        return state.moveHistory.moves[state.moveHistory.moves.length - 2].high;
+      else return 999;
+    },
 
     currentPlayer: state => {
       return state.sessionPlayersArray[state.currentPlayerIndex];
@@ -303,17 +311,34 @@ export default new Vuex.Store({
   },
   mutations: {
     setQuestions(state, loadedQuestions) {
-        state.loadedQuestions = loadedQuestions
+      state.loadedQuestions = loadedQuestions;
     }
   },
   actions: {
-    async loadQuestions({ commit, dispatch },amount) {
-        axios.get('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions?amount=1')
-            .then(r => r.data).then(loadedQuestions => {
-                commit('setQuestions', loadedQuestions)
-            }).then(()=>{
-          dispatch('assignQuestion',0)
-        }).catch(error => { console.log(error) })
+    async loadQuestions({ commit, dispatch, state }, amount) {
+      state.wantAnswers = false;
+      axios
+        .get(
+          "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions?amount=20"
+        )
+        .then(r => r.data)
+        .then(loadedQuestions => {
+          commit("setQuestions", loadedQuestions);
+        })
+        .then(() => {
+          dispatch("assignQuestion", 0);
+        })
+        .then(() => {
+          state.wantAnswers = true;
+          console.log(
+            "wantanswer ändras till true från loadQuestions " +
+              state.wantAnswers
+          );
+        })
+        .catch(error => {
+          console.log(error);
+          state.wantAnswers = false;
+        });
     },
     changeGameState({ state }, context) {
       state.gameState = context;
@@ -337,14 +362,16 @@ export default new Vuex.Store({
         state.sessionPlayersArray.length
       );
     },
-   assignQuestion({ state,dispatch,commit }, index) {
+    assignQuestion({ state, dispatch, commit }, index) {
       state.currentPlayerIndex = 0;
       state.currentQuestion = state.loadedQuestions[index];
       state.moveHistory.question = state.loadedQuestions[index].question;
-      state.moveHistory.moves=[{
-        low: state.currentQuestion.low,
-        high: state.currentQuestion.high
-      }];
+      state.moveHistory.moves = [
+        {
+          low: state.currentQuestion.low,
+          high: state.currentQuestion.high
+        }
+      ];
     },
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
@@ -394,23 +421,21 @@ export default new Vuex.Store({
           ) {
             state.currentPlayerIndex = 0;
             state.animatingCharacters = false;
-
           } else {
             state.currentPlayerIndex++;
             state.animatingCharacters = false;
           }
-            // console.log(getters.currentPlayer.isPlayer);
-            //Obs, Går inte att skriva !getters.currentPlayer.isPlayer av någon anledning
-            if (getters.currentPlayer.isPlayer === false) {
-              console.log("jag körs inte va??");
-              let botMove = getters.currentPlayer.move(state.moveHistory);
-              dispatch("addMove", ({ state, getters }, botMove));
-              setTimeout(function() {
-                //recursive
-                dispatch("turnFinished", { state, getters, dispatch });
-              }, getters.lastMove.timeTook);
-            }
-
+          // console.log(getters.currentPlayer.isPlayer);
+          //Obs, Går inte att skriva !getters.currentPlayer.isPlayer av någon anledning
+          if (getters.currentPlayer.isPlayer === false) {
+            console.log("jag körs inte va??");
+            let botMove = getters.currentPlayer.move(state.moveHistory);
+            dispatch("addMove", ({ state, getters }, botMove));
+            setTimeout(function() {
+              //recursive
+              dispatch("turnFinished", { state, getters, dispatch });
+            }, getters.lastMove.timeTook);
+          }
         }, 1000);
       }
     },
