@@ -9,7 +9,8 @@ module.exports = function(req, res, next) {
     //No access_token cookie = continue as guest
     req.user = {
       userName: 'Guest',
-      isAdmin: false
+      isAdmin: false,
+      role: 'Guest'
     }
     console.log('No cookie access_token found')
   } else {
@@ -18,7 +19,8 @@ module.exports = function(req, res, next) {
     req.user = {
       id: user.id,
       userName: user.userName,
-      isAdmin: user.isAdmin
+      isAdmin: user.isAdmin,
+      role: user.role
     }
     console.log('Cookie access_token=' + cookie)
   }
