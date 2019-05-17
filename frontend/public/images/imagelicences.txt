@@ -14,6 +14,7 @@ background2.jpg https://pixabay.com/illustrations/background-fantasy-landscape-t
 background2fixed.jpg https://pixabay.com/illustrations/background-fantasy-landscape-tree-3607469/
 header1.png https://pixabay.com/illustrations/background-fantasy-landscape-tree-3607469/
 btnwood.jpg https://pixabay.com/photos/wood-boards-texture-wooden-brown-2045380/
+bot.png https://pixabay.com/vectors/android-artificial-doodle-robot-159109/
 
 
 
