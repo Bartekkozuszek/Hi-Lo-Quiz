@@ -5,7 +5,7 @@ import avatar2 from "../public/images/avatar2test.png";
 import avatar3 from "../public/images/avatar3test.png";
 import axios from "axios";
 
-Vue.use(Vuex);
+Vue.use(Vuex, axios);
 
 export default new Vuex.Store({
   state: {
@@ -273,9 +273,13 @@ export default new Vuex.Store({
         image: avatar1,
         timeleft: 1337 //totalMatchTime,
       }
-    ]
+        ],
+    isLoggedIn: false
   },
-  getters: {
+    getters: {
+        isLoggedIn: state => {
+            return state.isLoggedIn;
+        },
     timeOutMultiplier: state => {
       return state.timeoutMultiplier;
     },
@@ -312,7 +316,11 @@ export default new Vuex.Store({
   mutations: {
     setQuestions(state, loadedQuestions) {
       state.loadedQuestions = loadedQuestions;
-    }
+      },
+      login(state, payload) {
+          state.isLoggedIn = true;
+
+      }
   },
   actions: {
     async loadQuestions({ commit, dispatch, state }, amount) {
@@ -447,6 +455,19 @@ export default new Vuex.Store({
       const root = document.documentElement;
 
       root.style.setProperty("--animationTime", state.timeoutMultiplier);
-    }
+      },
+      async login({ commit }, payload) {
+          await axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/login', {
+              userName: payload.user,
+              password: payload.password
+          })
+              .then((resp) => {
+                  commit('login', payload)
+                  console.log(resp.data.msg)
+              }).catch((err) => console.log(err))
+      },
+      logout({ state }) {
+          state.isLoggedIn = false
+      }
   }
 });
