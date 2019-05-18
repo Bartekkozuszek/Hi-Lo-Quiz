@@ -1,15 +1,27 @@
 <template>
   <div id="app">
-    <Menu user="guest" settings="Options" />
+    <Menu :user="user" settings="Options"/>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Menu from "@/components/Menu.vue";
+    import Menu from "@/components/Menu.vue";
+
 export default {
   name: "App",
-  components: { Menu },
+        components: { Menu },
+  computed: {
+            isLoggedIn() {
+                 return this.$store.getters.isLoggedIn
+      },
+      user() {
+          //when someone logs in, their username is displayed instead of guest
+          if (this.isLoggedIn) {
+              return this.$store.getters.user
+          } else return 'guest'
+      }
+        },
   created() {
     this.$store.dispatch("toggleBotChosen", 0);
     this.$store.dispatch("toggleBotChosen", 1);

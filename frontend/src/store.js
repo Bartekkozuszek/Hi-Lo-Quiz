@@ -274,7 +274,8 @@ export default new Vuex.Store({
         timeleft: 1337 //totalMatchTime,
       }
         ],
-    isLoggedIn: false
+        isLoggedIn: false,
+    user: 'guest'
   },
     getters: {
         isLoggedIn: state => {
@@ -311,7 +312,10 @@ export default new Vuex.Store({
 
     currentPlayer: state => {
       return state.sessionPlayersArray[state.currentPlayerIndex];
-    }
+        },
+        user: state => {
+            return state.user
+        }
   },
   mutations: {
     setQuestions(state, loadedQuestions) {
@@ -319,7 +323,12 @@ export default new Vuex.Store({
       },
       login(state, payload) {
           state.isLoggedIn = true;
-
+          state.currentUser.name = payload.user
+          state.user = payload.user
+      },
+      logout(state) {
+          state.isLoggedIn = false
+          state.gameState = 1
       }
   },
   actions: {
@@ -466,8 +475,8 @@ export default new Vuex.Store({
                   console.log(resp.data.msg)
               }).catch((err) => console.log(err))
       },
-      logout({ state }) {
-          state.isLoggedIn = false
+      logout({ commit }) {
+          commit('logout')
       }
   }
 });

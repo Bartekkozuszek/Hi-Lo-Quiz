@@ -14,7 +14,7 @@
 
       <div>
         <button class="select-btn" id="sbt1">
-          <router-link to="/login" v-if="!isLoggedIn">Login</router-link><span v-if="isLoggedIn"> <a @click="logout">Logout</a></span>
+          <router-link to="/login" v-if="!isLoggedIn">Login</router-link><span v-if="isLoggedIn" @click="logout">Logout</span>
         </button>
       </div>
     </div>
