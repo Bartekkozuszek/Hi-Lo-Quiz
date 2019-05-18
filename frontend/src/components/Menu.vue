@@ -14,7 +14,7 @@
 
       <div>
         <button class="select-btn" id="sbt1">
-          <router-link to="/login" v-if="!isLoggedIn">Login</router-link><span v-if="isLoggedIn" @click="logout">Logout</span>
+          <router-link class="login" to="/login" v-if="!isLoggedIn">Login</router-link><span v-if="isLoggedIn" @click="logout">Logout</span>
         </button>
       </div>
     </div>
@@ -120,5 +120,9 @@ button:hover {
 
 .flex-container > div {
   text-align: center;
+}
+
+.login {
+    color: white
 }
 </style>

@@ -275,7 +275,7 @@ export default new Vuex.Store({
       }
         ],
         isLoggedIn: false,
-    user: 'guest'
+        user: 'guest'
   },
     getters: {
         isLoggedIn: state => {
@@ -322,12 +322,13 @@ export default new Vuex.Store({
       state.loadedQuestions = loadedQuestions;
       },
       login(state, payload) {
-          state.isLoggedIn = true;
+          state.isLoggedIn = true
           state.currentUser.name = payload.user
           state.user = payload.user
       },
       logout(state) {
           state.isLoggedIn = false
+          state.currentUser.name = 'guest'
           state.gameState = 1
       }
   },

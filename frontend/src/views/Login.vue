@@ -7,7 +7,7 @@
             <label>Password:</label><br />
             <input required type="password" v-model="password" placeholder="Type your password here" /><br />
             <footer>
-                <button>Cancel</button>
+                <button @click="goBack">Cancel</button>
                 <button type="submit">OK</button>
             </footer>
         </form>
@@ -19,7 +19,8 @@
         data() {
             return {
                 user: "",
-                password: ""
+                password: "",
+                isValid: true
             }
         },
         computed: {
@@ -35,13 +36,26 @@
                     .then(() => {
                         if (this.isLoggedIn) this.$router.push('/')
                         else {
-                            console.log('wrong')
+                            console.log('wrong') //to be replaced with a modal or notification with appropriate message
                         }
                     })
                     .catch(err => console.log(err))
+            },
+            goBack() {
+                this.$router.push('/')
             }
         }
     }
 </script>
 
-<style></style>
+<style scoped>
+    input{
+        width: 20em;
+        height: 2em;
+        margin: 1em 2em;
+    }
+
+    footer {
+        margin: 3vw
+    }
+</style>
