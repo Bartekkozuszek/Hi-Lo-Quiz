@@ -1,7 +1,17 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <div class="answer-container">
-    <div class="answer-slider-container">
-      <vue-slider ref="slider" v-model="guess" v-bind="options" :marks="marks">
+  <div class="answer-container" v-if="wantAnswers">
+    <div
+      class="answer-slider-container"
+      v-bind:class="{ boxShadowClass: isPlayer }"
+    >
+      <vue-slider
+        ref="slider"
+        v-model="guess"
+        :marks="marksArray"
+        v-bind="options"
+        :clickable="showSubmit"
+        :key="componentKey"
+      >
         <template v-slot:mark="{ pos, label }">
           <div class="custom-mark" :style="{ left: `${pos}%` }">
             {{ label }}
@@ -13,7 +23,14 @@
     <div>Make your choice!</div>
     <br />
     <input :value="guess" />
-    <button id="submit-button" v-on:click="submitAnswer">Submit</button>
+    <button
+      v-if="showSubmit"
+      id="submit-button"
+      :marks="marks"
+      v-on:click="submitAnswer"
+    >
+      Submit
+    </button>
     Assign new Question:
     <select v-model="selected" @change="assignQuestion">
       <option v-for="(o, index) in loadedQuestions">{{ o.question }}</option>
@@ -22,9 +39,10 @@
 </template>
 
 <script>
-import VueSlider from "vue-slider-component";
-import "vue-slider-component/theme/default.css";
-export default {
+  import VueSlider from "vue-slider-component";
+  import "vue-slider-component/theme/material.css";
+
+  export default {
   name: "Answer",
   components: {
     VueSlider
@@ -32,63 +50,90 @@ export default {
 
   data: function() {
     return {
-      guess: 0,
+      guess: 1,
+      componentKey: 0,
       selected: "",
-      marks: val => {
-        let diff = this.options.max - this.options.min;
-        if (diff <= 20) return val;
-        else if (diff <= 40) return val % 2 === 0;
-        else if (diff <= 80) return val % 4 === 0;
-        else if (diff <= 200) return val % 10 === 0;
-        else if (diff <= 400) return val % 40 === 0;
-        else if (diff <= 1000) return val % 100 === 0;
-        else return (val % diff) / (diff / 10) === 0;
-      },
+      marks: [],
       options: {
         dotSize: 20,
         width: "90%",
         height: 5,
         direction: "ltr",
         disabled: false,
-        clickable: true,
-        duration: 0.2,
-        lazy: false
+        clickable: this.showSubmit,
+        duration: 0.5,
+        lazy: false,
+        max: 100,
+        min: 0,
+        silent: true
       }
     };
   },
   computed: {
     min() {
-      return this.$store.getters.min
+      return this.$store.getters.min;
     },
     max() {
-      return this.$store.getters.max
+      return this.$store.getters.max;
+    },
+    marksArray() {
+      let diff = Math.round(this.options.max - this.options.min);
+      return [
+        this.options.min,
+        Math.round(this.options.min + diff * 0.25),
+        Math.round(this.options.min + diff / 2),
+        Math.round(this.options.min + diff * 0.75),
+        this.options.max
+      ];
     },
     loadedQuestions() {
       return this.$store.state.loadedQuestions;
     },
     selectedIndex() {
-      let pos = this.loadedQuestions
-        .map(function(e) {
-          return e.question;
-        })
-        .indexOf(this.selected);
-      return pos;
+      return this.loadedQuestions
+              .map(function (e) {
+                return e.question;
+              })
+              .indexOf(this.selected);
     },
     moves() {
-      return this.$store.state.moveHistory.moves
+      return this.$store.state.moveHistory.moves;
     },
     lastMove() {
-      return this.$store.getters.lastMove    }
+      return this.$store.getters.lastMove;
+    },
+
+    isPlayer() {
+      document.documentElement.style.setProperty(
+        "--glowOn",
+        "0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+      );
+      return this.$store.getters.currentPlayer.isPlayer;
+    },
+    showSubmit() {
+      return !!(this.$store.state.animatingCharacters === false && this.isPlayer);
+    },
+    currentQuestion() {
+      return this.$store.state.currentQuestion;
+    },
+    wantAnswers() {
+      return this.$store.state.wantAnswers;
+    },
+    firstRound() {
+      return this.$store.state.moveHistory.moves.length < 2;
+    }
   },
   //Körs när moves arrayen uppdateras
-  watch :  {
-    min() {
-      this.updateValue()
-      console.log("min ändras och är" +this.min)
+  watch: {
+    wantAnswers() {
+      if (this.wantAnswers === true && this.firstRound === true)
+        this.updateValueForSubmit();
     },
-    max() {
-      this.updateValue()
-      console.log("max ändras och är" + this.max)
+
+    lastMove() {
+      if (this.$store.state.wantAnswers && this.firstRound === false) {
+        this.updateValue();
+      }
     }
   },
   methods: {
@@ -96,33 +141,40 @@ export default {
       let newMove = { guess: this.guess, timeTook: 10 };
       this.$store
         .dispatch("addMove", newMove)
-        .then(this.$store.dispatch("turnFinished"))
-        .then(this.updateValue);
+        .then(() => this.$store.dispatch("turnFinished"))
+        .then(() => this.updateValue);
     },
+    forceRerender() {
+      this.componentKey += 1;
+    },
+    resetGuessToMiddle() {
+      this.guess = Math.round(
+        this.options.min + (this.options.max - this.options.min) / 2
+      );
+    },
+
     //Sets guess to average rounded up to nearest int
     //Kollar så att det finns 2 eller mer platser kvar, annars sker ingen uppdatering.
     updateValue() {
+      this.resetGuessToMiddle();
+      this.forceRerender();
       if (this.max + 1 - (this.min - 1) > 1) {
-        this.options.max = this.max;
-        this.options.min = this.min;
+        this.options.max = this.max - 1;
+        this.forceRerender();
+        this.options.min = this.min + 1;
+        this.forceRerender();
         let temp = this.lastMove;
         //If satsen uppdaterar slidern och sen sätter värdet
-        if (typeof temp.guess !='undefined') {
-          if (temp.guess<=this.options.max-1)
-          this.guess = temp.guess+1
-          else
-            this.guess = temp.guess-1
-
-          this.guess = temp.guess
-
+        if (typeof temp.guess != "undefined") {
+          this.guess = temp.guess;
+        } else {
+          this.guess = Math.round(
+            this.options.min + (this.options.max - this.options.min) / 2
+          );
         }
-        if (this.$store.getters.currentPlayer.isPlayer) {
-          this.$nextTick(() => {
-            this.$refs.slider.setValue(
-                    Math.round(this.min + (this.max - this.min) / 2)
-            );
-          });
-        }
+        this.forceRerender();
+        this.marks = this.marksArray;
+        this.forceRerender();
       }
     },
 
@@ -133,73 +185,58 @@ export default {
     //4. När den är klar med detta sätt min till uppdaterade min
     //5. Uppdaterar guess med-1 för att uppdatera modellen
     //6. Sätter guess till mitten mellan max och min.
-    async updateValueForSubmit() {
+    updateValueForSubmit() {
       if (this.max >= this.options.max) {
         this.options.max = this.max;
-        if (
-          this.guess <
-          this.$store.state.moveHistory.moves[
-            this.$store.state.moveHistory.moves.length - 2
-          ].max -
-            1
-        )
-          this.guess++;
-        else this.guess--;
-        await this.$nextTick(() => {
-          this.guess = this.options.max - 1;
-        });
+        this.forceRerender();
+        this.guess = this.options.max - 1;
+        this.forceRerender();
         this.options.min = this.min;
-        if (this.guess < this.options.max - 1) this.guess++;
-        else this.guess--;
+        this.forceRerender();
       } else if (this.max < this.options.max) {
         this.options.min = this.min;
-        if (
-          this.guess <
-          this.$store.state.moveHistory.moves[
-            this.$store.state.moveHistory.moves.length - 2
-          ].max -
-            1
-        )
-          this.guess++;
-        else this.guess--;
-        await this.$nextTick(() => {
-          this.guess = this.options.min + 1;
-        });
+        this.forceRerender();
+
+        this.guess = this.options.min + 1;
+        this.forceRerender();
         this.options.max = this.max;
-        if (this.guess < this.options.max - 1) this.guess++;
-        else this.guess--;
+        this.forceRerender();
       }
+
       //Här sätts det riktiga värdet
-      await this.$nextTick(() => {
-        this.guess = this.guess = Math.round(
-          this.options.min + (this.options.max - this.options.min) / 2
-        );
-      });
+      this.guess = Math.round(
+        this.options.min + (this.options.max - this.options.min) / 2
+      );
+
+      this.forceRerender();
+
+      this.marks = this.marksArray;
+      this.forceRerender();
     },
     assignQuestion() {
-      this.$store
-        .dispatch("assignQuestion", this.selectedIndex)
-        .then(this.updateValueForSubmit);
+      this.$store.dispatch("assignQuestion", this.selectedIndex).then(() => {
+        this.updateValueForSubmit;
+      });
     }
-  },
-  mounted() {
-    this.updateValue();
-    //this.updateMarks()
   }
 };
 </script>
 
 <style>
-
-  .answer-container {
-    margin-top: 50px;
-  }
+.answer-container {
+  margin-top: 100px;
+}
 
 .answer-slider-container {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 30px;
+  background-image: url("../../public/images/btnwood.jpg");
+}
+
+.boxShadowClass {
+  box-shadow: 0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #submit-button {
@@ -207,10 +244,12 @@ export default {
 }
 
 .custom-mark {
-  color: crimson;
+  color: beige;
+  font-weight: bold;
   position: absolute;
   top: 15px;
   transform: translateX(-50%);
   white-space: nowrap;
 }
+
 </style>
