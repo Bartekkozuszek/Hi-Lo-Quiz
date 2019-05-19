@@ -348,10 +348,6 @@ export default new Vuex.Store({
         })
         .then(() => {
           state.wantAnswers = true;
-          console.log(
-            "wantanswer ändras till true från loadQuestions " +
-              state.wantAnswers
-          );
         })
         .catch(error => {
           console.log(error);
@@ -446,7 +442,6 @@ export default new Vuex.Store({
           // console.log(getters.currentPlayer.isPlayer);
           //Obs, Går inte att skriva !getters.currentPlayer.isPlayer av någon anledning
           if (getters.currentPlayer.isPlayer === false) {
-            console.log("jag körs inte va??");
             let botMove = getters.currentPlayer.move(state.moveHistory);
             dispatch("addMove", ({ state, getters }, botMove));
             setTimeout(function() {
