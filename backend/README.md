@@ -24,9 +24,11 @@ http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/question
 - Returns all questions
 - If guest or non-admin, only questions that are approved will be returned
 - Valid address parameters are:
-  - amount
-  - category
-  - author
+   - amount : number
+   - category : string
+   - author : string
+   - userSubmitted : bool
+   - reviewedBy : string
 
 ---
 
@@ -68,9 +70,10 @@ http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/question
 - optional fields
   - high : number
   - low : number
+  - category : string
   - learnMore : string
-  - userSubmitted  : bool
   - imageUrl : string
+  - author : string
 
 ---
 
@@ -94,5 +97,23 @@ http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/question
 - Id of the question you want to edit
 - Admin can edit any field
 - Include the field you want to set a new value on
+
+---
+
+##### DELETE /api/v1/questions/id
+
+- Delete question based on id
+
+---
+
+##### GET /api/v1/questions/categories
+
+- Returns all categories
+
+---
+
+##### GET /api/v1/questions/authors
+
+- Returns all authors
 
 ---
