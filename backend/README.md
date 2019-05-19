@@ -6,7 +6,7 @@ Web server with "rest" api for high-low questions.
 
 http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions
 
-### Api Documentation
+## Api Documentation Questions
 
 > **WARNING:** address parameters are case sensitive atm
 
@@ -115,5 +115,38 @@ http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/question
 ##### GET /api/v1/questions/authors
 
 - Returns all authors
+
+---
+
+## Api Documentation Users
+
+##### GET /api/v1/users
+
+- Returns all users
+
+---
+
+##### POST /api/v1/users
+
+###### Examples
+
+```
+/api/v1/users/
+{
+  "userName": "Foo",
+  "firstName": "Ccc",
+  "lastName": "Ddd",
+  "password": "mmmm",
+  "isAdmin": false
+}
+```
+
+- Add user
+
+---
+
+##### DELETE /api/v1/users/:id
+
+- Delete user
 
 ---
