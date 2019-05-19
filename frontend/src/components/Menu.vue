@@ -14,7 +14,7 @@
 
       <div>
         <button class="select-btn" id="sbt1">
-          <router-link to="/Login">Login</router-link>
+          <router-link class="login" to="/login" v-if="!isLoggedIn">Login</router-link><span v-if="isLoggedIn" @click="logout">Logout</span>
         </button>
       </div>
     </div>
@@ -40,7 +40,12 @@ export default {
         value: 1
       }
     };
-  },
+        },
+        computed: {
+            isLoggedIn() {
+                return this.$store.getters.isLoggedIn
+            }
+        },
   methods: {
     goToLink: function(event) {
       if (event.target.value == 1) {
@@ -48,7 +53,12 @@ export default {
       } else if (event.target.value == 2) {
         this.$router.push({ path: "/rules" });
       }
-    }
+      },
+      logout() {
+          this.$store.dispatch('logout').then(() => {
+              this.$router.push("/login")
+          })
+      }
   }
 };
 </script>
@@ -110,5 +120,9 @@ button:hover {
 
 .flex-container > div {
   text-align: center;
+}
+
+.login {
+    color: white
 }
 </style>

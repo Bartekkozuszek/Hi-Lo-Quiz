@@ -25,10 +25,13 @@ app.use(function(req, res, next) {
 var log = function(entry) {
   fs.appendFileSync('/tmp/sample-app.log', new Date().toISOString() + ' - ' + entry + '\n')
 }
+//check if user is already logged in
+app.use('/login', require('./auth/loginAuth'))
 
 app.use('/api', require('./auth/auth'))
 
-app.use('/', require('./auth/user'))
+//app.use('/', require('./auth/user'))
+app.use('/', require('./routes/login'))
 
 app.use('/api/v1/questions', require('./routes/api/questions'))
 

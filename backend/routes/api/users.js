@@ -3,16 +3,15 @@ const uri = 'mongodb://localhost:27017/test_lobsters_questions'
 
 const express = require('express')
 const router = express.Router()
-const schema = require('../../user/schema')
 const mongoose = require('mongoose')
-const UserSchema = new mongoose.Schema(schema)
-const User = mongoose.model('User', UserSchema)
+const User = require('../../user/user')
 
 mongoose.connect(uri, { useNewUrlParser: true })
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
 
 router.get('/', function(req, res, next){
-    User.find(function(err, result){
+    //let query = 
+    User.find({},{ password: 0 }, function(err, result){
         if(err){
             res.json({msg: err.message})
         }else{
@@ -24,19 +23,29 @@ router.get('/', function(req, res, next){
 router.post('/', function(req, res, next){
 
     let userProps = {
-        name: req.body.name,
-        displayName: req.body.displayName,
+        userName: req.body.userName,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         password: req.body.password,
         isAdmin: req.body.isAdmin
     }
     let newUser = new User(userProps)
-    newUser.save(function(err){
+    User.findOne({userName: req.body.userName}, function(err, result){
         if(err){
-            res.status(400).json({msg: err.message})
+            res.json({msg: err.message})
+        }if(!result){
+            newUser.save(function(err){
+                if(err){
+                    res.status(400).json({msg: err.message})
+                }else{
+                    res.status(201).json(newUser.presentable())
+                }
+            })
         }else{
-            res.status(201).json(newUser)
+            res.status(406).json({msg: 'Username already taken'})
         }
     })
+    
 })
 
 router.delete('/:id', async function(req, res, next){
@@ -48,7 +57,7 @@ router.delete('/:id', async function(req, res, next){
       if(removedUser === null){
         res.status(404).end()
       }else{
-        res.status(200).json(removedUser)
+        res.status(200).json(removedUser.presentable())
       }
 })
 

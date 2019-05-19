@@ -20,7 +20,6 @@ export default {
     user: String,
     settings: String,
 	newGame: String
-
 	},
     computed: {
         //Fetch values from vuex
@@ -39,7 +38,6 @@ export default {
 #wrap{
 background-color: orange;
 }
-
 selectbots{
 	padding: 1vh;
 	text-align: center;
@@ -52,13 +50,11 @@ h1 {
 	padding: 1vh;
     text-align: center;
 	}
-
 #title {
 	background-color: yellow;
 	font-family: 'Days One', sans-serif;
 	font-size: 3vh;
 	}
-
 select {
 	color: WHITE;
 	font-size: 3vh;
@@ -68,7 +64,6 @@ select {
 	text-decoration: none;
 	border: none;
 	}
-
 .select-btn {
 	color: WHITE;
 	font-size: 3vh;
@@ -80,9 +75,7 @@ min-height: 20vh;
 	border: none;
 	width: 100%;
 	}
-
 .flex-container {
-
   justify-content: center;
   background-color: green;
   min-height: 75vh;
@@ -90,7 +83,6 @@ min-height: 20vh;
   width:50%;
   margin:auto;
   }
-
   @media screen and (orientation: portrait) {
   .flex-container {
 	width:100%;
