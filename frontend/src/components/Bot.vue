@@ -1,7 +1,7 @@
 <template>
 		<div id="bot">  
 		<img v-bind:src="bot.image" 
-		v-bind:class="[bot.enabled ? 'active' : 'inactive']"
+		v-bind:class="[bot.enabled ? 'inactive' : 'active']"
 		v-on:click="toggleActive(index)"
 		
 		/>
