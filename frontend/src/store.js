@@ -359,17 +359,13 @@ export default new Vuex.Store({
     },
     toggleBotChosen({ state }, payloadIndex) {
       let selectedBot = state.loadedBots[payloadIndex];
-      if (
-        typeof state.sessionPlayersArray.find(o => o.id === selectedBot.id) ==
-        "undefined"
-      ) {
-        state.sessionPlayersArray.push(selectedBot);
-        selectedBot.enabled = true;
-      } else {
-        selectedBot.enabled = false;
-        state.sessionPlayersArray.splice(
-          state.sessionPlayersArray.indexOf(selectedBot)
-        );
+      if (!selectedBot.enabled) {
+       state.loadedBots[payloadIndex].enabled = true;    
+	   state.sessionPlayersArray.push(selectedBot);
+      } 
+	  else {
+       state.loadedBots[payloadIndex].enabled = false;
+	   state.sessionPlayersArray.splice(state.sessionPlayersArray.indexOf(selectedBot),1);
       }
       document.documentElement.style.setProperty(
         "--playerAmount",

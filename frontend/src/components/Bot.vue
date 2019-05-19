@@ -36,8 +36,8 @@ height:100%;
 width:100%;
 }
 img{
-height:25%;
-width:25%;
+height:20%;
+width:20%;
 transition: all .2s ease-in-out;
 }
 img:hover{
