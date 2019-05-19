@@ -5,6 +5,7 @@
 		v-on:click="toggleActive(index)"
 		
 		/>
+ <div class="top-right"><p>{{bot.name}}</p></div>
 </div>
 </template>
 
@@ -27,13 +28,23 @@ margin-left:2vh;
 margin-right:2vh;
 }
 p {
-  font-size: 5vh;	
+  font-size: 2vh;	
+	color:yellow;
+
 	}
+
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
 #bot{
 display: inline;
 margin:2vh;
 height:100%;
 width:100%;
+text-align: center;
+position: relative;
 }
 img{
 height:20%;
