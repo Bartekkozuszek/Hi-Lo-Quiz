@@ -1,4 +1,5 @@
 <template>
+	
 		<div id="bot">  
 		<img v-bind:src="bot.image" 
 		v-bind:class="[bot.enabled ? 'inactive' : 'active']"
@@ -26,6 +27,7 @@ methods:{
 *{
 margin-left:2vh;
 margin-right:2vh;
+
 }
 p {
   font-size: 2vh;	
@@ -37,6 +39,7 @@ p {
   position: absolute;
   top: 8px;
   right: 16px;
+
 }
 #bot{
 display: inline;
@@ -44,12 +47,23 @@ margin:2vh;
 height:100%;
 width:100%;
 text-align: center;
-position: relative;
+position:relative;
+margin-bottom:100vh;
+}
+#test{
+display: inline;
+margin:2vh;
+height:100%;
+width:100%;
+text-align: center;
+
+
 }
 img{
 height:20%;
 width:20%;
 transition: all .2s ease-in-out;
+margin-top:5vh;
 }
 img:hover{
 	transform: scale(1.1);
