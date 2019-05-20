@@ -8,8 +8,6 @@
         computed:{
             responseLogic:function(){
                 if (this.$store.state.animatingCharacters){
-                   console.log (this.$store.state.moveHistory.moves[this.$store.state.moveHistory.moves.length-1].guess)
-
                    if(this.$store.state.moveHistory.moves[this.$store.state.moveHistory.moves.length-1].guess>
                         this.$store.state.currentQuestion.answer){
                         return this.$store.state.images.tooHigh;

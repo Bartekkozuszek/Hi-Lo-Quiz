@@ -5,9 +5,9 @@ import avatar2 from "../public/images/avatar2test.png";
 import avatar3 from "../public/images/avatar3test.png";
 import optimus from "../public/images/avatar5test.png";
 import ImageTooHigh from "../public/images/tooHigh.png";
-import ImageTooLow from "../public/images/tooLow.png"
-import pontus from "../public/images/pontusBot.png"
-
+import ImageTooLow from "../public/images/tooLow.png";
+import pontus from "../public/images/pontusBot.png";
+import ImageBubble from "../public/images/bubble.png";
 import axios from "axios";
 
 Vue.use(Vuex, axios);
@@ -29,7 +29,8 @@ export default new Vuex.Store({
     currentPlayerIndex: 0,
       images:{
           tooHigh:ImageTooHigh,
-          tooLow:ImageTooLow
+          tooLow:ImageTooLow,
+          bubble:ImageBubble
       },
     currentQuestion: {
       userSubmitted: false,
@@ -69,7 +70,7 @@ export default new Vuex.Store({
         id: 2,
         wins: 100,
         losses: 300,
-        catchphrase: "Im gonna get you!",
+        catchphrase: "I'm just happy to play!",
         description: "Even though Lillis isn't the smartest, he will do his best.",
         image: pontus,
         enabled: false,
@@ -293,7 +294,7 @@ export default new Vuex.Store({
             state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
         }
         state.wantLastMove = true;
-        console.log("min och max efter vi sätter på wantLastMove" + state.moveHistory.moves[state.moveHistory.moves.length-1].low + ' ' + state.moveHistory.moves[state.moveHistory.moves.length-1].high)
+       // console.log("min och max efter vi sätter på wantLastMove" + state.moveHistory.moves[state.moveHistory.moves.length-1].low + ' ' + state.moveHistory.moves[state.moveHistory.moves.length-1].high)
         state.animatingCharacters = true;
         setTimeout(function() {
           if (
@@ -316,7 +317,7 @@ export default new Vuex.Store({
               dispatch("turnFinished", { state, getters, dispatch });
             }, getters.lastMove.timeTook);
           }
-        }, 1000);
+        }, 1100);
       }
     },
     addMove({ state }, newMove) {

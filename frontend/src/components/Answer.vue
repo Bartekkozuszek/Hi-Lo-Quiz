@@ -150,7 +150,7 @@
   //Watcher på när lastMove ändras (dvs bottarna gör turns)
     wantLastMove() {
       if (this.$store.state.wantAnswers && this.firstRound === false && this.$store.state.wantLastMove===true) {
-        console.log("watcher wantLastMove running")
+        //console.log("watcher wantLastMove running")
         this.updateValue();
       }
     },
@@ -163,7 +163,7 @@
   methods: {
     submitAnswer() {
       let newMove = { guess: this.guess, timeTook: 10 };
-      console.log(this.$store.getters.currentPlayer.name + ' gissar: ' + this.guess);
+     // console.log(this.$store.getters.currentPlayer.name + ' gissar: ' + this.guess);
       this.$store
         .dispatch("addMove", newMove)
         .then(() => this.$store.dispatch("turnFinished"))
@@ -205,7 +205,7 @@
       if (this.max + 1 - (this.min - 1) > 1) {
         this.options.max = this.max;
         this.forceRerender();
-        console.log('this.min: '+this.min)
+       // console.log('this.min: '+this.min)
         this.options.min = this.min;
         this.forceRerender();
         this.updateLastPlayerGuess();
