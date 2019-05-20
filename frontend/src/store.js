@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import avatar1 from "../public/images/avatar1test.png";
 import avatar2 from "../public/images/avatar2test.png";
 import avatar3 from "../public/images/avatar3test.png";
+import optimus from "../public/images/avatar5test.png";
 import axios from "axios";
 
 Vue.use(Vuex);
@@ -238,7 +239,30 @@ export default new Vuex.Store({
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
         }
+      },
+      {
+        name: "Optimus Prime",
+        isPlayer: false,
+        id: 4,
+        wins: 1337,
+        losses: 0,
+        catchphrase: "Roll out!",
+        description: "Almost optimus",
+        image: optimus,
+        enabled: false,
+        timeleft: 1337, //totalMatchTime,
+        move(allMoves) {
+          let newMove = {
+            guess: Math.round((allMoves.moves[allMoves.moves.length - 1].high - allMoves.moves[allMoves.moves.length - 1].low)/2),
+            timeTook: 2000 //*timeoutMultiplier();
+          };
+          console.log("botten " + this.name + "gissar: " + newMove.guess);
+          return newMove;
+        }
+
       }
+
+
     ],
     currentUser: {
       id: 0,
