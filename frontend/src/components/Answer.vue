@@ -31,10 +31,9 @@
     >
       Submit
     </button>
-    Assign new Question:
-    <select v-model="selected" @change="assignQuestion">
+    <!--select v-model="selected" @change="assignQuestion">
       <option v-for="(o, index) in loadedQuestions">{{ o.question }}</option>
-    </select>
+    </-_select/-->
   </div>
 </template>
 
