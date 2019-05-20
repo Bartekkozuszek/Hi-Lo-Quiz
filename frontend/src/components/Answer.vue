@@ -228,7 +228,7 @@
     },
     assignQuestion() {
       this.$store.dispatch("assignQuestion", this.selectedIndex).then(() => {
-        this.updateValueForSubmit;
+        this.updateValueForSubmit();
       });
     }
   },
