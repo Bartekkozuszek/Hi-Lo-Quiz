@@ -67,16 +67,16 @@
         railStyle: {
           boxShadow: 'var(--glow-on)'
         },
-        silent: true
+        silent: false
       }
     };
   },
   computed: {
     min() {
-      return this.$store.getters.min;
+      return this.$store.state.moveHistory.moves[this.$store.state.moveHistory.moves.length-1].low
     },
     max() {
-      return this.$store.getters.max;
+      return this.$store.state.moveHistory.moves[this.$store.state.moveHistory.moves.length-1].high
     },
     marksArray() {
       let diff = Math.round(this.options.max - this.options.min);
@@ -92,8 +92,7 @@
         {
             return [
                 this.options.min,
-                Math.round(this.options.min + diff * 0.33),
-                Math.round(this.options.min + diff / 0.66),
+                Math.round(this.options.min + diff / 0.5),
                 this.options.max
             ];
         }
@@ -103,7 +102,7 @@
               this.options.max
           ];
         }
-      else return this.options.max
+      else return [this.options.max]
     },
     loadedQuestions() {
       return this.$store.state.loadedQuestions;
@@ -136,6 +135,9 @@
     },
     firstRound() {
       return this.$store.state.moveHistory.moves.length < 2;
+    },
+    wantLastMove() {
+     return this.$store.state.wantLastMove
     }
   },
 
@@ -146,8 +148,9 @@
         this.updateValueForSubmit();
     },
   //Watcher på när lastMove ändras (dvs bottarna gör turns)
-    lastMove() {
-      if (this.$store.state.wantAnswers && this.firstRound === false) {
+    wantLastMove() {
+      if (this.$store.state.wantAnswers && this.firstRound === false && this.$store.state.wantLastMove===true) {
+        console.log("watcher wantLastMove running")
         this.updateValue();
       }
     },
@@ -200,9 +203,10 @@
       this.resetGuessToMiddle();
       this.forceRerender();
       if (this.max + 1 - (this.min - 1) > 1) {
-        this.options.max = this.max - 1;
+        this.options.max = this.max;
         this.forceRerender();
-        this.options.min = this.min + 1;
+        console.log('this.min: '+this.min)
+        this.options.min = this.min;
         this.forceRerender();
         this.updateLastPlayerGuess();
         this.forceRerender();
