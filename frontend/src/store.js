@@ -7,7 +7,7 @@ import optimus from "../public/images/avatar5test.png";
 import ImageTooHigh from "../public/images/tooHigh.png";
 import ImageTooLow from "../public/images/tooLow.png";
 import pontus from "../public/images/pontusBot.png";
-import ImageBubble from "../public/images/bubble.png";
+//import ImageBubble from "../public/images/bubble.png";
 import axios from "axios";
 
 Vue.use(Vuex, axios);
@@ -30,7 +30,7 @@ export default new Vuex.Store({
       images:{
           tooHigh:ImageTooHigh,
           tooLow:ImageTooLow,
-          bubble:ImageBubble
+         // bubble:ImageBubble
       },
     currentQuestion: {
       userSubmitted: false,
