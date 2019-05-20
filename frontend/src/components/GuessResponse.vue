@@ -7,10 +7,16 @@
         name: "GuessResponse",
         computed:{
             responseLogic:function(){
+                if (this.$store.state.animatingCharacters){
+                   console.log (this.$store.state.moveHistory.moves[this.$store.state.moveHistory.moves.length-1].guess)
 
-
-
-                return this.$store.state.images.tooHigh;
+                   if(this.$store.state.moveHistory.moves[this.$store.state.moveHistory.moves.length-1].guess>
+                        this.$store.state.currentQuestion.answer){
+                        return this.$store.state.images.tooHigh;
+                    }else {
+                        return this.$store.state.images.tooLow;
+                    }
+                }
             }
         }
     }
@@ -19,10 +25,11 @@
 
 <style scoped>
     img {
+        width:20vw;
         position: absolute;
         left: 50%;
-        margin-left:-142px;
-        top: 50%;
+        margin-left:-40px;
+        top: 60%;
         margin-top:-50px;
 
         z-index: 1;

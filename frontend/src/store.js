@@ -6,6 +6,7 @@ import avatar3 from "../public/images/avatar3test.png";
 import optimus from "../public/images/avatar5test.png";
 import ImageTooHigh from "../public/images/tooHigh.png";
 import ImageTooLow from "../public/images/tooLow.png"
+import pontus from "../public/images/pontusBot.png"
 
 import axios from "axios";
 
@@ -62,14 +63,14 @@ export default new Vuex.Store({
         }
       },
       {
-        name: "PontusBot",
+        name: "Lillis",
         isPlayer: false,
         id: 2,
         wins: 100,
         losses: 300,
         catchphrase: "Im gonna get you!",
-        description: "testBot and template",
-        image: avatar2,
+        description: "Even though Lillis isn't the smartest, he will do his best.",
+        image: pontus,
         enabled: false,
         timeleft: 1337, //totalMatchTime,
         move(allMoves) {
