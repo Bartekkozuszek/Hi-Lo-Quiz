@@ -272,6 +272,8 @@
   align-items: center;
   padding: 30px;
   background-image: url("../../public/images/btnwood.jpg");
+  background-size: 20%;
+  box-shadow: 0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0);
 }
 
 .boxShadowClass {
