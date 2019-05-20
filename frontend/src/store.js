@@ -4,6 +4,9 @@ import avatar1 from "../public/images/avatar1test.png";
 import avatar2 from "../public/images/avatar2test.png";
 import avatar3 from "../public/images/avatar3test.png";
 import optimus from "../public/images/avatar5test.png";
+import ImageTooHigh from "../public/images/tooHigh.png";
+import ImageTooLow from "../public/images/tooLow.png"
+
 import axios from "axios";
 
 Vue.use(Vuex, axios);
@@ -22,6 +25,10 @@ export default new Vuex.Store({
     wantAnswers: false,
     totalMatchTime: 50,
     currentPlayerIndex: 0,
+      images:{
+          tooHigh:ImageTooHigh,
+          tooLow:ImageTooLow
+      },
     currentQuestion: {
       userSubmitted: false,
       author: "guest",
@@ -32,152 +39,6 @@ export default new Vuex.Store({
       high: 10
     },
     loadedQuestions: [
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "history",
-        question: "In what year was Gothenburg founded?",
-        answer: 1621,
-        low: 1000,
-        high: 2000,
-        learnMore: "https://en.wikipedia.org/wiki/Gothenburg"
-      },
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "records",
-        question:
-          "is how many meters tall is Burj Khalifa, the highest building in the world?",
-        answer: 828,
-        low: 100,
-        high: 1000,
-        learnMore:
-          "https://www.guinnessworldrecords.com/records/hall-of-fame/burj-khalifa-tallest-building-in-the-world"
-      },
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "records",
-        question:
-          "The Longest human tunnel travelled through by a skateboarding dog contained how many persons?",
-        answer: 30,
-        low: 1,
-        high: 100,
-        learnMore:
-          "https://www.guinnessworldrecords.com/records/hall-of-fame/otto-the-skateboarding-bulldog"
-      },
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "records",
-        question: "How many centimeters tall is the worlds tallest living man?",
-        answer: 251,
-        low: 200,
-        high: 300,
-        learnMore:
-          "https://www.guinnessworldrecords.com/records/hall-of-fame/sultan-kosen-tallest-living-man"
-      },
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "records",
-        question: "How old was the youngest Nobel Prize winner ever?",
-        answer: 17,
-        low: 5,
-        high: 70,
-        learnMore:
-          "https://www.guinnessworldrecords.com/records/hall-of-fame/malala-yousafzai-youngest-nobel-prize-winner"
-      },
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "records",
-        question: "How old was the youngest Nobel Prize winner ever?",
-        answer: 17,
-        low: 5,
-        high: 70,
-        learnMore:
-          "https://www.guinnessworldrecords.com/records/hall-of-fame/malala-yousafzai-youngest-nobel-prize-winner"
-      },
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "history",
-        question: "in what year did Cristopher Columbus find America?",
-        answer: 1492,
-        low: 1000,
-        high: 2000,
-        learnMore:
-          "https://www.history.com/topics/exploration/christopher-columbus"
-      },
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "history",
-        question:
-          "in what year did Charles Darwin publish On the Origin of Species?",
-        answer: 1859,
-        low: 1800,
-        high: 1950,
-        learnMore:
-          "http://darwin-online.org.uk/EditorialIntroductions/Freeman_OntheOriginofSpecies.html"
-      },
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "random",
-        question:
-          "What Percentage Of Americans Have Served In The Military?(rounded to whole percents)",
-        answer: 7,
-        low: 0,
-        high: 100,
-        learnMore:
-          "https://fivethirtyeight.com/features/what-percentage-of-americans-have-served-in-the-military/"
-      },
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "random",
-        question:
-          "What Percentage of the water on Earth is drinkable?(rounded to whole percents)",
-        answer: 0,
-        low: 0,
-        high: 100,
-        learnMore:
-          "https://www.worldatlas.com/articles/what-percentage-of-the-earth-s-water-is-drinkable.html"
-      },
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "record",
-        question:
-          "How many flavours does the biggest ice cream bar in Europe offer?",
-        answer: 331,
-        low: 50,
-        high: 500,
-        learnMore: "http://www.glassmagasinet.se/"
-      },
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "history",
-        question:
-          "In what year did The Simpsons first air on American Television?",
-        answer: 1989,
-        low: 1940,
-        high: 1990,
-        learnMore: "https://simpsons.fandom.com/wiki/History_of_The_Simpsons"
-      },
-      {
-        userSubmitted: false,
-        author: "Pontus Fredriksson",
-        category: "history",
-        question: "It-högskolan was founded in what year?",
-        answer: 2012,
-        low: 2000,
-        high: 2018,
-        learnMore: "No."
-      }
     ],
     loadedBots: [
       {
