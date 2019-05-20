@@ -81,13 +81,30 @@
     },
     marksArray() {
       let diff = Math.round(this.options.max - this.options.min);
-      return [
-        this.options.min,
-        Math.round(this.options.min + diff * 0.25),
-        Math.round(this.options.min + diff / 2),
-        Math.round(this.options.min + diff * 0.75),
-        this.options.max
-      ];
+      if (diff>3) {
+          return [
+              this.options.min,
+              Math.round(this.options.min + diff * 0.25),
+              Math.round(this.options.min + diff / 2),
+              Math.round(this.options.min + diff * 0.75),
+              this.options.max
+          ];
+      } else if (diff>2)
+        {
+            return [
+                this.options.min,
+                Math.round(this.options.min + diff * 0.33),
+                Math.round(this.options.min + diff / 0.66),
+                this.options.max
+            ];
+        }
+      else if (diff>1) {
+          return [
+              this.options.min,
+              this.options.max
+          ];
+        }
+      else return this.options.max
     },
     loadedQuestions() {
       return this.$store.state.loadedQuestions;
