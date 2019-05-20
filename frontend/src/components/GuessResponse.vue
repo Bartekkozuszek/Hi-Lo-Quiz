@@ -1,13 +1,16 @@
 <template>
-    <img src="responseLogic"></img>
+    <img v-if="this.$store.state.animatingCharacters" :src="responseLogic"></img>
 </template>
 
 <script>
     export default {
         name: "GuessResponse",
-        methods:{
-            responselogic:function(){
+        computed:{
+            responseLogic:function(){
 
+
+
+                return this.$store.state.images.tooHigh;
             }
         }
     }
@@ -17,8 +20,11 @@
 <style scoped>
     img {
         position: absolute;
-        left: 0px;
-        top: 0px;
-        z-index: -1;
+        left: 50%;
+        margin-left:-142px;
+        top: 50%;
+        margin-top:-50px;
+
+        z-index: 1;
     }
 </style>
