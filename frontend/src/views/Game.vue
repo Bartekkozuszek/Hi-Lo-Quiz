@@ -6,6 +6,7 @@
     }"
   >
     <question-display></question-display>
+    <guess-response></guess-response>
     <GameTable></GameTable>
     <answer></answer>
   </div>
@@ -15,11 +16,13 @@
 import QuestionDisplay from "../components/QuestionDisplay.vue";
 import Answer from "../components/Answer.vue";
 import GameTable from "../components/GameTable.vue";
+import GuessResponse from "../components/GuessResponse";
 
 export default {
   name: "Game",
   computed: {},
   components: {
+    GuessResponse,
     QuestionDisplay,
     Answer,
     GameTable
