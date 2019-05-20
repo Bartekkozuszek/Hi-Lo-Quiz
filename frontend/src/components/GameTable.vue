@@ -133,7 +133,8 @@
         font-family: "Avenir", Helvetica, Arial, sans-serif;
         color: beige;
         border: 1px solid #a0a08d;
-        width: 250px;
+        width: 27vw;
+        max-width: 260px;
         font-size: 14px;
         font-weight: 600;
         text-transform: uppercase;

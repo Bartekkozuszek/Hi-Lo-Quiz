@@ -1,6 +1,12 @@
 <template>
   <header class="header">
-    <div class="flex-container">
+    <div class="flex-container"
+         :style="{
+      'background-image': `url(${require('../../public/images/btnwood.jpg')})`,
+      'background-size':`6%`
+      }"
+    >
+
       <div>
         <button class="select-btn" id="sbt1">{{ user }}</button>
       </div>
