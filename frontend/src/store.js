@@ -114,7 +114,7 @@ export default new Vuex.Store({
         timeleft: 1337, //totalMatchTime,
         move(allMoves) {
           let newMove = {
-            guess: Math.round((allMoves.moves[allMoves.moves.length - 1].high - allMoves.moves[allMoves.moves.length - 1].low)/2),
+            guess: Math.round(allMoves.moves[allMoves.moves.length - 1].low + (allMoves.moves[allMoves.moves.length - 1].high - allMoves.moves[allMoves.moves.length - 1].low)/2),
             timeTook: 2000 //*timeoutMultiplier();
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
