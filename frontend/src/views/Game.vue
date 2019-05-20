@@ -7,6 +7,7 @@
   >
     <question-display></question-display>
     <guess-response></guess-response>
+    <SpeechBubble></SpeechBubble>
     <GameTable></GameTable>
     <answer></answer>
   </div>
@@ -17,11 +18,13 @@ import QuestionDisplay from "../components/QuestionDisplay.vue";
 import Answer from "../components/Answer.vue";
 import GameTable from "../components/GameTable.vue";
 import GuessResponse from "../components/GuessResponse";
+import SpeechBubble from "../components/SpeechBubble";
 
 export default {
   name: "Game",
   computed: {},
   components: {
+    SpeechBubble,
     GuessResponse,
     QuestionDisplay,
     Answer,
