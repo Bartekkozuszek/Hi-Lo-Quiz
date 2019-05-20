@@ -67,7 +67,7 @@
         railStyle: {
           boxShadow: 'var(--glow-on)'
         },
-        silent: true
+        silent: false
       }
     };
   },
@@ -92,8 +92,7 @@
         {
             return [
                 this.options.min,
-                Math.round(this.options.min + diff * 0.33),
-                Math.round(this.options.min + diff / 0.66),
+                Math.round(this.options.min + diff / 0.5),
                 this.options.max
             ];
         }
@@ -103,7 +102,7 @@
               this.options.max
           ];
         }
-      else return this.options.max
+      else return [this.options.max]
     },
     loadedQuestions() {
       return this.$store.state.loadedQuestions;
@@ -204,10 +203,10 @@
       this.resetGuessToMiddle();
       this.forceRerender();
       if (this.max + 1 - (this.min - 1) > 1) {
-        this.options.max = this.max - 1;
+        this.options.max = this.max;
         this.forceRerender();
         console.log('this.min: '+this.min)
-        this.options.min = this.min + 1;
+        this.options.min = this.min;
         this.forceRerender();
         this.updateLastPlayerGuess();
         this.forceRerender();
