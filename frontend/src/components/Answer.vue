@@ -73,10 +73,10 @@
   },
   computed: {
     min() {
-      return this.$store.getters.min;
+      return this.$store.state.moveHistory.moves[this.$store.state.moveHistory.moves.length-1].low
     },
     max() {
-      return this.$store.getters.max;
+      return this.$store.state.moveHistory.moves[this.$store.state.moveHistory.moves.length-1].high
     },
     marksArray() {
       let diff = Math.round(this.options.max - this.options.min);
@@ -136,6 +136,9 @@
     },
     firstRound() {
       return this.$store.state.moveHistory.moves.length < 2;
+    },
+    wantLastMove() {
+     return this.$store.state.wantLastMove
     }
   },
 
@@ -146,8 +149,9 @@
         this.updateValueForSubmit();
     },
   //Watcher på när lastMove ändras (dvs bottarna gör turns)
-    lastMove() {
-      if (this.$store.state.wantAnswers && this.firstRound === false) {
+    wantLastMove() {
+      if (this.$store.state.wantAnswers && this.firstRound === false && this.$store.state.wantLastMove===true) {
+        console.log("watcher wantLastMove running")
         this.updateValue();
       }
     },
@@ -202,6 +206,7 @@
       if (this.max + 1 - (this.min - 1) > 1) {
         this.options.max = this.max - 1;
         this.forceRerender();
+        console.log('this.min: '+this.min)
         this.options.min = this.min + 1;
         this.forceRerender();
         this.updateLastPlayerGuess();

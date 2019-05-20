@@ -20,6 +20,7 @@ export default new Vuex.Store({
     gameState: 1,
     animatingCharacters: false,
     wantAnswers: false,
+    wantLastMove: false,
     totalMatchTime: 50,
     currentPlayerIndex: 0,
     currentQuestion: {
@@ -254,7 +255,7 @@ export default new Vuex.Store({
         move(allMoves) {
           let newMove = {
             guess: Math.round(allMoves.moves[allMoves.moves.length - 1].low + (allMoves.moves[allMoves.moves.length - 1].high - allMoves.moves[allMoves.moves.length - 1].low)/2),
-            timeTook: 2000 //*timeoutMultiplier();
+            timeTook: 1800 //*timeoutMultiplier();
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
@@ -310,28 +311,6 @@ export default new Vuex.Store({
     },
     lastMove: state => {
       return state.moveHistory.moves[state.moveHistory.moves.length - 1];
-    },
-    min: (state, getters) => {
-      let temp = getters.lastMove.low;
-      if (typeof temp !== "undefined") {
-        return temp;
-      } else if (
-        typeof state.moveHistory.moves[state.moveHistory.moves.length - 2]
-          .low !== "undefined"
-      )
-        return state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
-      else return 0;
-    },
-    max: (state, getters) => {
-      let temp = getters.lastMove.high;
-      if (typeof temp !== "undefined") {
-        return temp;
-      } else if (
-        typeof state.moveHistory.moves[state.moveHistory.moves.length - 2]
-          .high !== "undefined"
-      )
-        return state.moveHistory.moves[state.moveHistory.moves.length - 2].high;
-      else return 999;
     },
 
     currentPlayer: state => {
@@ -418,6 +397,7 @@ export default new Vuex.Store({
         console.log(getters.currentPlayer.name + " won!!!!");
       } else {
         //too high in bounds
+
         if (
           getters.lastMove.guess > state.currentQuestion.answer &&
           getters.lastMove.guess <
@@ -450,7 +430,8 @@ export default new Vuex.Store({
           getters.lastMove.low =
             state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
         }
-
+        state.wantLastMove = true;
+        console.log("min och max efter vi sätter på wantLastMove" + state.moveHistory.moves[state.moveHistory.moves.length-1].low + ' ' + state.moveHistory.moves[state.moveHistory.moves.length-1].high)
         state.animatingCharacters = true;
         setTimeout(function() {
           if (
@@ -478,6 +459,8 @@ export default new Vuex.Store({
     },
     addMove({ state }, newMove) {
       //pushes last object in array to the same array
+      //Turn off wantLastMove to not trigger watcher in answer
+      state.wantLastMove = false;
       state.moveHistory.moves.push(newMove);
     },
     toggleAnimations({ state }) {
