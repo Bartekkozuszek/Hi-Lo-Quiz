@@ -221,6 +221,8 @@ export default new Vuex.Store({
       login(state, payload) {
           state.isLoggedIn = true
           state.currentUser.name = payload.user
+          state.currentUser.image = avatar1;
+          state.sessionPlayersArray[0] = state.currentUser
           state.user = payload.user
       },
       logout(state) {

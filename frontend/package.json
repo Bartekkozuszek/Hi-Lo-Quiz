@@ -12,6 +12,7 @@
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "mongoose": "^5.5.7",
+    "simple-vue-validator": "^0.16.0",
     "vue": "^2.6.10",
     "vue-dragscroll": "^1.8.3",
     "vue-router": "^3.0.3",
