@@ -7,7 +7,7 @@
             <label>Password:</label><br />
             <input required type="password" v-model="password" placeholder="Type your password here" /><br />
             <footer>
-                <button @click="goBack">Cancel</button>
+                <button type="button" @click="goBack">Cancel</button>
                 <button type="submit">OK</button>
             </footer>
         </form>

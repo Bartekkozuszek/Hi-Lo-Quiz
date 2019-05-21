@@ -31,16 +31,15 @@
     >
       Submit
     </button>
-    Assign new Question:
-    <select v-model="selected" @change="assignQuestion">
+    <!--select v-model="selected" @change="assignQuestion">
       <option v-for="(o, index) in loadedQuestions">{{ o.question }}</option>
-    </select>
+    </-_select/-->
   </div>
 </template>
 
 <script>
   import VueSlider from "vue-slider-component";
-  import "vue-slider-component/theme/material.css";
+  import "../assets/default.css";
 
   export default {
   name: "Answer",
@@ -65,26 +64,45 @@
         lazy: false,
         max: 100,
         min: 0,
-        silent: true
+        railStyle: {
+          boxShadow: 'var(--glow-on)'
+        },
+        silent: false
       }
     };
   },
   computed: {
     min() {
-      return this.$store.getters.min;
+      return this.$store.state.moveHistory.moves[this.$store.state.moveHistory.moves.length-1].low
     },
     max() {
-      return this.$store.getters.max;
+      return this.$store.state.moveHistory.moves[this.$store.state.moveHistory.moves.length-1].high
     },
     marksArray() {
       let diff = Math.round(this.options.max - this.options.min);
-      return [
-        this.options.min,
-        Math.round(this.options.min + diff * 0.25),
-        Math.round(this.options.min + diff / 2),
-        Math.round(this.options.min + diff * 0.75),
-        this.options.max
-      ];
+      if (diff>3) {
+          return [
+              this.options.min,
+              Math.round(this.options.min + diff * 0.25),
+              Math.round(this.options.min + diff / 2),
+              Math.round(this.options.min + diff * 0.75),
+              this.options.max
+          ];
+      } else if (diff>2)
+        {
+            return [
+                this.options.min,
+                Math.round(this.options.min + diff / 0.5),
+                this.options.max
+            ];
+        }
+      else if (diff>1) {
+          return [
+              this.options.min,
+              this.options.max
+          ];
+        }
+      else return [this.options.max]
     },
     loadedQuestions() {
       return this.$store.state.loadedQuestions;
@@ -104,10 +122,6 @@
     },
 
     isPlayer() {
-      document.documentElement.style.setProperty(
-        "--glowOn",
-        "0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-      );
       return this.$store.getters.currentPlayer.isPlayer;
     },
     showSubmit() {
@@ -121,24 +135,40 @@
     },
     firstRound() {
       return this.$store.state.moveHistory.moves.length < 2;
+    },
+    wantLastMove() {
+     return this.$store.state.wantLastMove
     }
   },
-  //Körs när moves arrayen uppdateras
+
   watch: {
+    //Watcher på när wantAnswer ändras och det är första rundan
     wantAnswers() {
       if (this.wantAnswers === true && this.firstRound === true)
         this.updateValueForSubmit();
     },
-
+    //Uppdaterar guess sen när botten är klar med sitt moves ändras wantLastMove och den uppdateras.
     lastMove() {
-      if (this.$store.state.wantAnswers && this.firstRound === false) {
+      this.guess = this.lastMove.guess
+      this.forceRerender
+    },
+  //Watcher på när lastMove ändras (dvs bottarna gör turns)
+    wantLastMove() {
+      if (this.$store.state.wantAnswers && this.firstRound === false && this.$store.state.wantLastMove===true) {
+        //console.log("watcher wantLastMove running")
         this.updateValue();
       }
+    },
+    isPlayer() {
+      if(this.isPlayer)
+      this.setBoxShadowOnRail();
+      else this.unsetBoxShadowOnRail();
     }
   },
   methods: {
     submitAnswer() {
       let newMove = { guess: this.guess, timeTook: 10 };
+     // console.log(this.$store.getters.currentPlayer.name + ' gissar: ' + this.guess);
       this.$store
         .dispatch("addMove", newMove)
         .then(() => this.$store.dispatch("turnFinished"))
@@ -152,26 +182,38 @@
         this.options.min + (this.options.max - this.options.min) / 2
       );
     },
+    updateLastPlayerGuess() {
+      let temp = this.lastMove;
+      if (typeof temp.guess != "undefined") {
+        this.guess = temp.guess;
+      } else {
+        this.resetGuessToMiddle();
+      }
+    },
+    setBoxShadowOnRail() {
+      this.options.railStyle = {
+        boxShadow: 'var(--glow-on)'
+      }
+      this.forceRerender()
 
-    //Sets guess to average rounded up to nearest int
-    //Kollar så att det finns 2 eller mer platser kvar, annars sker ingen uppdatering.
+    },
+    unsetBoxShadowOnRail() {
+      this.options.railStyle = {
+      }
+      this.forceRerender()
+
+    },
+    //0. Resettar Guess till middle
     updateValue() {
       this.resetGuessToMiddle();
       this.forceRerender();
       if (this.max + 1 - (this.min - 1) > 1) {
-        this.options.max = this.max - 1;
+        this.options.max = this.max;
         this.forceRerender();
-        this.options.min = this.min + 1;
+       // console.log('this.min: '+this.min)
+        this.options.min = this.min;
         this.forceRerender();
-        let temp = this.lastMove;
-        //If satsen uppdaterar slidern och sen sätter värdet
-        if (typeof temp.guess != "undefined") {
-          this.guess = temp.guess;
-        } else {
-          this.guess = Math.round(
-            this.options.min + (this.options.max - this.options.min) / 2
-          );
-        }
+        this.updateLastPlayerGuess();
         this.forceRerender();
         this.marks = this.marksArray;
         this.forceRerender();
@@ -180,11 +222,14 @@
 
     //0. Kollar först åt vilket håll intervallet ändras, fallen nedan är om nya max är större än tidigare, blir inverted annars med att vi ökar min först.
     //1. Sätter nytt max värde
-    //2. Uppdaterar guess för att uppdatera modellen (om den är mindre än föregående max lägg till en, annars dra bort en), för att slidern inte alltid är uppdaterad
-    //3. Await så att den väntar tills den är klar med att uppdatera guess till optionsMax(eftersom vi vet att den kommer finnas med i intervallet)
+    //2. Rerender
+    //3. Uppdatera guess till optionsMax(eftersom vi vet att den kommer finnas med i intervallet)
     //4. När den är klar med detta sätt min till uppdaterade min
-    //5. Uppdaterar guess med-1 för att uppdatera modellen
+    //5. Rerender
     //6. Sätter guess till mitten mellan max och min.
+    //7. Rerender
+    //8. Settar Marks i modellen
+    //10. Rerender
     updateValueForSubmit() {
       if (this.max >= this.options.max) {
         this.options.max = this.max;
@@ -196,30 +241,29 @@
       } else if (this.max < this.options.max) {
         this.options.min = this.min;
         this.forceRerender();
-
         this.guess = this.options.min + 1;
         this.forceRerender();
         this.options.max = this.max;
         this.forceRerender();
       }
-
-      //Här sätts det riktiga värdet
-      this.guess = Math.round(
-        this.options.min + (this.options.max - this.options.min) / 2
-      );
-
+      this.resetGuessToMiddle();
       this.forceRerender();
-
       this.marks = this.marksArray;
       this.forceRerender();
     },
     assignQuestion() {
       this.$store.dispatch("assignQuestion", this.selectedIndex).then(() => {
-        this.updateValueForSubmit;
+        this.updateValueForSubmit();
       });
     }
-  }
-};
+  },
+    //Settar glow om det är en spelare
+    mounted() {
+    if(this.isPlayer)
+      this.setBoxShadowOnRail()
+      else this.unsetBoxShadowOnRail()
+    }
+  };
 </script>
 
 <style>
@@ -233,6 +277,8 @@
   align-items: center;
   padding: 30px;
   background-image: url("../../public/images/btnwood.jpg");
+  background-size: 20%;
+  box-shadow: 0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0);
 }
 
 .boxShadowClass {
