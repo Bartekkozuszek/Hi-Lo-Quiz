@@ -67,5 +67,11 @@
 </script>
 
 <style>
+    .form-control{
+        border-radius: 4px;
+    }
 
+    .message {
+        color: red;
+    }
 </style>
