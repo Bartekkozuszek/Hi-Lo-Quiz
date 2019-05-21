@@ -147,6 +147,11 @@
       if (this.wantAnswers === true && this.firstRound === true)
         this.updateValueForSubmit();
     },
+    //Uppdaterar guess sen när botten är klar med sitt moves ändras wantLastMove och den uppdateras.
+    lastMove() {
+      this.guess = this.lastMove.guess
+      this.forceRerender
+    },
   //Watcher på när lastMove ändras (dvs bottarna gör turns)
     wantLastMove() {
       if (this.$store.state.wantAnswers && this.firstRound === false && this.$store.state.wantLastMove===true) {
