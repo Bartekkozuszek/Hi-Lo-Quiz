@@ -1,10 +1,12 @@
 <template>
+	
 		<div id="bot">  
 		<img v-bind:src="bot.image" 
-		v-bind:class="[bot.enabled ? 'active' : 'inactive']"
+		v-bind:class="[bot.enabled ? 'inactive' : 'active']"
 		v-on:click="toggleActive(index)"
 		
 		/>
+ <div class="top-right"><p>{{bot.name}}</p></div>
 </div>
 </template>
 
@@ -25,20 +27,43 @@ methods:{
 *{
 margin-left:2vh;
 margin-right:2vh;
+
 }
 p {
-  font-size: 5vh;	
+  font-size: 2vh;	
+	color:yellow;
+
 	}
+
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+
+}
 #bot{
 display: inline;
 margin:2vh;
 height:100%;
 width:100%;
+text-align: center;
+position:relative;
+margin-bottom:100vh;
+}
+#test{
+display: inline;
+margin:2vh;
+height:100%;
+width:100%;
+text-align: center;
+
+
 }
 img{
-height:25%;
-width:25%;
+height:20%;
+width:20%;
 transition: all .2s ease-in-out;
+margin-top:5vh;
 }
 img:hover{
 	transform: scale(1.1);

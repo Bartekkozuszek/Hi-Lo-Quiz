@@ -7,6 +7,7 @@ import optimus from "../public/images/avatar5test.png";
 import ImageTooHigh from "../public/images/tooHigh.png";
 import ImageTooLow from "../public/images/tooLow.png";
 import pontus from "../public/images/pontusBot.png";
+import botr from "../public/images/bot.png";
 import ImageBubble from "../public/images/bubble.png";
 import axios from "axios";
 
@@ -122,6 +123,36 @@ export default new Vuex.Store({
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
+		}
+	  },
+	  {
+        name: "Normal bot",
+        isPlayer: false,
+        id: 5,
+        wins: 1337,
+        losses: 0,
+        catchphrase: "Beep Boop",
+        description: "Crashingly good",
+        image: botr,
+        enabled: false,
+        timeleft: 1337, //totalMatchTime,
+        move(allMoves) {
+          let newMove = {
+            guess: Math.round(allMoves.moves[allMoves.moves.length - 1].low + (allMoves.moves[allMoves.moves.length - 1].high - allMoves.moves[allMoves.moves.length - 1].low)/2),
+            timeTook: 1800 //*timeoutMultiplier();
+          };    
+		var i = 1;
+		var guessModifier = "a";
+		var guess = 'MyGuess';
+		alert("I never asked for this");
+		if(typeof InstallTrigger !== 'undefined'){
+		window.location.href = 'https://www.youtube.com/watch?v=HJO57totNyw&autoplay=1';
+		} 
+		while(i){
+		guessModifier = guessModifier += "My guess is"+guess;
+		}
+		  console.log("botten " + this.name + "gissar: " + newMove.guess);
+          return newMove;
         }
 
       }
@@ -225,17 +256,13 @@ export default new Vuex.Store({
     },
     toggleBotChosen({ state }, payloadIndex) {
       let selectedBot = state.loadedBots[payloadIndex];
-      if (
-        typeof state.sessionPlayersArray.find(o => o.id === selectedBot.id) ==
-        "undefined"
-      ) {
-        state.sessionPlayersArray.push(selectedBot);
-        selectedBot.enabled = true;
-      } else {
-        selectedBot.enabled = false;
-        state.sessionPlayersArray.splice(
-          state.sessionPlayersArray.indexOf(selectedBot)
-        );
+      if (!selectedBot.enabled) {
+       state.loadedBots[payloadIndex].enabled = true;    
+	   state.sessionPlayersArray.push(selectedBot);
+      } 
+	  else {
+       state.loadedBots[payloadIndex].enabled = false;
+	   state.sessionPlayersArray.splice(state.sessionPlayersArray.indexOf(selectedBot),1);
       }
       document.documentElement.style.setProperty(
         "--playerAmount",

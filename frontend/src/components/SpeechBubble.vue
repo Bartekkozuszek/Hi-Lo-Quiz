@@ -49,13 +49,15 @@
          position: absolute;
          width:20vw;
         left:50%;
-
      }
     img{
         position: absolute;
         width:20vw;
         left:0;
         z-index: 1;
+    }
+    p{
+        font-size:1.5vw;
     }
     .firstLine{
         position:absolute;

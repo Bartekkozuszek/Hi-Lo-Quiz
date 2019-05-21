@@ -35,7 +35,7 @@ export default {
 
 <style>
 .thisDiv {
-  height: 87vh;
+  height: 94.5vh;
   background-position: center;
   background-size: 310vh;
 }
