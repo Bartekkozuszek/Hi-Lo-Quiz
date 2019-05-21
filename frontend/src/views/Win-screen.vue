@@ -2,6 +2,9 @@
     <div id="winScreenWindow"
          :style="{'background-image': `url(${require('../../public/images/background2fixed.jpg')})`}">
         <question-display></question-display>
+        <a :href="getUrl()" target="_blank">
+            <img id="knowMore" :src="this.$store.state.images.wantToKnowMore">
+        </a>
         <div class="answerText">
             <p class="darkenBG answerText">The right answer is: {{this.$store.state.currentQuestion.answer}} </p>
         </div>
@@ -32,6 +35,9 @@
         methods:{
             goToMenu:function(){
                 this.$store.dispatch('changeGameState', 1)
+            },
+            getUrl:function(){
+                return this.$store.state.currentQuestion.learnMore;
             }
         },
 
