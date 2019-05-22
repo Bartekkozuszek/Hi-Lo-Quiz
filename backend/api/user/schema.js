@@ -5,5 +5,6 @@ module.exports = {
   password: { type: String, required: true },
   isAdmin: { type: Boolean, required: true },
   wins: { type: Number, required: false, default: 0 },
-  losses: { type: Number, required: true, default: 0 }
+  losses: { type: Number, required: false, default: 0 },
+  score: { type: Number, required: false, default: 0 }
 }
