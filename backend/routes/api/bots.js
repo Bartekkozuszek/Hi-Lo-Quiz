@@ -23,14 +23,14 @@ router.get('/', async function(req, res, next) {
   }
 })
 
-router.get('/:id', function(req, res, next) {
-  Bot.findById(req.params.id, (err, bot) => {
-    if (err) {
-      res.status(400).json({ msg: 'No bot found' })
-    } else {
-      res.json(bot)
-    }
-  })
+//get bot based on mongodb _id
+router.get('/:id', async function(req, res, next) {
+  try {
+    const bot = await Bot.findById(req.params.id)
+    res.json(bot)
+  } catch (error) {
+    res.status(400).json({ msg: 'No bot found' })
+  }
 })
 
 router.delete('/:id', async function(req, res, next) {
