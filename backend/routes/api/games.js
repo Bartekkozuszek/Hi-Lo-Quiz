@@ -13,6 +13,15 @@ const uri = config.URL
 mongoose.connect(uri, { useNewUrlParser: true })
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
 
+router.get('/played', async function(req, res, next) {
+  try {
+    const played = await Game.find().countDocuments()
+    res.json({ played: played })
+  } catch (error) {
+    res.json({ msg: error.message })
+  }
+})
+
 router.get('/', function(req, res, next) {
   Game.find(function(err, result) {
     if (err) {
@@ -46,7 +55,7 @@ router.post('/', async function(req, res, next) {
   const newGame = new Game(sanitized)
 
   try {
-    var addedGame = await newGame.save()
+    await newGame.save()
   } catch (e) {
     res.status(400).json({ msg: 'Error adding game history ' + e.message })
     return
