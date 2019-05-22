@@ -11,12 +11,10 @@ const config = require('../../config.js')
 
 const uri = config.URL
 
-
 mongoose.connect(uri, { useNewUrlParser: true })
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
 
 router.use(function(req, res, next) {
-  
   //Can use this to override temporary when testing
   //req.user = {
   // name: 'user1',
@@ -28,35 +26,38 @@ router.use(function(req, res, next) {
 })
 
 router.get('/categories', function(req, res, next) {
-  Question.distinct("category", function(err){
-    if(err){
-      res.json({msg: err.message})
+  Question.distinct('category', function(err) {
+    if (err) {
+      res.json({ msg: err.message })
     }
-  }).then(result => {res.json(result)})
-  
+  }).then(result => {
+    res.json(result)
+  })
 })
 
 router.get('/authors', function(req, res, next) {
-  Question.distinct("author", function(err){
-    if(err){
-      res.json({msg: err.message})
+  Question.distinct('author', function(err) {
+    if (err) {
+      res.json({ msg: err.message })
     }
-  }).then(result => {res.json(result)})
-  
+  }).then(result => {
+    res.json(result)
+  })
 })
 
 router.get('/', async function(req, res, next) {
   // make req params into query objects
-  
+
   let category = req.query.category ? { category: { $eq: req.query.category } } : {}
   let author = req.query.author ? { author: { $eq: req.query.author } } : {}
-  var approved = req.user.isAdmin && req.query.approved ? { approved: req.query.approved === 'true' } : { approved: true }
+  var approved =
+    req.user.isAdmin && req.query.approved ? { approved: req.query.approved === 'true' } : { approved: true }
   let userSubmitted = req.query.userSubmitted ? { userSubmitted: { $eq: req.query.userSubmitted === 'true' } } : {} // convert string to boolean
   let reviewedBy = req.query.reviewedBy ? { reviewedBy: { $eq: req.query.reviewedBy } } : {}
-  try{
+  try {
     amount = req.query.amount ? parseInt(req.query.amount) : await Question.countDocuments()
-  }catch(e){
-    res.json({msg : e.message})
+  } catch (e) {
+    res.json({ msg: e.message })
   }
 
   let query = [
@@ -74,11 +75,11 @@ router.get('/', async function(req, res, next) {
     },
     { $sample: { size: amount } } // randomize and get correct amount of Questions
   ]
-  Question.aggregate(query, function (err){
-    if(err){
-      res.json({msg: err.message})
+  Question.aggregate(query, function(err) {
+    if (err) {
+      res.json({ msg: err.message })
     }
-  }).then((result ) => res.json(result))
+  }).then(result => res.json(result))
 })
 
 router.get('/:id', function(req, res, next) {
@@ -137,18 +138,16 @@ router.put('/:id', function(req, res, next) {
 })
 
 router.delete('/:id', async function(req, res, next) {
-  try{ 
+  try {
     removedQuestion = await Question.findByIdAndRemove(req.params.id)
-  }catch(e){
-    res.status(400).json({msg: e.message})
+  } catch (e) {
+    res.status(400).json({ msg: e.message })
   }
-  if(removedQuestion === null){
+  if (removedQuestion === null) {
     res.status(404).end()
-  }else{
+  } else {
     res.status(200).json(removedQuestion)
   }
 })
-
-
 
 module.exports = router

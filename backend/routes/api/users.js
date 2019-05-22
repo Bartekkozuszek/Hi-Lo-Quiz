@@ -10,32 +10,39 @@ const uri = config.URL
 mongoose.connect(uri, { useNewUrlParser: true })
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
 
-router.get('/', function(req, res, next) {
-  let sort = helpers.parseSort(req.query.sort)
-
-  User.find({}, { password: 0 }, function(err, result) {
-    if (err) {
-      res.json({ msg: err.message })
-    }
-  })
-    .sort([[sort, -1]])
-    .exec(function(err, docs) {
-      if (err) {
-        res.json({ msg: err.message })
-      } else {
-        res.json(docs)
-      }
-    })
+//get rank based on score for an user id
+router.get('/score-rank/:id', async function(req, res, next) {
+  try {
+    const user = await User.findById(req.params.id, 'score')
+    console.log(user.score)
+    const rank = await User.find({ score: { $gt: user.score } }).count()
+    res.json({ rank: rank })
+  } catch (error) {
+    res.status(400).json({ msg: 'No score-rank found ' + error.message })
+  }
 })
 
-router.get('/:id', function(req, res, next) {
-  User.findById(req.params.id, (err, user) => {
-    if (err) {
-      res.status(400).json({ msg: 'No user found' })
-    } else {
-      res.json(user.presentable())
-    }
-  })
+router.get('/', async function(req, res, next) {
+  const sort = helpers.parseSort(req.query.sort)
+  const amount = parseInt(req.query.amount)
+
+  try {
+    const users = await User.find({}, { password: 0 })
+      .sort([[sort, -1]])
+      .limit(amount)
+    res.json(users)
+  } catch (error) {
+    res.json({ msg: error.message })
+  }
+})
+
+router.get('/:id', async function(req, res, next) {
+  try {
+    const user = await User.findById(req.params.id)
+    res.json(user.presentable())
+  } catch (error) {
+    res.status(400).json({ msg: 'No user found ' + error.message })
+  }
 })
 
 router.post('/', function(req, res, next) {
