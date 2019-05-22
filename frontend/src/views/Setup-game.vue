@@ -5,8 +5,9 @@
       'background-image': `url(${require('../../public/images/background1.jpg')})`
     }"
   >
+    <HighScore></HighScore>
     <button @click="startGame" class="startButton">Start!</button>
-
+    <button @click="toggeShowHighscore" class="startButton">Highscores</button>
     <div class="botContainer" v-dragscroll.x="true">
       <div></div>
       <div
@@ -27,6 +28,7 @@
 <script>
 import SelectBots from "./SelectBots.vue";
 import { dragscroll } from "vue-dragscroll";
+import HighScore from "../components/HighScore";
 export default {
   directives: {
     dragscroll
@@ -36,6 +38,7 @@ export default {
   //    this.$store.dispatch('loadQuestions')
   //},
   components: {
+    HighScore,
     SelectBots
   },
   methods: {
