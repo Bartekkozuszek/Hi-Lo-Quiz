@@ -1,10 +1,10 @@
-/* eslint-disable prettier/prettier */
-const uri = 'mongodb://localhost:27017/test_lobsters_questions'
-
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const User = require('../../user/user')
+const config = require('../config.js')
+
+const uri = config.URL
 
 mongoose.connect(uri, { useNewUrlParser: true })
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
