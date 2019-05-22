@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const User = require('../../user/user')
-const helpers = require('../../user/helpers')
+const User = require('../../api/user/user')
+const helpers = require('../../api/user/helpers')
 const config = require('../../config.js')
 
 const uri = config.URL

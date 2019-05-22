@@ -2,8 +2,8 @@
 
 const express = require('express')
 const router = express.Router()
-const schema = require('../../question/schema')
-const helpers = require('../../question/helpers')
+const schema = require('../../api/question/schema')
+const helpers = require('../../api/question/helpers')
 const mongoose = require('mongoose')
 const QuestionSchema = new mongoose.Schema(schema)
 const Question = mongoose.model('Question', QuestionSchema)

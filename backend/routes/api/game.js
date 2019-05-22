@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const schema = require('../../game/schema')
+const schema = require('../../api/game/schema')
 const mongoose = require('mongoose')
 const GameSchema = new mongoose.Schema(schema)
 const Game = mongoose.model('Game', GameSchema)
