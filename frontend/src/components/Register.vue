@@ -34,6 +34,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     import SimpleVueValidator from 'simple-vue-validator';
     const Validator = SimpleVueValidator.Validator;
 
@@ -72,21 +73,32 @@
     methods: {
         submit: function () {
             this.submitted = true;
-        this.$validate()
+            this.$validate()
           .then(function (success) {
-            if (success) {
-              alert('Registration succeeded!');
+              if (success) {
+               alert('Registration succeeded!');
+
             }
           });
-            let firstName = this.firstName
-            let lastName = this.lastName
-                let userName = this.userName
-            let password = this.password
-            this.$store.dispatch('registerNewUser', { firstName, lastName, userName, password })
-                    .then(() => {
-                            console.log('ok')
-                        
-                    })
+          
+            axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users', {
+              firstName: this.firstName,
+              lastName: this.lastName,
+              userName: this.userName,
+              password: this.password,
+              isAdmin: false
+
+          }).then((resp) => {
+              this.$store.commit('login', resp.data)
+              console.log(resp.status)
+          }).catch((err) => { console.log(err) })   
+      
+            //this.$store.dispatch('registerNewUser', { firstName, lastName, userName, password })
+            //        .then(() => {
+            //            console.log('ok')
+
+            //        })
+            
         //            .catch(err => console.log(err))
         },
         registerNewUser() {
