@@ -73,8 +73,8 @@
         grid-template-columns: 8vh 8vh 10fr 10fr 10fr;
         grid-template-rows: 8vh;
         text-align: left;
-        border:solid black 1px;
-        background-color:rgba(0, 9, 25, 0.8);
+        border:solid rgba(0, 9, 25, 0.5) 1px;
+        background-color:rgba(0, 9, 25, 0.9);
     }
     p{
         color:beige;
