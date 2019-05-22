@@ -10,22 +10,19 @@ const uri = config.URL
 mongoose.connect(uri, { useNewUrlParser: true })
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
 
-router.get('/', function(req, res, next) {
-  let sort = helpers.parseSort(req.query.sort)
+router.get('/', async function(req, res, next) {
+  const sort = helpers.parseSort(req.query.sort)
+  const amount = parseInt(req.query.amount)
 
-  User.find({}, { password: 0 }, function(err, result) {
-    if (err) {
-      res.json({ msg: err.message })
-    }
-  })
-    .sort([[sort, -1]])
-    .exec(function(err, docs) {
-      if (err) {
-        res.json({ msg: err.message })
-      } else {
-        res.json(docs)
-      }
-    })
+  try {
+    var users = await User.find({}, { password: 0 })
+      .sort([[sort, -1]])
+      .limit(amount)
+  } catch (error) {
+    res.json({ msg: error.message })
+    return
+  }
+  res.json(users)
 })
 
 router.get('/:id', function(req, res, next) {
