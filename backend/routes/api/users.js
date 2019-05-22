@@ -33,7 +33,7 @@ router.get('/:id', function(req, res, next) {
     if (err) {
       res.status(400).json({ msg: 'No user found' })
     } else {
-      res.json(user)
+      res.json(user.presentable())
     }
   })
 })
