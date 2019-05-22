@@ -1,18 +1,27 @@
 <template>
     <div class="layout-form">
-        <div class="form-group" :class="{error: validation.hasError('email')}">
-            <div class="label">* Email</div>
-            <div class="content"><input type="text" class="form-control" v-model="email" /></div>
-            <div class="message">{{ validation.firstError('email') }}</div>
+        <div class="form-group" :class="{error: validation.hasError('firstName')}">
+            <div class="label">* First name</div>
+            <div class="content"><input type="text" class="form-control" v-model="firstName" /></div>
+            <div class="message">{{ validation.firstError('firstName') }}</div>
         </div>
-        
+        <div class="form-group" :class="{error: validation.hasError('lastName')}">
+            <div class="label">* Last name</div>
+            <div class="content"><input type="text" class="form-control" v-model="lastName" /></div>
+            <div class="message">{{ validation.firstError('lastName') }}</div>
+        </div>
+        <div class="form-group" :class="{error: validation.hasError('userName')}">
+            <div class="label">* Username</div>
+            <div class="content"><input type="text" class="form-control" v-model="userName" /></div>
+            <div class="message">{{ validation.firstError('userName') }}</div>
+        </div>
         <div class="form-group" :class="{error: validation.hasError('password')}">
             <div class="label">* Password</div>
             <div class="content"><input type="password" class="form-control" v-model="password" /></div>
             <div class="message">{{ validation.firstError('password') }}</div>
         </div>
         <div class="form-group" :class="{error: validation.hasError('repeat')}">
-            <div class="label">* Repeat</div>
+            <div class="label">* Repeat password</div>
             <div class="content"><input type="password" class="form-control" v-model="repeat" /></div>
             <div class="message">{{ validation.firstError('repeat') }}</div>
         </div>
@@ -33,15 +42,23 @@
         mixins: [SimpleVueValidator.mixin],
         data: function () {
       return {
-          email: '',
+          firstName: '',
+          lastName: '',
+          userName: '',
           password: '',
         repeat: '',
         submitted: false
       };
     },
     validators: {
-      email: function (value) {
-        return Validator.value(value).required().email();
+        firstName: function (value) {
+            return Validator.value(value).required().minLength(1).maxLength(50);
+        },
+        lastName: function (value) {
+            return Validator.value(value).required().minLength(1).maxLength(50);
+        },
+                userName: function (value) {
+            return Validator.value(value).required().minLength(3).maxLength(15);
         },
         password: function (value) {
         return Validator.value(value).required().minLength(6);
@@ -58,10 +75,23 @@
         this.$validate()
           .then(function (success) {
             if (success) {
-              alert('Validation succeeded!');
+              alert('Registration succeeded!');
             }
           });
-      }
+            let firstName = this.firstName
+            let lastName = this.lastName
+                let userName = this.userName
+            let password = this.password
+            this.$store.dispatch('registerNewUser', { firstName, lastName, userName, password })
+                    .then(() => {
+                            console.log('ok')
+                        
+                    })
+        //            .catch(err => console.log(err))
+        },
+        registerNewUser() {
+            
+            },
     }
     }
 </script>

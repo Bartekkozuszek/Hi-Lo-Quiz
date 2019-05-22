@@ -220,7 +220,7 @@ export default new Vuex.Store({
       },
       login(state, payload) {
           state.isLoggedIn = true
-          state.currentUser.name = payload.user
+          state.currentUser.name = payload.userName
           state.currentUser.image = avatar1;
           state.sessionPlayersArray[0] = state.currentUser
           state.user = payload.user
@@ -362,7 +362,7 @@ export default new Vuex.Store({
       },
       async login({ commit }, payload) {
           await axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/login', {
-              userName: payload.user,
+              userName: payload.userName,
               password: payload.password
           })
               .then((resp) => {
@@ -372,6 +372,20 @@ export default new Vuex.Store({
       },
       logout({ commit }) {
           commit('logout')
+      },
+      async registerNewUser({ commit }, payload) {
+          await axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users', {
+              firstName: payload.firstName,
+              lastName: payload.lastName,
+              userName: payload.userName,
+              password: payload.password,
+              isAdmin: false
+
+          }).then((resp) => {
+              commit('login', resp.data)
+              console.log(resp.data)
+          }).catch((err) => { console.log(err) })   
       }
+      
   }
 });
