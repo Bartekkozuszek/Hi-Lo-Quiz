@@ -27,6 +27,7 @@ export default new Vuex.Store({
     wantAnswers: false,
     wantLastMove: false,
     totalMatchTime: 50,
+    matchesPlayed: 0,
     currentPlayerIndex: 0,
       images:{
           tooHigh:ImageTooHigh,
@@ -42,6 +43,58 @@ export default new Vuex.Store({
       low: 1,
       high: 10
     },
+      highScore : [
+          {
+              id: '',
+              name: "guest",
+              isPlayer: true,
+              wins: 5,
+              losses: 7,
+              description: "testPlayer and template",
+              image: avatar1,
+              timeleft: 1337 //totalMatchTime,
+          },
+          {
+              id: '',
+              name: "Pontus",
+              isPlayer: true,
+              wins: 1,
+              losses: 10,
+              description: "Tja",
+              image: avatar3,
+              timeleft: 2000 //totalMatchTime,
+          },
+          {
+              id: '',
+              name: "Adam",
+              isPlayer: true,
+              wins: 2,
+              losses: 5,
+              description: "Hello",
+              image: avatar2,
+              timeleft: 1337 //totalMatchTime,
+          },
+          {
+              id: '',
+              name: "Petros",
+              isPlayer: true,
+              wins: 17,
+              losses: 3,
+              description: "Hola",
+              image: avatar1,
+              timeleft: 3500 //totalMatchTime,
+          },
+          {
+              id: '',
+              name: "Carl",
+              isPlayer: true,
+              wins: 6,
+              losses: 2,
+              description: "Hej",
+              image: avatar2,
+              timeleft: 1337 //totalMatchTime,
+          },
+      ],
     loadedQuestions: [
     ],
     loadedBots: [
@@ -59,7 +112,8 @@ export default new Vuex.Store({
         move(allMoves) {
           let newMove = {
             guess: allMoves.moves[allMoves.moves.length - 1].low + 1,
-            timeTook: 2000 //*timeoutMultiplier();
+            timeTook: 2000,
+            id: this.id,//*timeoutMultiplier();
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
@@ -79,7 +133,8 @@ export default new Vuex.Store({
         move(allMoves) {
           let newMove = {
             guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
-            timeTook: 2000 //*timeoutMultiplier();
+            timeTook: 2000,
+            id: this.id,//*timeoutMultiplier();
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
@@ -99,7 +154,8 @@ export default new Vuex.Store({
         move(allMoves) {
           let newMove = {
             guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
-            timeTook: 2000 //*timeoutMultiplier();
+            timeTook: 2000, //*timeoutMultiplier();
+            id: this.id,
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
@@ -119,7 +175,8 @@ export default new Vuex.Store({
         move(allMoves) {
           let newMove = {
             guess: Math.round(allMoves.moves[allMoves.moves.length - 1].low + (allMoves.moves[allMoves.moves.length - 1].high - allMoves.moves[allMoves.moves.length - 1].low)/2),
-            timeTook: 1800 //*timeoutMultiplier();
+            timeTook: 1800, //*timeoutMultiplier();
+            id: this.id,
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
@@ -139,7 +196,8 @@ export default new Vuex.Store({
         move(allMoves) {
           let newMove = {
             guess: Math.round(allMoves.moves[allMoves.moves.length - 1].low + (allMoves.moves[allMoves.moves.length - 1].high - allMoves.moves[allMoves.moves.length - 1].low)/2),
-            timeTook: 1800 //*timeoutMultiplier();
+            timeTook: 1800,
+            id: this.id//*timeoutMultiplier();
           };    
 		var i = 1;
 		var guessModifier = "a";
@@ -161,7 +219,6 @@ export default new Vuex.Store({
     ],
     currentUser: {
       id: 0,
-      databaseId: null,
       name: "guest",
       isPlayer: true,
       wins: 5,
@@ -171,6 +228,10 @@ export default new Vuex.Store({
       timeleft: 1337 //totalMatchTime,
     },
     moveHistory: {
+      questionID: '',
+      userID: '',
+      botsIDs: [],
+      score: '',
       question: null,
       moves: [
         {
@@ -183,7 +244,6 @@ export default new Vuex.Store({
       //obs! just nu mockdata från currentUser
       {
         id: 0,
-        databaseId: null,
         name: "guest",
         isPlayer: true,
         wins: 5,
@@ -272,7 +332,14 @@ export default new Vuex.Store({
     assignQuestion({ state, dispatch, commit }, index) {
       state.currentPlayerIndex = 0;
       state.currentQuestion = state.loadedQuestions[index];
-      state.moveHistory.question = state.loadedQuestions[index].question;
+      state.moveHistory.question = state.currentQuestion.question;
+      state.moveHistory.questionID = state.currentQuestion.questionID;
+      state.moveHistory.userID = state.currentUser.id;
+      state.sessionPlayersArray.forEach(a => {
+        if(a.isPlayer === false) {
+          state.moveHistory.botsIDs.push(a.id)
+        }}
+       )
       state.moveHistory.moves = [
         {
           low: state.currentQuestion.low,
