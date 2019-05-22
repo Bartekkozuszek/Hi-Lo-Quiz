@@ -13,7 +13,8 @@
         <div class="form-group" :class="{error: validation.hasError('userName')}">
             <div class="label">* Username</div>
             <div class="content"><input type="text" class="form-control" v-model="userName" /></div>
-            <div class="message">{{ validation.firstError('userName') }}</div>
+            <div class="message" >{{ validation.firstError('userName') }}</div>
+            <div v-if="registerError !== ''"> {{registerError}}</div>
         </div>
         <div class="form-group" :class="{error: validation.hasError('password')}">
             <div class="label">* Password</div>
@@ -48,7 +49,9 @@
           userName: '',
           password: '',
         repeat: '',
-        submitted: false
+          submitted: false,
+          registerError: null,
+        status: 0
       };
     },
     validators: {
@@ -88,18 +91,18 @@
               password: this.password,
               isAdmin: false
 
-          }).then((resp) => {
-              this.$store.commit('login', resp.data)
-              console.log(resp.status)
-          }).catch((err) => { console.log(err) })   
-      
-            //this.$store.dispatch('registerNewUser', { firstName, lastName, userName, password })
-            //        .then(() => {
-            //            console.log('ok')
-
-            //        })
+            }).then((resp) => {
+                console.log("success")
+               
+                this.$store.commit('login', resp.data)
+                this.registerError = ''
+                console.log(resp.status)
             
-        //            .catch(err => console.log(err))
+             
+            }).catch((err) => {
+                console.log("catch")
+                this.registerError = err.response.data.msg
+            })   
         },
         registerNewUser() {
             
