@@ -7,7 +7,7 @@ const helpers = require('../../question/helpers')
 const mongoose = require('mongoose')
 const QuestionSchema = new mongoose.Schema(schema)
 const Question = mongoose.model('Question', QuestionSchema)
-const config = require('../config.js')
+const config = require('../../config.js')
 
 const uri = config.URL
 
