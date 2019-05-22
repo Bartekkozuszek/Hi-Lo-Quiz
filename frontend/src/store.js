@@ -59,7 +59,8 @@ export default new Vuex.Store({
         move(allMoves) {
           let newMove = {
             guess: allMoves.moves[allMoves.moves.length - 1].low + 1,
-            timeTook: 2000 //*timeoutMultiplier();
+            timeTook: 2000,
+            player: this.id,//*timeoutMultiplier();
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
@@ -79,7 +80,8 @@ export default new Vuex.Store({
         move(allMoves) {
           let newMove = {
             guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
-            timeTook: 2000 //*timeoutMultiplier();
+            timeTook: 2000,
+            player: this.id,//*timeoutMultiplier();
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
@@ -99,7 +101,8 @@ export default new Vuex.Store({
         move(allMoves) {
           let newMove = {
             guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
-            timeTook: 2000 //*timeoutMultiplier();
+            timeTook: 2000, //*timeoutMultiplier();
+            player: this.id,
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
@@ -119,7 +122,8 @@ export default new Vuex.Store({
         move(allMoves) {
           let newMove = {
             guess: Math.round(allMoves.moves[allMoves.moves.length - 1].low + (allMoves.moves[allMoves.moves.length - 1].high - allMoves.moves[allMoves.moves.length - 1].low)/2),
-            timeTook: 1800 //*timeoutMultiplier();
+            timeTook: 1800, //*timeoutMultiplier();
+            player: this.id,
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;

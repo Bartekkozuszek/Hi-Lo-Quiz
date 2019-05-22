@@ -22,11 +22,10 @@
     <!--Just nu submitbutton för enkelhetens skull men sen fixa så att värdet skickas ändå om tiden går ut-->
     <div>Make your choice!</div>
     <br />
-    <input :value="guess" />
+    <vue-numeric-input  v-model="guess" :min="options.min" :max="options.max" :step="1"></vue-numeric-input>
     <button
       v-if="showSubmit"
       id="submit-button"
-      :marks="marks"
       v-on:click="submitAnswer"
     >
       Submit
@@ -40,11 +39,13 @@
 <script>
   import VueSlider from "vue-slider-component";
   import "../assets/default.css";
+  import VueNumericInput from 'vue-numeric-input'
 
   export default {
   name: "Answer",
   components: {
-    VueSlider
+    VueSlider,
+    VueNumericInput
   },
 
   data: function() {
@@ -167,12 +168,12 @@
   },
   methods: {
     submitAnswer() {
-      let newMove = { guess: this.guess, timeTook: 10 };
-     // console.log(this.$store.getters.currentPlayer.name + ' gissar: ' + this.guess);
-      this.$store
-        .dispatch("addMove", newMove)
-        .then(() => this.$store.dispatch("turnFinished"))
-        .then(() => this.updateValue);
+        let newMove = {guess: this.guess, timeTook: 10};
+        // console.log(this.$store.getters.currentPlayer.name + ' gissar: ' + this.guess);
+        this.$store
+                .dispatch("addMove", newMove)
+                .then(() => this.$store.dispatch("turnFinished"))
+                .then(() => this.updateValue);
     },
     forceRerender() {
       this.componentKey += 1;
