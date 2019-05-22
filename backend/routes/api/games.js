@@ -22,24 +22,22 @@ router.get('/played', async function(req, res, next) {
   }
 })
 
-router.get('/', function(req, res, next) {
-  Game.find(function(err, result) {
-    if (err) {
-      res.json({ msg: err.message })
-    } else {
-      res.json(result)
-    }
-  })
+router.get('/', async function(req, res, next) {
+  try {
+    const games = await Game.find()
+    res.json(games)
+  } catch (error) {
+    res.json({ msg: error.message })
+  }
 })
 
-router.get('/:id', function(req, res, next) {
-  Game.findById(req.params.id, (err, game) => {
-    if (err) {
-      res.status(400).json({ msg: 'No game found' })
-    } else {
-      res.json(game)
-    }
-  })
+router.get('/:id', async function(req, res, next) {
+  try {
+    const game = await Game.findById(req.params.id)
+    res.json(game)
+  } catch (error) {
+    res.status(400).json({ msg: 'No game found' })
+  }
 })
 
 router.post('/', async function(req, res, next) {
