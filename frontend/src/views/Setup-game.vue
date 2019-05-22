@@ -5,8 +5,9 @@
       'background-image': `url(${require('../../public/images/background1.jpg')})`
     }"
   >
-    <HighScore></HighScore>
+    <HighScore v-if="this.$store.state.showHighScore "></HighScore>
     <button @click="startGame" class="startButton">Start!</button>
+    <br>
     <button @click="toggeShowHighscore" class="startButton">Highscores</button>
     <div class="botContainer" v-dragscroll.x="true">
       <div></div>
@@ -17,7 +18,7 @@
           'background-image': `url(${require('../../public/images/header1.png')})`
         }"
       >
-        <img class="image" v-bind:src="bot.image" /> {{ bot.name }}
+        <img class="playersImage" v-bind:src="bot.image" /> {{ bot.name }}
       </div>
       <div></div>
     </div>
@@ -45,6 +46,13 @@ export default {
     startGame() {
       this.$store.dispatch("loadQuestions", 1);
       this.$store.dispatch("changeGameState", 2);
+    },
+    toggeShowHighscore:function(){
+      if (this.$store.state.showHighScore==true){
+        this.$store.state.showHighScore=false;
+      }else{
+        this.$store.state.showHighScore=true;
+      }
     }
   },
   computed: {
@@ -68,7 +76,7 @@ export default {
   background-color: black;
   overflow: hidden;
 }
-.image {
+.playersImage {
   grid-column: 2 / -2;
   height: 9vw;
 }
