@@ -51,6 +51,15 @@
 </script>
 
 <style scoped>
+    #knowMore{
+        position: absolute;
+        left: 80%;
+        width:6vw;
+        min-width: 70px;
+        top:15%;
+        z-index: 1;
+    }
+
     .winnerImage{
         display: grid;
         grid-template-columns: auto 10vw;
