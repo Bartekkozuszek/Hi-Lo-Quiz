@@ -37,4 +37,6 @@ app.use('/api/v1/questions', require('./routes/api/questions'))
 
 app.use('/api/v1/users', require('./routes/api/users'))
 
+app.use('/api/v1/bots', require('./routes/api/bots'))
+
 module.exports = app
