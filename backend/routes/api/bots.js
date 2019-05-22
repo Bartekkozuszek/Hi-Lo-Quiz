@@ -3,9 +3,7 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const helpers = require('../../api/bot/helpers')
 const config = require('../../config.js')
-const schema = require('../../api/bot/schema')
-const BotSchema = new mongoose.Schema(schema)
-const Bot = mongoose.model('Bot', BotSchema)
+const Bot = require('../../api/bot/bot')
 const uri = config.URL
 
 mongoose.connect(uri, { useNewUrlParser: true })
