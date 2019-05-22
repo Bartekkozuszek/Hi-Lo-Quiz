@@ -65,6 +65,36 @@ router.post('/', function(req, res, next) {
   })
 })
 
+router.put('/:id', async function(req, res, next) {
+  if (req.user && req.user.isAdmin) {
+    let userProps = {}
+
+    if (req.body.firstName) {
+      userProps.firstName = req.body.firstName
+    }
+    if (req.body.lastName) {
+      userProps.lastName = req.body.lastName
+    }
+    if (req.body.isAdmin !== undefined) {
+      userProps.isAdmin = req.body.isAdmin
+    }
+
+    try {
+      var updatedUser = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: userProps },
+        { new: true, runValidators: true, useFindAndModify: false }
+      )
+    } catch (error) {
+      res.status(400).json({ msg: error.message })
+      return
+    }
+    res.status(200).json(updatedUser.presentable())
+  } else {
+    res.status(401).json({ msg: 'Must be admin to edit users (for now)' })
+  }
+})
+
 router.delete('/:id', async function(req, res, next) {
   try {
     removedUser = await User.findByIdAndRemove(req.params.id)
