@@ -391,6 +391,7 @@ export default new Vuex.Store({
             state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
           getters.lastMove.high =
             state.moveHistory.moves[state.moveHistory.moves.length - 2].high;
+
         }
         //to low out of bounds
         else if (getters.lastMove.guess < state.currentQuestion.answer) {
