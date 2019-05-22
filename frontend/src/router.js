@@ -4,6 +4,7 @@ import Home from "./views/Home";
 import Rules from "./components/Rules";
 import SelectBots from "./views/SelectBots.vue";
 import Login from "./views/Login.vue";
+import Register from "./components/Register.vue"
 
 Vue.use(Router);
 
@@ -31,7 +32,12 @@ export default new Router({
       path: "/login",
       name: "login",
       component: Login
-    },
+      },
+      {
+          path: "/register",
+          name: "register",
+          component: Register
+      },
     {
       path: "/about",
       name: "about",
