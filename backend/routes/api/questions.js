@@ -132,7 +132,7 @@ router.put('/:id', function(req, res, next) {
       .then(result => res.json(result))
       .catch(err => res.status(400).json({ msg: `Didn't edit. ${err.message}` }))
   } else {
-    res.status(401).json({ msg: 'Must be admin to edit' })
+    res.status(401).json({ msg: 'Must be admin to edit questions' })
   }
 })
 
