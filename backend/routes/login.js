@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken')
 var config = require('../jwt.js')
 const express = require('express')
 const router = express.Router()
-const User = require('../user/user')
+const User = require('../api/user/user')
 
 router.post('/login', function(req, res) {
 
