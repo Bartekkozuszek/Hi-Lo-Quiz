@@ -5,7 +5,7 @@
       'background-image': `url(${require('../../public/images/background1.jpg')})`
     }"
   >
-    <HighScore v-if="this.$store.state.showHighScore "></HighScore>
+    <HighScore v-if="this.$store.state.showHighScore"></HighScore>
     <button @click="startGame" class="startButton">Start!</button>
     <br>
     <button @click="toggleShowHighscore" class="startButton">Highscores</button>
@@ -97,13 +97,13 @@ export default {
   position: absolute;
   background-image: linear-gradient(#1e1c1c, #645c5c);
   height: 94.5%;
-  width:100%;
+  width: 100%;
   alignment: center;
   background-size: 200%;
   background-position: top; /* Center the image */
   background-repeat: no-repeat;
   background-color: #2c231c;
-  flex-grow : 1;
+  flex-grow: 1;
 }
 .startButton {
   margin: 2em;

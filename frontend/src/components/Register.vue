@@ -1,43 +1,58 @@
 <template>
-    <div class="layout-form">
-        <div class="form-group" :class="{error: validation.hasError('firstName')}">
-            <div class="label">* First name</div>
-            <div class="content"><input type="text" class="form-control" v-model="firstName" /></div>
-            <div class="message">{{ validation.firstError('firstName') }}</div>
-        </div>
-        <div class="form-group" :class="{error: validation.hasError('lastName')}">
-            <div class="label">* Last name</div>
-            <div class="content"><input type="text" class="form-control" v-model="lastName" /></div>
-            <div class="message">{{ validation.firstError('lastName') }}</div>
-        </div>
-        <div class="form-group" :class="{error: validation.hasError('userName')}">
-            <div class="label">* Username</div>
-            <div class="content"><input type="text" class="form-control" v-model="userName" /></div>
-            <div class="message" >{{ validation.firstError('userName') }}</div>
-            <div v-if="registerError !== ''"> {{registerError}}</div>
-        </div>
-        <div class="form-group" :class="{error: validation.hasError('password')}">
-            <div class="label">* Password</div>
-            <div class="content"><input type="password" class="form-control" v-model="password" /></div>
-            <div class="message">{{ validation.firstError('password') }}</div>
-        </div>
-        <div class="form-group" :class="{error: validation.hasError('repeat')}">
-            <div class="label">* Repeat password</div>
-            <div class="content"><input type="password" class="form-control" v-model="repeat" /></div>
-            <div class="message">{{ validation.firstError('repeat') }}</div>
-        </div>
-        <div class="form-group">
-            <div class="actions">
-                <button type="button" class="btn btn-primary" @click="submit">Submit</button>
-            </div>
-        </div>
+  <div class="layout-form">
+    <div
+      class="form-group"
+      :class="{ error: validation.hasError('firstName') }"
+    >
+      <div class="label">* First name</div>
+      <div class="content">
+        <input type="text" class="form-control" v-model="firstName" />
+      </div>
+      <div class="message">{{ validation.firstError("firstName") }}</div>
     </div>
+    <div class="form-group" :class="{ error: validation.hasError('lastName') }">
+      <div class="label">* Last name</div>
+      <div class="content">
+        <input type="text" class="form-control" v-model="lastName" />
+      </div>
+      <div class="message">{{ validation.firstError("lastName") }}</div>
+    </div>
+    <div class="form-group" :class="{ error: validation.hasError('userName') }">
+      <div class="label">* Username</div>
+      <div class="content">
+        <input type="text" class="form-control" v-model="userName" />
+      </div>
+      <div class="message">{{ validation.firstError("userName") }}</div>
+      <div v-if="registerError !== ''">{{ registerError }}</div>
+    </div>
+    <div class="form-group" :class="{ error: validation.hasError('password') }">
+      <div class="label">* Password</div>
+      <div class="content">
+        <input type="password" class="form-control" v-model="password" />
+      </div>
+      <div class="message">{{ validation.firstError("password") }}</div>
+    </div>
+    <div class="form-group" :class="{ error: validation.hasError('repeat') }">
+      <div class="label">* Repeat password</div>
+      <div class="content">
+        <input type="password" class="form-control" v-model="repeat" />
+      </div>
+      <div class="message">{{ validation.firstError("repeat") }}</div>
+    </div>
+    <div class="form-group">
+      <div class="actions">
+        <button type="button" class="btn btn-primary" @click="submit">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-    import axios from 'axios';
-    import SimpleVueValidator from 'simple-vue-validator';
-    const Validator = SimpleVueValidator.Validator;
+import axios from "axios";
+import SimpleVueValidator from "simple-vue-validator";
+const Validator = SimpleVueValidator.Validator;
 
     export default {
         name: 'Register',
@@ -112,11 +127,11 @@
 </script>
 
 <style>
-    .form-control{
-        border-radius: 4px;
-    }
+.form-control {
+  border-radius: 4px;
+}
 
-    .message {
-        color: red;
-    }
+.message {
+  color: red;
+}
 </style>
