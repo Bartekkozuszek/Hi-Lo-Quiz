@@ -9,7 +9,7 @@ import ImageTooLow from "../public/images/tooLow.png";
 import pontus from "../public/images/pontusBot.png";
 import botr from "../public/images/bot.png";
 import ImageBubble from "../public/images/bubble.png";
-import ImageWantToKnowMore from"../public/images/wantToKnowMore.png";
+import ImageWantToKnowMore from "../public/images/wantToKnowMore.png";
 import axios from "axios";
 
 Vue.use(Vuex, axios);
@@ -29,14 +29,14 @@ export default new Vuex.Store({
     wantLastMove: false,
     totalMatchTime: 50,
     matchesPlayed: 0,
-    showHighScore:false,
+    showHighScore: false,
     currentPlayerIndex: 0,
-      images:{
-          tooHigh:ImageTooHigh,
-          tooLow:ImageTooLow,
-          bubble:ImageBubble,
-          wantToKnowMore:ImageWantToKnowMore
-      },
+    images: {
+      tooHigh: ImageTooHigh,
+      tooLow: ImageTooLow,
+      bubble: ImageBubble,
+      wantToKnowMore: ImageWantToKnowMore
+    },
     currentQuestion: {
       userSubmitted: false,
       author: "guest",
@@ -46,65 +46,64 @@ export default new Vuex.Store({
       low: 1,
       high: 10
     },
-      highScore : [
-          {
-              id: '',
-              name: "guest",
-              isPlayer: true,
-              wins: 10,
-              losses: 5,
-              score:2930,
-              description: "testPlayer and template",
-              image: avatar1,
-              timeleft: 1337 //totalMatchTime,
-          },
-          {
-              id: '',
-              name: "Pontus",
-              isPlayer: true,
-              wins: 1,
-              losses: 10,
-              score:21,
-              description: "Tja",
-              image: avatar3,
-              timeleft: 2000 //totalMatchTime,
-          },
-          {
-              id: '',
-              name: "Adam",
-              isPlayer: true,
-              wins: 2,
-              losses: 5,
-              score:20,
-              description: "Hello",
-              image: avatar2,
-              timeleft: 1337 //totalMatchTime,
-          },
-          {
-              id: '',
-              name: "Petros",
-              isPlayer: true,
-              wins: 17,
-              losses: 3,
-              score:10,
-              description: "Hola",
-              image: avatar1,
-              timeleft: 3500 //totalMatchTime,
-          },
-          {
-              id: '',
-              name: "Carl",
-              isPlayer: true,
-              wins: 6,
-              losses: 2,
-              score:5,
-              description: "Hej",
-              image: avatar2,
-              timeleft: 1337 //totalMatchTime,
-          },
-      ],
-    loadedQuestions: [
+    highScore: [
+      {
+        id: "",
+        name: "guest",
+        isPlayer: true,
+        wins: 10,
+        losses: 5,
+        score: 2930,
+        description: "testPlayer and template",
+        image: avatar1,
+        timeleft: 1337 //totalMatchTime,
+      },
+      {
+        id: "",
+        name: "Pontus",
+        isPlayer: true,
+        wins: 1,
+        losses: 10,
+        score: 21,
+        description: "Tja",
+        image: avatar3,
+        timeleft: 2000 //totalMatchTime,
+      },
+      {
+        id: "",
+        name: "Adam",
+        isPlayer: true,
+        wins: 2,
+        losses: 5,
+        score: 20,
+        description: "Hello",
+        image: avatar2,
+        timeleft: 1337 //totalMatchTime,
+      },
+      {
+        id: "",
+        name: "Petros",
+        isPlayer: true,
+        wins: 17,
+        losses: 3,
+        score: 10,
+        description: "Hola",
+        image: avatar1,
+        timeleft: 3500 //totalMatchTime,
+      },
+      {
+        id: "",
+        name: "Carl",
+        isPlayer: true,
+        wins: 6,
+        losses: 2,
+        score: 5,
+        description: "Hej",
+        image: avatar2,
+        timeleft: 1337 //totalMatchTime,
+      }
     ],
+    loadedQuestions: [],
     loadedBots: [
       {
         name: "BartekBot",
@@ -121,7 +120,7 @@ export default new Vuex.Store({
           let newMove = {
             guess: allMoves.moves[allMoves.moves.length - 1].low + 1,
             timeTook: 2000,
-            id: this.id,//*timeoutMultiplier();
+            id: this.id //*timeoutMultiplier();
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
@@ -134,7 +133,8 @@ export default new Vuex.Store({
         wins: 100,
         losses: 300,
         catchphrase: "I'm just happy to play!",
-        description: "Even though Lillis isn't the smartest, he will do his best.",
+        description:
+          "Even though Lillis isn't the smartest, he will do his best.",
         image: pontus,
         enabled: false,
         timeleft: 1337, //totalMatchTime,
@@ -142,7 +142,7 @@ export default new Vuex.Store({
           let newMove = {
             guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
             timeTook: 2000,
-            id: this.id,//*timeoutMultiplier();
+            id: this.id //*timeoutMultiplier();
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
@@ -163,7 +163,7 @@ export default new Vuex.Store({
           let newMove = {
             guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
             timeTook: 2000, //*timeoutMultiplier();
-            id: this.id,
+            id: this.id
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
@@ -182,15 +182,20 @@ export default new Vuex.Store({
         timeleft: 1337, //totalMatchTime,
         move(allMoves) {
           let newMove = {
-            guess: Math.round(allMoves.moves[allMoves.moves.length - 1].low + (allMoves.moves[allMoves.moves.length - 1].high - allMoves.moves[allMoves.moves.length - 1].low)/2),
+            guess: Math.round(
+              allMoves.moves[allMoves.moves.length - 1].low +
+                (allMoves.moves[allMoves.moves.length - 1].high -
+                  allMoves.moves[allMoves.moves.length - 1].low) /
+                  2
+            ),
             timeTook: 1800, //*timeoutMultiplier();
-            id: this.id,
+            id: this.id
           };
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
-		}
-	  },
-	  {
+        }
+      },
+      {
         name: "Normal bot",
         isPlayer: false,
         id: 5,
@@ -203,27 +208,30 @@ export default new Vuex.Store({
         timeleft: 1337, //totalMatchTime,
         move(allMoves) {
           let newMove = {
-            guess: Math.round(allMoves.moves[allMoves.moves.length - 1].low + (allMoves.moves[allMoves.moves.length - 1].high - allMoves.moves[allMoves.moves.length - 1].low)/2),
+            guess: Math.round(
+              allMoves.moves[allMoves.moves.length - 1].low +
+                (allMoves.moves[allMoves.moves.length - 1].high -
+                  allMoves.moves[allMoves.moves.length - 1].low) /
+                  2
+            ),
             timeTook: 1800,
-            id: this.id//*timeoutMultiplier();
-          };    
-		var i = 1;
-		var guessModifier = "a";
-		var guess = 'MyGuess';
-		alert("I never asked for this");
-		if(typeof InstallTrigger !== 'undefined'){
-		window.location.href = 'https://www.youtube.com/watch?v=HJO57totNyw&autoplay=1';
-		} 
-		while(i){
-		guessModifier = guessModifier += "My guess is"+guess;
-		}
-		  console.log("botten " + this.name + "gissar: " + newMove.guess);
+            id: this.id //*timeoutMultiplier();
+          };
+          var i = 1;
+          var guessModifier = "a";
+          var guess = "MyGuess";
+          alert("I never asked for this");
+          if (typeof InstallTrigger !== "undefined") {
+            window.location.href =
+              "https://www.youtube.com/watch?v=HJO57totNyw&autoplay=1";
+          }
+          while (i) {
+            guessModifier = guessModifier += "My guess is" + guess;
+          }
+          console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
         }
-
       }
-
-
     ],
     currentUser: {
       id: 0,
@@ -231,17 +239,17 @@ export default new Vuex.Store({
       isPlayer: true,
       wins: 5,
       losses: 7,
-        rank:6,
+        rank:3,
         score:1,
       description: "testPlayer and template",
       image: avatar1,
       timeleft: 1337 //totalMatchTime,
     },
     moveHistory: {
-      questionID: '',
-      userID: '',
+      questionID: "",
+      userID: "",
       botsIDs: [],
-      score: '',
+      score: "",
       question: null,
       moves: [
         {
@@ -262,14 +270,14 @@ export default new Vuex.Store({
         image: avatar1,
         timeleft: 1337 //totalMatchTime,
       }
-        ],
-        isLoggedIn: false,
-        user: 'guest'
+    ],
+    isLoggedIn: false,
+    user: "guest"
   },
-    getters: {
-        isLoggedIn: state => {
-            return state.isLoggedIn;
-        },
+  getters: {
+    isLoggedIn: state => {
+      return state.isLoggedIn;
+    },
     timeOutMultiplier: state => {
       return state.timeoutMultiplier;
     },
@@ -279,14 +287,15 @@ export default new Vuex.Store({
 
     currentPlayer: state => {
       return state.sessionPlayersArray[state.currentPlayerIndex];
-        },
-        user: state => {
-            return state.user
-        }
+    },
+    user: state => {
+      return state.user;
+    }
   },
   mutations: {
     setQuestions(state, loadedQuestions) {
       state.loadedQuestions = loadedQuestions;
+
       },
       login(state, payload) {
           state.isLoggedIn = true,
@@ -306,6 +315,29 @@ export default new Vuex.Store({
       }
   },
   actions: {
+      async loadHighScores({state}){
+          //top 5.
+          let tempArray= await axios.get(
+              "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users?sort=score&amount=5"
+          );
+          state.highScore=tempArray.data.slice(0,5);
+
+          //TEMPORARY SOLUTION.
+          state.highScore.forEach(function(element) {
+            element.image=avatar1;
+          });
+
+
+          if(state.currentUser.id != 0) {
+              //user ranking
+              tempArray = await axios.get(
+                  "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users/score-rank/" +
+                  state.currentUser.id
+              );
+              console.log(tempArray.data);
+              state.currentUser.rank = tempArray.data.rank+1;
+          }
+      },
     async loadQuestions({ commit, dispatch, state }, amount) {
       state.wantAnswers = false;
       axios
@@ -333,12 +365,14 @@ export default new Vuex.Store({
     toggleBotChosen({ state }, payloadIndex) {
       let selectedBot = state.loadedBots[payloadIndex];
       if (!selectedBot.enabled) {
-       state.loadedBots[payloadIndex].enabled = true;    
-	   state.sessionPlayersArray.push(selectedBot);
-      } 
-	  else {
-       state.loadedBots[payloadIndex].enabled = false;
-	   state.sessionPlayersArray.splice(state.sessionPlayersArray.indexOf(selectedBot),1);
+        state.loadedBots[payloadIndex].enabled = true;
+        state.sessionPlayersArray.push(selectedBot);
+      } else {
+        state.loadedBots[payloadIndex].enabled = false;
+        state.sessionPlayersArray.splice(
+          state.sessionPlayersArray.indexOf(selectedBot),
+          1
+        );
       }
       document.documentElement.style.setProperty(
         "--playerAmount",
@@ -352,10 +386,10 @@ export default new Vuex.Store({
       state.moveHistory.questionID = state.currentQuestion.questionID;
       state.moveHistory.userID = state.currentUser.id;
       state.sessionPlayersArray.forEach(a => {
-        if(a.isPlayer === false) {
-          state.moveHistory.botsIDs.push(a.id)
-        }}
-       )
+        if (a.isPlayer === false) {
+          state.moveHistory.botsIDs.push(a.id);
+        }
+      });
       state.moveHistory.moves = [
         {
           low: state.currentQuestion.low,
@@ -366,6 +400,7 @@ export default new Vuex.Store({
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
       if (getters.lastMove.guess == state.currentQuestion.answer) {
+        dispatch('postGameStats')
         state.gameState = 3;
         console.log(getters.currentPlayer.name + " won!!!!");
       } else {
@@ -395,7 +430,6 @@ export default new Vuex.Store({
             state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
           getters.lastMove.high =
             state.moveHistory.moves[state.moveHistory.moves.length - 2].high;
-
         }
         //to low out of bounds
         else if (getters.lastMove.guess < state.currentQuestion.answer) {
@@ -405,7 +439,7 @@ export default new Vuex.Store({
             state.moveHistory.moves[state.moveHistory.moves.length - 2].low;
         }
         state.wantLastMove = true;
-       // console.log("min och max efter vi sätter på wantLastMove" + state.moveHistory.moves[state.moveHistory.moves.length-1].low + ' ' + state.moveHistory.moves[state.moveHistory.moves.length-1].high)
+        // console.log("min och max efter vi sätter på wantLastMove" + state.moveHistory.moves[state.moveHistory.moves.length-1].low + ' ' + state.moveHistory.moves[state.moveHistory.moves.length-1].high)
         state.animatingCharacters = true;
         setTimeout(function() {
           if (
@@ -458,7 +492,24 @@ export default new Vuex.Store({
               .then((r) => console.log(r.data.msg)).then(() => commit('logout'))
           
       },
-      
+      async postGameStats({ state }) {
+        try {
+          let game = {}
+          game.questionID = state.currentQuestion._id
+          game.userID = state.currentUser.id
+          // TODO calculate score to be added
+          game.score = 5
+          game.botIDs = [...new Set(state.moveHistory.botsIDs)]
+          game.moves = state.moveHistory.moves
+          var res = await axios.post(
+            'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/games',
+            game
+          )
+          console.log(res)
+        } catch (error) {
+          console.log(error)
+        }
+      }
       
   }
 });

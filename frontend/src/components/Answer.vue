@@ -196,7 +196,8 @@
         this.forceRerender();
         console.log("no guess was made, so guess automatically set to lowest of span")
       }
-        let newMove = {guess: this.value, timeTook: 10};
+      let userId=this.$store.state.currentUser.id
+        let newMove = {id:userId,guess: this.value, timeTook: 10};
         this.$store
                 .dispatch("addMove", newMove)
                 .then(() => this.$store.dispatch("turnFinished"))

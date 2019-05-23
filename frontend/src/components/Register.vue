@@ -123,7 +123,7 @@
                 }).catch((err) => {
                     this.registerError = err.response.data.msg
                 })
-              }
+            }
           });
             
         },
