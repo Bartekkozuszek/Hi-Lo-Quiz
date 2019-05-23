@@ -323,15 +323,15 @@ export default new Vuex.Store({
           state.highScore=tempArray.data.slice(0,5);
 
 
-
-          //user ranking
-          tempArray= await axios.get(
-              "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com//api/v1/users/score-rank/" +
-          state.currentUser.id
-      );
-          console.log(tempArray.data);
-          state.currentUser.rank=tempArray.data;
-
+          if(state.currentUser.id != 0) {
+              //user ranking
+              tempArray = await axios.get(
+                  "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com//api/v1/users/score-rank/" +
+                  state.currentUser.id
+              );
+              console.log(tempArray.data);
+              state.currentUser.rank = tempArray.data;
+          }
       },
     async loadQuestions({ commit, dispatch, state }, amount) {
       state.wantAnswers = false;
