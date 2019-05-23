@@ -3,20 +3,24 @@
     "version": "0.1.0",
     "babel": {
         "presets": [
-
-            ["env", {
-                "modules": false
-            }]
-
+            [
+                "env",
+                {
+                    "modules": false
+                }
+            ]
         ],
         "env": {
             "test": {
                 "presets": [
-                    ["env", {
-                        "targets": {
-                            "node": "current"
+                    [
+                        "env",
+                        {
+                            "targets": {
+                                "node": "current"
+                            }
                         }
-                    }]
+                    ]
                 ]
             }
         }
@@ -81,10 +85,8 @@
         "testMatch": [
             "<rootDir>/tests/unit/*.spec.js"
         ],
-        "transformIgnorePatterns": ["/node_modules(?![\\/]vue-awesome[\\/]|[\\/]vue-single-select[\\/])/"]
-
-
+        "transformIgnorePatterns": [
+            "/node_modules(?![\\/]vue-awesome[\\/]|[\\/]vue-single-select[\\/])/"
+        ]
     }
-
-
 }
