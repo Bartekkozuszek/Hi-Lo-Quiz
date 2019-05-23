@@ -8,11 +8,14 @@
         {
           "modules": false
         }
+      ],
+      [
+        "@vue/app"
+      ],
+      [
+        "@babel/preset-env"
       ]
-		,
-		["@vue/app"],
-		["@babel/preset-env"]
-	],
+    ],
     "env": {
       "test": {
         "presets": [
