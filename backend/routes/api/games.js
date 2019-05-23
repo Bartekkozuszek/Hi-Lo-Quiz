@@ -83,25 +83,27 @@ router.post('/', async function(req, res, next) {
 
   //add statistics for user
   var userID = sanitized.userID
-  if (req.user.id === userID) {
-    var score = sanitized.score
-    var lastMoveId = sanitized.moves[sanitized.moves.length - 1].id
+  console.log('userID ' + userID)
+  console.log('req.user.id ' + req.user.id)
+  //if (req.user.id === userID) {
+  var score = sanitized.score
+  var lastMoveId = sanitized.moves[sanitized.moves.length - 1].id
 
-    var won = lastMoveId === userID ? true : false
-    var win = won ? 1 : 0
-    var loss = won ? 0 : 1
+  var won = lastMoveId === userID ? true : false
+  var win = won ? 1 : 0
+  var loss = won ? 0 : 1
 
-    try {
-      var updatedUser = await User.findByIdAndUpdate(
-        userID,
-        { $inc: { score: score, wins: win, losses: loss } },
-        { new: true, runValidators: true, useFindAndModify: false }
-      )
-    } catch (err) {
-      res.status(400).json({ msg: 'Error updating statistics for user ' + err.message })
-      return
-    }
+  try {
+    var updatedUser = await User.findByIdAndUpdate(
+      userID,
+      { $inc: { score: score, wins: win, losses: loss } },
+      { new: true, runValidators: true, useFindAndModify: false }
+    )
+  } catch (err) {
+    res.status(400).json({ msg: 'Error updating statistics for user ' + err.message })
+    return
   }
+  //}
 
   let responseJson = {}
   responseJson.updatedUser = updatedUser ? updatedUser.presentable() : {}
