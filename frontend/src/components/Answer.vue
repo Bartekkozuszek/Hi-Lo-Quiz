@@ -10,7 +10,10 @@
         :marks="marksArray"
         v-bind="options"
         :clickable="showSubmit"
+        :disabled="!showSubmit"
         :key="componentKey"
+        v-on:change="setValueToGuess"
+        :use-keyboard="true"
       >
         <template v-slot:mark="{ pos, label }">
           <div class="custom-mark" :style="{ left: `${pos}%` }">
@@ -22,11 +25,10 @@
     <!--Just nu submitbutton för enkelhetens skull men sen fixa så att värdet skickas ändå om tiden går ut-->
     <div>Make your choice!</div>
     <br />
-    <input :value="guess" />
+    <input v-model.number="value" type="number" v-on:change="setGuessToValue"/>
     <button
       v-if="showSubmit"
       id="submit-button"
-      :marks="marks"
       v-on:click="submitAnswer"
     >
       Submit
@@ -40,11 +42,13 @@
 <script>
   import VueSlider from "vue-slider-component";
   import "../assets/default.css";
+  import VueNumericInput from 'vue-numeric-input'
 
   export default {
   name: "Answer",
   components: {
-    VueSlider
+    VueSlider,
+    VueNumericInput
   },
 
   data: function() {
@@ -53,21 +57,21 @@
       componentKey: 0,
       selected: "",
       marks: [],
+      value: 0,
       options: {
         dotSize: 20,
         width: "90%",
         height: 5,
         direction: "ltr",
-        disabled: false,
-        clickable: this.showSubmit,
         duration: 0.5,
-        lazy: false,
         max: 100,
         min: 0,
+        contained: true,
         railStyle: {
           boxShadow: 'var(--glow-on)'
         },
-        silent: false
+        silent: false,
+        lazy: true,
       }
     };
   },
@@ -127,6 +131,7 @@
     showSubmit() {
       return !!(this.$store.state.animatingCharacters === false && this.isPlayer);
     },
+
     currentQuestion() {
       return this.$store.state.currentQuestion;
     },
@@ -146,17 +151,32 @@
     wantAnswers() {
       if (this.wantAnswers === true && this.firstRound === true)
         this.updateValueForSubmit();
+        this.resetGuessToMiddle();
+        this.setValueToGuess();
     },
     //Uppdaterar guess sen när botten är klar med sitt moves ändras wantLastMove och den uppdateras.
+    // Kollar även om siffran är utanför range och isåfall sätter den maxsiffran i slidern
     lastMove() {
-      this.guess = this.lastMove.guess
-      this.forceRerender
+
+      if (this.lastMove.guess>this.options.max){
+        this.guess = this.options.max
+      } else if (this.lastMove.guess<this.options.min) {
+        this.guess = this.options.min
+      } else {
+
+        this.guess = this.lastMove.guess;
+      }
+
+      this.setValueToGuess();
+      this.forceRerender()
+
     },
   //Watcher på när lastMove ändras (dvs bottarna gör turns)
     wantLastMove() {
       if (this.$store.state.wantAnswers && this.firstRound === false && this.$store.state.wantLastMove===true) {
-        //console.log("watcher wantLastMove running")
+
         this.updateValue();
+
       }
     },
     isPlayer() {
@@ -166,13 +186,38 @@
     }
   },
   methods: {
+    // Om guess inte är ett tal eller illegal sätts gissning till middle nu.
     submitAnswer() {
-      let newMove = { guess: this.guess, timeTook: 10 };
-     // console.log(this.$store.getters.currentPlayer.name + ' gissar: ' + this.guess);
-      this.$store
-        .dispatch("addMove", newMove)
-        .then(() => this.$store.dispatch("turnFinished"))
-        .then(() => this.updateValue);
+
+
+      if (typeof this.value ==! "number" || this.value == '') {
+        this.value = this.options.min;
+        this.setGuessToValue();
+        this.forceRerender();
+        console.log("no guess was made, so guess automatically set to lowest of span")
+      }
+        let newMove = {guess: this.value, timeTook: 10};
+        this.$store
+                .dispatch("addMove", newMove)
+                .then(() => this.$store.dispatch("turnFinished"))
+                .then(() => this.updateValue);
+    },
+    setValueToGuess() {
+      this.value = this.guess;
+      this.forceRerender();
+    },
+    setGuessToValue() {
+      if (typeof this.value == 'number' && this.value <= this.options.max && this.value >= this.options.min) {
+        this.guess = this.value;
+        this.forceRerender();
+      } else if (typeof this.value == 'number' && this.value > this.options.max){
+        this.guess = this.options.max;
+        this.forceRerender();
+      }
+      else if (typeof this.value == 'number' && this.value < this.options.min){
+        this.guess = this.options.min;
+        this.forceRerender();
+      }
     },
     forceRerender() {
       this.componentKey += 1;
@@ -182,13 +227,22 @@
         this.options.min + (this.options.max - this.options.min) / 2
       );
     },
+    //Settar gisssningen till det senaste spelaren har gissat. Kollar för undefined och om det är för stort eller inte.
     updateLastPlayerGuess() {
+
       let temp = this.lastMove;
       if (typeof temp.guess != "undefined") {
-        this.guess = temp.guess;
+        if(temp.guess>this.options.max) {
+          this.guess = this.options.max
+        } else if (temp.guess<this.options.min) {
+          this.guess = this.options.min
+        } else {
+          this.guess = temp.guess;
+        }
       } else {
         this.resetGuessToMiddle();
       }
+
     },
     setBoxShadowOnRail() {
       this.options.railStyle = {
@@ -210,7 +264,6 @@
       if (this.max + 1 - (this.min - 1) > 1) {
         this.options.max = this.max;
         this.forceRerender();
-       // console.log('this.min: '+this.min)
         this.options.min = this.min;
         this.forceRerender();
         this.updateLastPlayerGuess();
@@ -259,9 +312,14 @@
   },
     //Settar glow om det är en spelare
     mounted() {
-    if(this.isPlayer)
+    if(this.isPlayer) {
       this.setBoxShadowOnRail()
-      else this.unsetBoxShadowOnRail()
+    }
+       else{
+        this.unsetBoxShadowOnRail()
+      }
+
+
     }
   };
 </script>
