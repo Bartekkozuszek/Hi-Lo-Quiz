@@ -497,7 +497,7 @@ export default new Vuex.Store({
           game.userID = state.currentUser.id
           // TODO calculate score to be added
           game.score = 5
-          game.botIDs = [...new Set(state.moveHistory.botIDs)]
+          game.botIDs = [...new Set(state.moveHistory.botsIDs)]
           game.moves = state.moveHistory.moves
           var res = await axios.post(
             'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/games',
