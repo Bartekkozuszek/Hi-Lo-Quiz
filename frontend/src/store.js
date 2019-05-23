@@ -242,7 +242,7 @@ export default new Vuex.Store({
     moveHistory: {
       questionID: '',
       userID: '',
-      botsIDs: [],
+      botIDs: [],
       score: '',
       question: null,
       moves: [
@@ -346,7 +346,7 @@ export default new Vuex.Store({
       state.moveHistory.userID = state.currentUser.id
       state.sessionPlayersArray.forEach(a => {
         if (a.isPlayer === false) {
-          state.moveHistory.botsIDs.push(a.id)
+          state.moveHistory.botIDs.push(a.id)
         }
       })
       state.moveHistory.moves = [
@@ -359,6 +359,7 @@ export default new Vuex.Store({
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
       if (getters.lastMove.guess == state.currentQuestion.answer) {
+        dispatch('postGameStats')
         state.gameState = 3
         console.log(getters.currentPlayer.name + ' won!!!!')
       } else {
@@ -416,7 +417,6 @@ export default new Vuex.Store({
       //pushes last object in array to the same array
       //Turn off wantLastMove to not trigger watcher in answer
       state.wantLastMove = false
-      console.log(newMove)
       state.moveHistory.moves.push(newMove)
     },
     toggleAnimations({ state }) {
@@ -427,13 +427,11 @@ export default new Vuex.Store({
     async login({ commit }, payload) {
       await axios
         .post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/login', {
-        
-        userName: payload.userName,
+          userName: payload.userName,
           password: payload.password
         })
         .then(resp => {
-          console.log('hit '+resp.data.userName)
-          payload.id=resp.data._id
+          payload.id = resp.data.user._id
           commit('login', payload)
           console.log(resp.data.msg)
         })
@@ -441,6 +439,24 @@ export default new Vuex.Store({
     },
     logout({ commit }) {
       commit('logout')
+    },
+    async postGameStats({ state }) {
+      try {
+        let game = {}
+        game.questionID = state.currentQuestion._id
+        game.userID = state.currentUser.id
+        game.score = 5
+        game.botIDs = [...new Set(state.moveHistory.botIDs)]
+        game.moves = state.moveHistory.moves
+        console.log(game.moves)
+        var res = await axios.post(
+          'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/games',
+          game
+        )
+        console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 })
