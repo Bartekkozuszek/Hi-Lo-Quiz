@@ -8,7 +8,7 @@
     <HighScore v-if="this.$store.state.showHighScore "></HighScore>
     <button @click="startGame" class="startButton">Start!</button>
     <br>
-    <button @click="toggeShowHighscore" class="startButton">Highscores</button>
+    <button @click="toggleShowHighscore" class="startButton">Highscores</button>
     <div class="botContainer" v-dragscroll.x="true">
       <div></div>
       <div
@@ -47,10 +47,11 @@ export default {
       this.$store.dispatch("loadQuestions", 1);
       this.$store.dispatch("changeGameState", 2);
     },
-    toggeShowHighscore:function(){
+    toggleShowHighscore:function(){
       if (this.$store.state.showHighScore==true){
         this.$store.state.showHighScore=false;
       }else{
+        this.$store.dispatch("loadHighScores");
         this.$store.state.showHighScore=true;
       }
     }

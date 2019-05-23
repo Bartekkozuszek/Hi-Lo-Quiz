@@ -231,7 +231,7 @@ export default new Vuex.Store({
       isPlayer: true,
       wins: 5,
       losses: 7,
-        rank:6,
+        rank:3,
         score:1,
       description: "testPlayer and template",
       image: avatar1,
@@ -302,6 +302,24 @@ export default new Vuex.Store({
       }
   },
   actions: {
+      async loadHighScores({state}){
+          //top 5.
+          let tempArray= await axios.get(
+              "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users?sort=score&amount=5"
+          );
+          state.highScore=tempArray.data.slice(0,5);
+
+
+
+          //user ranking
+          tempArray= await axios.get(
+              "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com//api/v1/users/score-rank/" +
+          state.currentUser.id
+      );
+          console.log(tempArray.data);
+          state.currentUser.rank=tempArray.data;
+
+      },
     async loadQuestions({ commit, dispatch, state }, amount) {
       state.wantAnswers = false;
       axios

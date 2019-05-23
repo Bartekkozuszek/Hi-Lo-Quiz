@@ -3,7 +3,7 @@
     >
         <div class="highScoreHeader">
             <p>Global Rankings</p>
-            <p class="back"@click="toggeShowHighscore">BACK</p>
+            <p class="back"@click="toggleShowHighscore">BACK</p>
         </div>
         <div class="playerComponent" >
             <p class="rank">Rank</p>
@@ -17,9 +17,9 @@
         >
             <p class="rank">{{index+1}}</p>
             <img class="playerImage" :src="player.image">
-            <p>{{player.name}}</p>
+            <p>{{player.userName}}</p>
             <p>{{player.score}}</p>
-            <p>{{Math.round(player.wins/(player.wins + player.losses)*100)}}%</p>
+            <p>{{calcWinRate(player)}}%</p>
         </div>
 
         <div class="playerComponent" v-if="playerBadEnough" v-bind="player=this.$store.state.currentUser">
@@ -27,7 +27,7 @@
             <img class="playerImage" :src="player.image">
             <p>{{player.name}}</p>
             <p>{{player.score}}</p>
-            <p>{{Math.round(player.wins/(player.wins + player.losses)*100)}}%</p>
+            <p>{{calcWinRate(player)}}%</p>
         </div>
 
     </div>
@@ -37,13 +37,20 @@
     export default {
         name: "HighScore",
         methods:{
-            toggeShowHighscore:function(){
+            toggleShowHighscore:function(){
                 if (this.$store.state.showHighScore==true){
                     this.$store.state.showHighScore=false;
                 }else{
                     this.$store.state.showHighScore=true;
                 }
+            },
+            calcWinRate:function(player){
+                if(player.wins +player.losses ==0){
+                    return 0;
+                }
+                 return Math.round(player.wins/(player.wins + player.losses)*100)
             }
+
         },
         computed:{
             playerBadEnough:function(){
