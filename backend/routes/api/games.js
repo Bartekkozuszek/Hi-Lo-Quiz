@@ -48,7 +48,6 @@ router.post('/', async function(req, res, next) {
     botIDs: req.body.botIDs,
     moves: req.body.moves
   }
-
   //save game history
   const newGame = new Game(sanitized)
 
@@ -82,8 +81,10 @@ router.post('/', async function(req, res, next) {
   }
 
   //add statistics for user
+  console.log('sanitized.userID ' + sanitized.userID)
+  console.log('req.user.id ' + req.user.id)
   var userID = sanitized.userID
-  if (req.user.id === userID) {
+  if (req.user.id == userID) {
     var score = sanitized.score
     var lastMoveId = sanitized.moves[sanitized.moves.length - 1].id
 
