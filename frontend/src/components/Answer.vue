@@ -13,7 +13,7 @@
         :disabled="!showSubmit"
         :key="componentKey"
         v-on:change="setValueToGuess"
-        :use-keyboard="true"
+        v-show="!checked"
       >
         <template v-slot:mark="{ pos, label }">
           <div class="custom-mark" :style="{ left: `${pos}%` }">
@@ -23,16 +23,22 @@
       </vue-slider>
     </div>
     <!--Just nu submitbutton för enkelhetens skull men sen fixa så att värdet skickas ändå om tiden går ut-->
-    <div>Make your choice!</div>
     <br />
-    <input v-model.number="value" type="number" v-on:change="setGuessToValue"/>
-    <button
-      v-if="showSubmit"
-      id="submit-button"
-      v-on:click="submitAnswer"
-    >
+    <div>{{ msg }}</div>
+    <br />
+    <input
+      ref="input"
+      v-model.number="value"
+      type="number"
+      v-on:change="setGuessToValue"
+      autofocus="autofocus"
+    />
+    <button v-if="showSubmit" id="submit-button" v-on:click="submitAnswer">
       Submit
     </button>
+    <br />
+    <label for="hardMode">Hard (No slider)</label>
+    <input type="checkbox" id="hardMode" v-model="checked" />
     <!--select v-model="selected" @change="assignQuestion">
       <option v-for="(o, index) in loadedQuestions">{{ o.question }}</option>
     </-_select/-->
@@ -40,15 +46,13 @@
 </template>
 
 <script>
-  import VueSlider from "vue-slider-component";
-  import "../assets/default.css";
-  import VueNumericInput from 'vue-numeric-input'
+import VueSlider from "vue-slider-component";
+import "../assets/default.css";
 
-  export default {
+export default {
   name: "Answer",
   components: {
-    VueSlider,
-    VueNumericInput
+    VueSlider
   },
 
   data: function() {
@@ -58,6 +62,7 @@
       selected: "",
       marks: [],
       value: 0,
+      checked: false,
       options: {
         dotSize: 20,
         width: "90%",
@@ -68,55 +73,65 @@
         min: 0,
         contained: true,
         railStyle: {
-          boxShadow: 'var(--glow-on)'
+          boxShadow: "var(--glow-on)"
         },
         silent: false,
-        lazy: true,
+        lazy: true
       }
     };
   },
   computed: {
     min() {
-      return this.$store.state.moveHistory.moves[this.$store.state.moveHistory.moves.length-1].low
+      return this.$store.state.moveHistory.moves[
+        this.$store.state.moveHistory.moves.length - 1
+      ].low;
     },
     max() {
-      return this.$store.state.moveHistory.moves[this.$store.state.moveHistory.moves.length-1].high
+      return this.$store.state.moveHistory.moves[
+        this.$store.state.moveHistory.moves.length - 1
+      ].high;
     },
+    msg() {
+      if (this.isPlayer) return "Make your choice!";
+      else return "Other players turn, please wait";
+    },
+    //Funktion för vilka tal som ska visas under slidern. Mer än 4 tal visas 5 alternativ, 4-tal 4 etc.
     marksArray() {
       let diff = Math.round(this.options.max - this.options.min);
-      if (diff>3) {
-          return [
-              this.options.min,
-              Math.round(this.options.min + diff * 0.25),
-              Math.round(this.options.min + diff / 2),
-              Math.round(this.options.min + diff * 0.75),
-              this.options.max
-          ];
-      } else if (diff>2)
-        {
-            return [
-                this.options.min,
-                Math.round(this.options.min + diff / 0.5),
-                this.options.max
-            ];
-        }
-      else if (diff>1) {
-          return [
-              this.options.min,
-              this.options.max
-          ];
-        }
-      else return [this.options.max]
+      if (diff > 4) {
+        return [
+          this.options.min,
+          Math.round(this.options.min + diff * 0.25),
+          Math.round(this.options.min + diff / 2),
+          Math.round(this.options.min + diff * 0.75),
+          this.options.max
+        ];
+      } else if (diff > 3) {
+        return [
+          this.options.min,
+          Math.round(this.options.min + diff * (1 / 3)),
+          Math.round(this.options.min + diff * (2 / 3)),
+          this.options.max
+        ];
+      } else if (diff > 2) {
+        return [
+          this.options.min,
+          Math.round(this.options.min + diff / 0.5),
+          this.options.max
+        ];
+      } else if (diff > 1) {
+        return [this.options.min, this.options.max];
+      } else return [this.options.max];
     },
     loadedQuestions() {
       return this.$store.state.loadedQuestions;
     },
     selectedIndex() {
       return this.loadedQuestions
-              .map(function (e) {
-                return e.question;
-              })
-              .indexOf(this.selected);
+        .map(function(e) {
+          return e.question;
+        })
+        .indexOf(this.selected);
     },
     moves() {
       return this.$store.state.moveHistory.moves;
@@ -129,7 +144,9 @@
       return this.$store.getters.currentPlayer.isPlayer;
     },
     showSubmit() {
-      return !!(this.$store.state.animatingCharacters === false && this.isPlayer);
+      return !!(
+        this.$store.state.animatingCharacters === false && this.isPlayer
+      );
     },
 
     currentQuestion() {
@@ -142,7 +159,7 @@
       return this.$store.state.moveHistory.moves.length < 2;
     },
     wantLastMove() {
-     return this.$store.state.wantLastMove
+      return this.$store.state.wantLastMove;
     }
   },
 
@@ -151,70 +168,82 @@
     wantAnswers() {
       if (this.wantAnswers === true && this.firstRound === true)
         this.updateValueForSubmit();
-        this.resetGuessToMiddle();
-        this.setValueToGuess();
+      this.resetGuessToMiddle();
+      this.setValueToGuess();
     },
     //Uppdaterar guess sen när botten är klar med sitt moves ändras wantLastMove och den uppdateras.
     // Kollar även om siffran är utanför range och isåfall sätter den maxsiffran i slidern
     lastMove() {
-
-      if (this.lastMove.guess>this.options.max){
-        this.guess = this.options.max
-      } else if (this.lastMove.guess<this.options.min) {
-        this.guess = this.options.min
+      if (this.lastMove.guess > this.options.max) {
+        this.guess = this.options.max;
+      } else if (this.lastMove.guess < this.options.min) {
+        this.guess = this.options.min;
       } else {
-
         this.guess = this.lastMove.guess;
       }
 
       this.setValueToGuess();
-      this.forceRerender()
-
+      this.forceRerender();
     },
-  //Watcher på när lastMove ändras (dvs bottarna gör turns)
+    //Watcher på när lastMove ändras (dvs bottarna gör turns)
     wantLastMove() {
-      if (this.$store.state.wantAnswers && this.firstRound === false && this.$store.state.wantLastMove===true) {
-
+      if (
+        this.$store.state.wantAnswers &&
+        this.firstRound === false &&
+        this.$store.state.wantLastMove === true
+      ) {
         this.updateValue();
-
       }
     },
     isPlayer() {
-      if(this.isPlayer)
-      this.setBoxShadowOnRail();
-      else this.unsetBoxShadowOnRail();
+      if (this.isPlayer) {
+        this.setBoxShadowOnRail();
+        this.$refs.input.focus();
+      } else this.unsetBoxShadowOnRail();
     }
   },
   methods: {
+    // Metod som körs när man klickar på submit eller tiden har gått ut.
+    // Input validation på att det är att nummer som skickas in mm. annars sätts value till minsta möjliga.
     // Om guess inte är ett tal eller illegal sätts gissning till middle nu.
     submitAnswer() {
-
-
-      if (typeof this.value ==! "number" || this.value == '') {
+      if (typeof this.value == !"number" || this.value == "") {
         this.value = this.options.min;
         this.setGuessToValue();
         this.forceRerender();
-        console.log("no guess was made, so guess automatically set to lowest of span")
+        console.log(
+          "no guess was made, so guess automatically set to lowest of span"
+        );
       }
-        let newMove = {guess: this.value, timeTook: 10};
-        this.$store
-                .dispatch("addMove", newMove)
-                .then(() => this.$store.dispatch("turnFinished"))
-                .then(() => this.updateValue);
+      let newMove = { guess: this.value, timeTook: 10 };
+      this.$store
+        .dispatch("addMove", newMove)
+        .then(() => this.$store.dispatch("turnFinished"))
+        .then(() => this.updateValue);
     },
     setValueToGuess() {
       this.value = this.guess;
       this.forceRerender();
     },
+    // Uppdaterar guess (bindat värde för slidern) till value (för inputfältet). Kollar att värdet inte är utanför bounds för slidern och om det är det sätter slidern till max/min instället.
     setGuessToValue() {
-      if (typeof this.value == 'number' && this.value <= this.options.max && this.value >= this.options.min) {
+      if (
+        typeof this.value == "number" &&
+        this.value <= this.options.max &&
+        this.value >= this.options.min
+      ) {
         this.guess = this.value;
         this.forceRerender();
-      } else if (typeof this.value == 'number' && this.value > this.options.max){
+      } else if (
+        typeof this.value == "number" &&
+        this.value > this.options.max
+      ) {
         this.guess = this.options.max;
         this.forceRerender();
-      }
-      else if (typeof this.value == 'number' && this.value < this.options.min){
+      } else if (
+        typeof this.value == "number" &&
+        this.value < this.options.min
+      ) {
         this.guess = this.options.min;
         this.forceRerender();
       }
@@ -229,35 +258,34 @@
     },
     //Settar gisssningen till det senaste spelaren har gissat. Kollar för undefined och om det är för stort eller inte.
     updateLastPlayerGuess() {
-
       let temp = this.lastMove;
       if (typeof temp.guess != "undefined") {
-        if(temp.guess>this.options.max) {
-          this.guess = this.options.max
-        } else if (temp.guess<this.options.min) {
-          this.guess = this.options.min
+        if (temp.guess > this.options.max) {
+          this.guess = this.options.max;
+        } else if (temp.guess < this.options.min) {
+          this.guess = this.options.min;
         } else {
           this.guess = temp.guess;
         }
       } else {
         this.resetGuessToMiddle();
       }
-
     },
     setBoxShadowOnRail() {
       this.options.railStyle = {
-        boxShadow: 'var(--glow-on)'
-      }
-      this.forceRerender()
-
+        boxShadow: "var(--glow-on)"
+      };
+      this.forceRerender();
     },
     unsetBoxShadowOnRail() {
-      this.options.railStyle = {
-      }
-      this.forceRerender()
-
+      this.options.railStyle = {};
+      this.forceRerender();
     },
+    // Används när man spelare /bottar har gissat för att byta tur.
     //0. Resettar Guess till middle
+    //1. Sätter sedan nya min och max värden
+    //2. Sätter värdet för senaste gissningen
+    //3. Uppdaterar Marks arrayen.
     updateValue() {
       this.resetGuessToMiddle();
       this.forceRerender();
@@ -272,7 +300,7 @@
         this.forceRerender();
       }
     },
-
+    // Används när en ny fråga laddas in och intervallen på slidern behöver uppdateras.
     //0. Kollar först åt vilket håll intervallet ändras, fallen nedan är om nya max är större än tidigare, blir inverted annars med att vi ökar min först.
     //1. Sätter nytt max värde
     //2. Rerender
@@ -310,18 +338,15 @@
       });
     }
   },
-    //Settar glow om det är en spelare
-    mounted() {
-    if(this.isPlayer) {
-      this.setBoxShadowOnRail()
+  //Settar glow om det är en spelare som är först på tur
+  mounted() {
+    if (this.isPlayer) {
+      this.setBoxShadowOnRail();
+    } else {
+      this.unsetBoxShadowOnRail();
     }
-       else{
-        this.unsetBoxShadowOnRail()
-      }
-
-
-    }
-  };
+  }
+};
 </script>
 
 <style>
@@ -355,5 +380,4 @@
   transform: translateX(-50%);
   white-space: nowrap;
 }
-
 </style>
