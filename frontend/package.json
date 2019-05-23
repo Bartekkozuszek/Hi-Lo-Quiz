@@ -1,92 +1,96 @@
 {
-    "name": "frontend",
-    "version": "0.1.0",
-    "babel": {
-        "presets": [
-            [
-                "env",
-                {
-                    "modules": false
-                }
-            ]
-        ],
-        "env": {
-            "test": {
-                "presets": [
-                    [
-                        "env",
-                        {
-                            "targets": {
-                                "node": "current"
-                            }
-                        }
-                    ]
-                ]
-            }
+  "name": "frontend",
+  "version": "0.1.0",
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "modules": false
         }
-    },
-    "private": true,
-    "scripts": {
-        "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build",
-        "lint": "vue-cli-service lint",
-        "test": "jest"
-    },
-    "dependencies": {
-        "axios": "^0.18.0",
-        "core-js": "^2.6.5",
-        "mongoose": "^5.5.7",
-        "vue": "^2.6.10",
-        "vue-dragscroll": "^1.8.3",
-        "vue-router": "^3.0.3",
-        "vue-slider-component": "^3.0.31",
-        "vue-test-utils": "^1.0.0-beta.11",
-        "vuex": "^3.0.1"
-    },
-    "devDependencies": {
-        "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-        "@vue/cli-plugin-babel": "^3.7.0",
-        "@vue/cli-plugin-eslint": "^3.7.0",
-        "@vue/cli-plugin-unit-jest": "^3.7.0",
-        "@vue/cli-service": "^3.7.0",
-        "@vue/eslint-config-prettier": "^4.0.1",
-        "@vue/test-utils": "1.0.0-beta.29",
-        "babel-core": "^7.0.0-bridge.0",
-        "babel-eslint": "^10.0.1",
-        "babel-jest": "^21.2.0",
-        "babel-preset-env": "^1.7.0",
-        "css-loader": "^0.28.7",
-        "eslint": "^5.16.0",
-        "eslint-plugin-vue": "^5.0.0",
-        "file-loader": "^1.1.4",
-        "jest": "^24.6",
-        "jest-serializer-vue": "^0.2.0",
-        "vue-jest": "^2.6.0",
-        "vue-loader": "^14.2.2",
-        "vue-server-renderer": "^2.4.4",
-        "vue-template-compiler": "^2.5.21"
-    },
-    "jest": {
-        "moduleFileExtensions": [
-            "js",
-            "vue"
-        ],
-        "moduleNameMapper": {
-            "^@/(.*)$": "<rootDir>/src/$1"
-        },
-        "transform": {
-            "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-            ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest",
-            "^.+\\.(js|jsx)?$": "<rootDir>/node_modules/babel-jest"
-        },
-        "snapshotSerializers": [
-            "<rootDir>/node_modules/jest-serializer-vue"
-        ],
-        "testMatch": [
-            "<rootDir>/tests/unit/*.spec.js"
-        ],
-        "transformIgnorePatterns": [
-            "/node_modules(?![\\/]vue-awesome[\\/]|[\\/]vue-single-select[\\/])/"
+      ]
+		,
+		["@vue/app"],
+		["@babel/preset-env"]
+	],
+    "env": {
+      "test": {
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
         ]
+      }
     }
+  },
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "core-js": "^2.6.5",
+    "mongoose": "^5.5.7",
+    "save": "^2.4.0",
+    "vue": "^2.6.10",
+    "vue-dragscroll": "^1.8.3",
+    "vue-router": "^3.0.3",
+    "vue-slider-component": "^3.0.31",
+    "vue-test-utils": "^1.0.0-beta.11",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@vue/cli-plugin-babel": "^3.7.0",
+    "@vue/cli-plugin-eslint": "^3.7.0",
+    "@vue/cli-plugin-unit-jest": "^3.7.0",
+    "@vue/cli-service": "^3.7.0",
+    "@vue/eslint-config-prettier": "^4.0.1",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^0.28.7",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "file-loader": "^1.1.4",
+    "jest": "^24.6",
+    "jest-serializer-vue": "^0.2.0",
+    "vue-jest": "^2.6.0",
+    "vue-loader": "^14.2.2",
+    "vue-server-renderer": "^2.4.4",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest",
+      "^.+\\.(js|jsx)?$": "<rootDir>/node_modules/babel-jest"
+    },
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/jest-serializer-vue"
+    ],
+    "testMatch": [
+      "<rootDir>/tests/unit/*.spec.js"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules(?![\\/]vue-awesome[\\/]|[\\/]vue-single-select[\\/])/"
+    ]
+  }
 }
