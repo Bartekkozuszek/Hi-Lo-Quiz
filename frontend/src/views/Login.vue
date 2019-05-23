@@ -3,22 +3,26 @@
         <h2>Login</h2>
         <form class="login" @submit.prevent="login">
             <label>Username:</label><br />
-            <input required autocomplete="on" v-model="user" placeholder="Type your username here" /><br />
+            <input required autocomplete="on" v-model="userName" placeholder="Type your username here" /><br />
             <label>Password:</label><br />
             <input required type="password" v-model="password" placeholder="Type your password here" /><br />
             <footer>
-                <button @click="goBack">Cancel</button>
+                <button type="button" @click="goBack">Cancel</button>
                 <button type="submit">OK</button>
             </footer>
         </form>
+        <div>
+            <router-link to="/register"><span>Register new user</span></router-link>
+        </div>
     </div>
+    
 </template>
 
 <script>
     export default {
         data() {
             return {
-                user: "",
+                userName: "",
                 password: "",
                 isValid: true
             }
@@ -30,9 +34,9 @@
         },
         methods: {
             login() {
-                let user = this.user
+                let userName = this.userName
                 let password = this.password
-                this.$store.dispatch('login', { user, password })
+                this.$store.dispatch('login', { userName, password })
                     .then(() => {
                         if (this.isLoggedIn) this.$router.push('/')
                         else {

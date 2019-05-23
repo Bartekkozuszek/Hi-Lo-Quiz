@@ -8,7 +8,12 @@ var cors = require('cors')
 var app = express()
 
 app.use(logger('dev'))
-app.use(cors())
+app.use(
+  cors({
+    exposedHeaders: ['Content-Length', 'Set-Cookie', 'access_token'],
+    credentials: true
+  })
+)
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
@@ -36,5 +41,9 @@ app.use('/', require('./routes/login'))
 app.use('/api/v1/questions', require('./routes/api/questions'))
 
 app.use('/api/v1/users', require('./routes/api/users'))
+
+app.use('/api/v1/bots', require('./routes/api/bots'))
+
+app.use('/api/v1/games', require('./routes/api/games'))
 
 module.exports = app

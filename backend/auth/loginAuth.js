@@ -1,6 +1,5 @@
 var jwt = require('jsonwebtoken')
-var config = require('../jwt.js')
-var User = require('../user/user')
+var jwtSecret = require('../jwt.js')
 
 module.exports = async function(req, res, next) {
   var cookie = req.cookies.access_token
@@ -9,7 +8,7 @@ module.exports = async function(req, res, next) {
     next()
   } else {
     console.log('access_token found')
-    user = jwt.verify(cookie, config.JWT_SECRET)
+    user = jwt.verify(cookie, jwtSecret.JWT_SECRET)
     res.json({ msg: 'already logged in as: ' + user.userName + ' (' + user.role + ')' })
     return
   }
