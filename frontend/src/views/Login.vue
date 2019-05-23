@@ -11,7 +11,11 @@
                 <button type="submit">OK</button>
             </footer>
         </form>
+        <div>
+            <router-link to="/register"><span>Register new user</span></router-link>
+        </div>
     </div>
+    
 </template>
 
 <script>
