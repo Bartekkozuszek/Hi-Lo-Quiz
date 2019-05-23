@@ -51,7 +51,7 @@
         repeat: '',
           submitted: false,
           registerError: null,
-        status: 0
+          status: 0,
       };
     },
     validators: {
@@ -62,7 +62,8 @@
             return Validator.value(value).required().minLength(1).maxLength(50);
         },
                 userName: function (value) {
-            return Validator.value(value).required().minLength(3).maxLength(15);
+                    return Validator.value(value).required().minLength(3).maxLength(15);
+                    // try with a GET request
         },
         password: function (value) {
         return Validator.value(value).required().minLength(6);
@@ -75,38 +76,37 @@
     },
     methods: {
         submit: function () {
+            let isValid = false;
             this.submitted = true;
             this.$validate()
           .then(function (success) {
               if (success) {
-               alert('Registration succeeded!');
+                  isValid= true;
+              } else {
+                  alert('You have not filled in the form correctly, please check it again.')
+              }
+          }).then(() => {
+            if (isValid) {
+                 axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users', {
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    userName: this.userName,
+                    password: this.password,
+                    isAdmin: false
 
+                }).then((resp) => {
+                    this.$store.commit('login', resp.data)
+                    this.registerError = ''
+                    alert('Registration succeeded!');
+
+
+                }).catch((err) => {
+                    this.registerError = err.response.data.msg
+                })
             }
           });
-          
-            axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users', {
-              firstName: this.firstName,
-              lastName: this.lastName,
-              userName: this.userName,
-              password: this.password,
-              isAdmin: false
-
-            }).then((resp) => {
-                console.log("success")
-               
-                this.$store.commit('login', resp.data)
-                this.registerError = ''
-                console.log(resp.status)
             
-             
-            }).catch((err) => {
-                console.log("catch")
-                this.registerError = err.response.data.msg
-            })   
         },
-        registerNewUser() {
-            
-            },
     }
     }
 </script>
