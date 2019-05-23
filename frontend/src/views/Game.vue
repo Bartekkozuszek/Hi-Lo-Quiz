@@ -6,6 +6,7 @@
     }"
   >
     <question-display></question-display>
+    <GameClock></GameClock>
     <guess-response></guess-response>
     <SpeechBubble></SpeechBubble>
     <GameTable></GameTable>
@@ -19,6 +20,7 @@ import Answer from "../components/Answer.vue";
 import GameTable from "../components/GameTable.vue";
 import GuessResponse from "../components/GuessResponse";
 import SpeechBubble from "../components/SpeechBubble";
+import GameClock from "../components/GameClock";
 
 export default {
   name: "Game",
@@ -28,7 +30,8 @@ export default {
     GuessResponse,
     QuestionDisplay,
     Answer,
-    GameTable
+    GameTable,
+    GameClock
   }
 };
 </script>
