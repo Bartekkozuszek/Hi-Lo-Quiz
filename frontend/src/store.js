@@ -149,7 +149,7 @@ export default new Vuex.Store({
         }
       },
       {
-        name: "PetrosBot",
+        name: "PetroBot",
         isPlayer: false,
         id: 3,
         wins: 100,
@@ -289,7 +289,11 @@ export default new Vuex.Store({
       state.loadedQuestions = loadedQuestions;
       },
       login(state, payload) {
-          state.isLoggedIn = true
+          state.isLoggedIn = true,
+          state.currentUser.id = payload._id,
+          state.currentUser.wins = payload.wins,
+          state.currentUser.losses = payload.losses,
+          state.currentUser.score = payload.score,
           state.currentUser.name = payload.userName
           state.currentUser.image = avatar1;
           state.sessionPlayersArray[0] = state.currentUser
@@ -442,9 +446,10 @@ export default new Vuex.Store({
           await axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/login', {
               userName: payload.userName,
               password: payload.password
+            
           })
               .then((resp) => {
-                  commit('login', payload)
+                  commit('login', resp.data.user)
                   console.log(resp.data.msg)
               }).catch((err) => console.log(err))
       },
