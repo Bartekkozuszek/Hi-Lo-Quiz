@@ -431,6 +431,8 @@ export default new Vuex.Store({
           password: payload.password
         })
         .then(resp => {
+          //TODO
+          //we can add userName etc from resp.data.
           payload.id = resp.data.user._id
           commit('login', payload)
           console.log(resp.data.msg)
@@ -445,10 +447,10 @@ export default new Vuex.Store({
         let game = {}
         game.questionID = state.currentQuestion._id
         game.userID = state.currentUser.id
+        // TODO calculate score to be added
         game.score = 5
         game.botIDs = [...new Set(state.moveHistory.botIDs)]
         game.moves = state.moveHistory.moves
-        console.log(game.moves)
         var res = await axios.post(
           'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/games',
           game
