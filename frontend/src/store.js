@@ -326,11 +326,11 @@ export default new Vuex.Store({
           if(state.currentUser.id != 0) {
               //user ranking
               tempArray = await axios.get(
-                  "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com//api/v1/users/score-rank/" +
+                  "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users/score-rank/" +
                   state.currentUser.id
               );
               console.log(tempArray.data);
-              state.currentUser.rank = tempArray.data;
+              state.currentUser.rank = tempArray.data.rank+1;
           }
       },
     async loadQuestions({ commit, dispatch, state }, amount) {

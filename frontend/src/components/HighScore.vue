@@ -28,17 +28,6 @@
         <p>{{player.score}}</p>
         <p>{{calcWinRate(player)}}%</p>
     </div>
-
-    <div
-      class="playerComponent"
-      v-if="playerBadEnough"
-      v-bind="(player = this.$store.state.currentUser)">
-      <p class="rank">{{ player.rank }}</p>
-      <img class="playerImage" :src="player.image" />
-      <p>{{ player.name }}</p>
-      <p>{{ player.score }}</p>
-        <p>{{calcWinRate(player)}}%</p>
-    </div>
   </div>
 </template>
 
