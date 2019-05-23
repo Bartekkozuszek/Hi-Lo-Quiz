@@ -3,33 +3,14 @@
   "version": "0.1.0",
   "babel": {
     "presets": [
-      [
-        "env",
-        {
-          "modules": false
-        }
-      ],
+    
       [
         "@vue/app"
       ],
       [
         "@babel/preset-env"
       ]
-    ],
-    "env": {
-      "test": {
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "node": "current"
-              }
-            }
-          ]
-        ]
-      }
-    }
+    ]
   },
   "private": true,
   "scripts": {
