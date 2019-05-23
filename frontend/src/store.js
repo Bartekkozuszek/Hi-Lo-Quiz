@@ -296,6 +296,7 @@ export default new Vuex.Store({
       state.currentUser.image = avatar1
       state.sessionPlayersArray[0] = state.currentUser
       state.user = payload.userName
+      state.currentUser.id = payload.id
     },
     logout(state) {
       state.isLoggedIn = false
@@ -415,6 +416,7 @@ export default new Vuex.Store({
       //pushes last object in array to the same array
       //Turn off wantLastMove to not trigger watcher in answer
       state.wantLastMove = false
+      console.log(newMove)
       state.moveHistory.moves.push(newMove)
     },
     toggleAnimations({ state }) {
@@ -425,10 +427,13 @@ export default new Vuex.Store({
     async login({ commit }, payload) {
       await axios
         .post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/login', {
-          userName: payload.userName,
+        
+        userName: payload.userName,
           password: payload.password
         })
         .then(resp => {
+          console.log('hit '+resp.data.userName)
+          payload.id=resp.data._id
           commit('login', payload)
           console.log(resp.data.msg)
         })
