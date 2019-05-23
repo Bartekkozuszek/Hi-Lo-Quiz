@@ -290,10 +290,10 @@ export default new Vuex.Store({
       },
       login(state, payload) {
           state.isLoggedIn = true,
-          state.currentUser.id = payload._id,
-          state.currentUser.wins = payload.wins,
-          state.currentUser.losses = payload.losses,
-          state.currentUser.score = payload.score,
+          state.currentUser.id = payload._id
+          state.currentUser.wins = payload.wins
+          state.currentUser.losses = payload.losses
+          state.currentUser.score = payload.score
           state.currentUser.name = payload.userName
           state.currentUser.image = avatar1;
           state.sessionPlayersArray[0] = state.currentUser
@@ -454,7 +454,9 @@ export default new Vuex.Store({
               }).catch((err) => console.log(err))
       },
       logout({ commit }) {
-          commit('logout')
+          axios.get('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/logout')
+              .then((r) => console.log(r.data.msg)).then(() => commit('logout'))
+          
       },
       
       

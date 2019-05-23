@@ -1,9 +1,9 @@
 <template>
     <div>
         <h2>Login</h2>
-        <form class="login" @submit.prevent="login">
+        <form class="form" @submit.prevent="login">
             <label>Username:</label><br />
-            <input required autocomplete="on" v-model="userName" placeholder="Type your username here" /><br />
+            <input required autofocus autocomplete="on" v-model="userName" placeholder="Type your username here" /><br />
             <label>Password:</label><br />
             <input required type="password" v-model="password" placeholder="Type your password here" /><br />
             <footer>
