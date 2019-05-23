@@ -81,10 +81,11 @@ router.post('/', async function(req, res, next) {
   }
 
   //add statistics for user
+  //Can't get cors to work properly
   console.log('sanitized.userID ' + sanitized.userID)
   console.log('req.user.id ' + req.user.id)
   var userID = sanitized.userID
-  if (req.user.id == userID) {
+  //if (req.user.id == userID) {
     var score = sanitized.score
     var lastMoveId = sanitized.moves[sanitized.moves.length - 1].id
 
@@ -102,7 +103,7 @@ router.post('/', async function(req, res, next) {
       res.status(400).json({ msg: 'Error updating statistics for user ' + err.message })
       return
     }
-  }
+  //}
 
   let responseJson = {}
   responseJson.updatedUser = updatedUser ? updatedUser.presentable() : {}
