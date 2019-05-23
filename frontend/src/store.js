@@ -322,6 +322,11 @@ export default new Vuex.Store({
           );
           state.highScore=tempArray.data.slice(0,5);
 
+          //TEMPORARY SOLUTION.
+          state.highScore.forEach(function(element) {
+            element.image=avatar1;
+          });
+
 
           if(state.currentUser.id != 0) {
               //user ranking
