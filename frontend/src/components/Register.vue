@@ -54,88 +54,76 @@ import axios from "axios";
 import SimpleVueValidator from "simple-vue-validator";
 const Validator = SimpleVueValidator.Validator;
 
-export default {
-  name: "Register",
-  mixins: [SimpleVueValidator.mixin],
-  data: function() {
-    return {
-      firstName: "",
-      lastName: "",
-      userName: "",
-      password: "",
-      repeat: "",
-      submitted: false,
-      registerError: null,
-      status: 0
-    };
-  },
-  validators: {
-    firstName: function(value) {
-      return Validator.value(value)
-        .required()
-        .minLength(1)
-        .maxLength(50);
+    export default {
+        name: 'Register',
+        mixins: [SimpleVueValidator.mixin],
+        data: function () {
+      return {
+          firstName: '',
+          lastName: '',
+          userName: '',
+          password: '',
+        repeat: '',
+          submitted: false,
+          registerError: null,
+          status: 0,
+      };
     },
-    lastName: function(value) {
-      return Validator.value(value)
-        .required()
-        .minLength(1)
-        .maxLength(50);
-    },
-    userName: function(value) {
-      return Validator.value(value)
-        .required()
-        .minLength(3)
-        .maxLength(15);
-    },
-    password: function(value) {
-      return Validator.value(value)
-        .required()
-        .minLength(6);
-    },
-    "repeat, password": function(repeat, password) {
-      if (this.submitted || this.validation.isTouched("repeat")) {
-        return Validator.value(repeat)
-          .required()
-          .match(password);
-      }
-    }
-  },
-  methods: {
-    submit: function() {
-      this.submitted = true;
-      this.$validate().then(function(success) {
-        if (success) {
-          alert("Registration succeeded!");
+    validators: {
+        firstName: function (value) {
+            return Validator.value(value).required().minLength(1).maxLength(50);
+        },
+        lastName: function (value) {
+            return Validator.value(value).required().minLength(1).maxLength(50);
+        },
+                userName: function (value) {
+                    return Validator.value(value).required().minLength(3).maxLength(15);
+                    // try with a GET request
+        },
+        password: function (value) {
+        return Validator.value(value).required().minLength(6);
+      },
+      'repeat, password': function (repeat, password) {
+        if (this.submitted || this.validation.isTouched('repeat')) {
+          return Validator.value(repeat).required().match(password);
         }
-      });
-
-      axios
-        .post(
-          "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users",
-          {
-            firstName: this.firstName,
-            lastName: this.lastName,
-            userName: this.userName,
-            password: this.password,
-            isAdmin: false
-          }
-        )
-        .then(resp => {
-          console.log("success");
-
-          this.$store.commit("login", resp.data);
-          this.registerError = "";
-          console.log(resp.status);
-        })
-        .catch(err => {
-          console.log("catch");
-          this.registerError = err.response.data.msg;
-        });
+      }
     },
-    registerNewUser() {}
-  }
-};
+    methods: {
+        submit: function () {
+            let isValid = false;
+            this.submitted = true;
+            this.$validate()
+          .then(function (success) {
+              if (success) {
+                  isValid= true;
+              } else {
+                  alert('You have not filled in the form correctly, please check it again.')
+              }
+          }).then(() => {
+            if (isValid) {
+                 axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users', {
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    userName: this.userName,
+                    password: this.password,
+                    isAdmin: false
+
+                }).then((resp) => {
+                    this.$store.commit('login', resp.data)
+                    this.registerError = ''
+                    alert('Registration succeeded!');
+
+
+                }).catch((err) => {
+                    this.registerError = err.response.data.msg
+                })
+              }
+          });
+            
+        },
+    }
+    }
 </script>
 
 <style>

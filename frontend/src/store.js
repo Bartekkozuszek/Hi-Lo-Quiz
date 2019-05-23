@@ -149,7 +149,7 @@ export default new Vuex.Store({
         }
       },
       {
-        name: "PetrosBot",
+        name: "PetroBot",
         isPlayer: false,
         id: 3,
         wins: 100,
@@ -239,8 +239,8 @@ export default new Vuex.Store({
       isPlayer: true,
       wins: 5,
       losses: 7,
-      rank: 6,
-      score: 1,
+        rank:3,
+        score:1,
       description: "testPlayer and template",
       image: avatar1,
       timeleft: 1337 //totalMatchTime,
@@ -295,21 +295,44 @@ export default new Vuex.Store({
   mutations: {
     setQuestions(state, loadedQuestions) {
       state.loadedQuestions = loadedQuestions;
-    },
-    login(state, payload) {
-      state.isLoggedIn = true;
-      state.currentUser.name = payload.userName;
-      state.currentUser.image = avatar1;
-      state.sessionPlayersArray[0] = state.currentUser;
-      state.user = payload.userName;
-    },
-    logout(state) {
-      state.isLoggedIn = false;
-      state.currentUser.name = "guest";
-      state.gameState = 1;
-    }
+
+      },
+      login(state, payload) {
+          state.isLoggedIn = true,
+          state.currentUser.id = payload._id,
+          state.currentUser.wins = payload.wins,
+          state.currentUser.losses = payload.losses,
+          state.currentUser.score = payload.score,
+          state.currentUser.name = payload.userName
+          state.currentUser.image = avatar1;
+          state.sessionPlayersArray[0] = state.currentUser
+          state.user = payload.userName
+      },
+      logout(state) {
+          state.isLoggedIn = false
+          state.currentUser.name = 'guest'
+          state.gameState = 1
+      }
   },
   actions: {
+      async loadHighScores({state}){
+          //top 5.
+          let tempArray= await axios.get(
+              "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users?sort=score&amount=5"
+          );
+          state.highScore=tempArray.data.slice(0,5);
+
+
+
+          //user ranking
+          tempArray= await axios.get(
+              "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com//api/v1/users/score-rank/" +
+          state.currentUser.id
+      );
+          console.log(tempArray.data);
+          state.currentUser.rank=tempArray.data;
+
+      },
     async loadQuestions({ commit, dispatch, state }, amount) {
       state.wantAnswers = false;
       axios
@@ -446,24 +469,22 @@ export default new Vuex.Store({
       const root = document.documentElement;
 
       root.style.setProperty("--animationTime", state.timeoutMultiplier);
-    },
-    async login({ commit }, payload) {
-      await axios
-        .post(
-          "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/login",
-          {
-            userName: payload.userName,
-            password: payload.password
-          }
-        )
-        .then(resp => {
-          commit("login", payload);
-          console.log(resp.data.msg);
-        })
-        .catch(err => console.log(err));
-    },
-    logout({ commit }) {
-      commit("logout");
-    }
+      },
+      async login({ commit }, payload) {
+          await axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/login', {
+              userName: payload.userName,
+              password: payload.password
+            
+          })
+              .then((resp) => {
+                  commit('login', resp.data.user)
+                  console.log(resp.data.msg)
+              }).catch((err) => console.log(err))
+      },
+      logout({ commit }) {
+          commit('logout')
+      },
+      
+      
   }
 });

@@ -16,14 +16,34 @@
       v-for="(player, index) in this.$store.state.highScore"
       :key="index"
     >
-      <p class="rank">{{ index + 1 }}</p>
-      <img class="playerImage" :src="player.image" />
-      <p>{{ player.name }}</p>
-      <p>{{ player.score }}</p>
-      <p>
-        {{ Math.round((player.wins / (player.wins + player.losses)) * 100) }}%
-      </p>
-    </div>
+        <div class="highScoreHeader">
+            <p>Global Rankings</p>
+            <p class="back"@click="toggleShowHighscore">BACK</p>
+        </div>
+        <div class="playerComponent" >
+            <p class="rank">Rank</p>
+            <p>Player</p>
+            <div></div>
+            <p>Score</p>
+            <p>Winrate</p>
+        </div>
+        <div class="playerComponent" v-for="(player, index) in this.$store.state.highScore"
+             :key="index"
+        >
+            <p class="rank">{{index+1}}</p>
+            <img class="playerImage" :src="player.image">
+            <p>{{player.userName}}</p>
+            <p>{{player.score}}</p>
+            <p>{{calcWinRate(player)}}%</p>
+        </div>
+
+        <div class="playerComponent" v-if="playerBadEnough" v-bind="player=this.$store.state.currentUser">
+            <p class="rank">{{player.rank}}</p>
+            <img class="playerImage" :src="player.image">
+            <p>{{player.name}}</p>
+            <p>{{player.score}}</p>
+            <p>{{calcWinRate(player)}}%</p>
+        </div>
 
     <div
       class="playerComponent"
@@ -42,23 +62,32 @@
 </template>
 
 <script>
-export default {
-  name: "HighScore",
-  methods: {
-    toggeShowHighscore: function() {
-      if (this.$store.state.showHighScore == true) {
-        this.$store.state.showHighScore = false;
-      } else {
-        this.$store.state.showHighScore = true;
-      }
-    }
-  },
-  computed: {
-    playerBadEnough: function() {
-      if (this.$store.state.currentUser.rank > 5) {
-        return true;
-      }
-      return false;
+    export default {
+        name: "HighScore",
+        methods:{
+            toggleShowHighscore:function(){
+                if (this.$store.state.showHighScore==true){
+                    this.$store.state.showHighScore=false;
+                }else{
+                    this.$store.state.showHighScore=true;
+                }
+            },
+            calcWinRate:function(player){
+                if(player.wins +player.losses ==0){
+                    return 0;
+                }
+                 return Math.round(player.wins/(player.wins + player.losses)*100)
+            }
+
+        },
+        computed:{
+            playerBadEnough:function(){
+                if(this.$store.state.currentUser.rank>5){
+                    return true;
+                }
+                return false;
+            }
+        }
     }
   }
 };
