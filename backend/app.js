@@ -10,8 +10,7 @@ var app = express()
 app.use(logger('dev'))
 app.use(
   cors({
-    exposedHeaders: ['Content-Length', 'Set-Cookie', 'access_token'],
-    credentials: true
+    exposedHeaders: ['access_token']
   })
 )
 app.use(express.json())
