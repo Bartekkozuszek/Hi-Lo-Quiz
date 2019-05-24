@@ -219,6 +219,7 @@
           );
         }
         let newMove = { guess: this.value, timeTook: 10 };
+        newMove.id=this.$store.state.currentUser.id
         this.$store
                 .dispatch("addMove", newMove)
                 .then(() => this.$store.dispatch("turnFinished"))
