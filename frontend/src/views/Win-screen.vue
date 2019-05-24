@@ -13,6 +13,7 @@
             <img class="darkenBG" :src="winnerImage"></img>
             <div class="darkenBG">
                 <p>Player:{{this.$store.state.sessionPlayersArray[this.$store.state.currentPlayerIndex].name}}</p>
+                <p>Guesses:{{totalGuesses}}</p>
                 <p>Wins: {{this.$store.state.sessionPlayersArray[this.$store.state.currentPlayerIndex].wins}}</p>
                 <p>Losses: {{this.$store.state.sessionPlayersArray[this.$store.state.currentPlayerIndex].losses}}</p>
             </div>
@@ -45,6 +46,10 @@
             winnerImage:function(){
 
                return this.$store.state.sessionPlayersArray[this.$store.state.currentPlayerIndex].image;
+            },
+            totalGuesses:function () {
+                return Math.ceil((this.$store.state.moveHistory.moves.length-1)/
+                this.$store.state.sessionPlayersArray.length);
             }
         }
     }
