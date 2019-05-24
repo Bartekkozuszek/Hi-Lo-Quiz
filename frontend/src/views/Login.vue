@@ -38,9 +38,12 @@
                 let password = this.password
                 this.$store.dispatch('login', { userName, password })
                     .then(() => {
-                        if (this.isLoggedIn) this.$router.push('/')
+                        if (this.isLoggedIn) {
+                            alert('Login successful')
+                             this.$router.push('/')
+                        }
                         else {
-                            console.log('wrong') //to be replaced with a modal or notification with appropriate message
+                            alert('Wrong username and/or password') 
                         }
                     })
                     .catch(err => console.log(err))
@@ -62,4 +65,6 @@
     footer {
         margin: 3vw
     }
+
+ 
 </style>

@@ -119,6 +119,7 @@
                     this.$store.commit('login', resp.data)
                     this.registerError = ''
                     alert('Registration succeeded!');
+                    this.$router.push('/')
 
                 }).catch((err) => {
                     this.registerError = err.response.data.msg
