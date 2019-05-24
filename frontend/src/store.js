@@ -35,8 +35,11 @@ export default new Vuex.Store({
     wantLastMove: false,
     totalMatchTime: 30,
     matchesPlayed: 0,
+    selectedCategory: '',
+    categories: [],
     timesUp: false,
     showHighScore: false,
+    showAddQuestion: false,
     currentPlayerIndex: 0,
     images: {
       tooHigh: ImageTooHigh,
@@ -279,7 +282,7 @@ export default new Vuex.Store({
       }
     ],
     isLoggedIn: false,
-    user: "guest"
+        user: "guest"
   },
   getters: {
     isLoggedIn: state => {
@@ -304,12 +307,18 @@ export default new Vuex.Store({
       state.loadedQuestions = loadedQuestions;
 
       },
+    setCategories(state, loadedCategories) {
+      state.categories = loadedCategories;
+    },
+    setSelectedCategory(state, index) {
+      state.selectedCategory = state.categories[index]
+    },
       login(state, payload) {
           state.isLoggedIn = true,
-          state.currentUser.id = payload._id,
-          state.currentUser.wins = payload.wins,
-          state.currentUser.losses = payload.losses,
-          state.currentUser.score = payload.score,
+          state.currentUser.id = payload._id
+          state.currentUser.wins = payload.wins
+          state.currentUser.losses = payload.losses
+          state.currentUser.score = payload.score
           state.currentUser.name = payload.userName
           state.currentUser.image = avatar1;
           state.sessionPlayersArray[0] = state.currentUser
@@ -321,9 +330,29 @@ export default new Vuex.Store({
           state.isLoggedIn = false
           state.currentUser.name = 'guest'
           state.gameState = 1
+          state.currentUser.wins = 5
+          state.currentUser.losses = 7
+          state.currentUser.rank = 3
+          state.currentUser.score = 1
+          state.gameState = 1
+          //TODO add the rest of the object
       }
   },
   actions: {
+      async loadBotStats({state}){
+          let tempArray= await instance.get(
+              "/api/v1/bots",
+              {
+                  headers: {
+                      access_token: localStorage.access_token
+                  }
+              }
+          );
+          console.log(tempArray);
+          for(let i=0; i< state.loadedBots.length; i++){
+              state.loadedBots[i].wins=1;
+          }
+    },
       async loadHighScores({state}){
           //top 5.
           let tempArray= await instance.get("/api/v1/users?sort=score&amount=5",
@@ -357,8 +386,10 @@ export default new Vuex.Store({
       },
     async loadQuestions({ commit, dispatch, state }, amount) {
       state.wantAnswers = false;
+
       instance
-        .get("/api/v1/questions?amount=20",
+        .get("/api/v1/questions?amount=20&category=" + state.selectedCategory,
+
           {
             headers: {
               access_token: localStorage.access_token
@@ -417,6 +448,24 @@ export default new Vuex.Store({
           high: state.currentQuestion.high
         }
       ];
+    },
+    async loadCategories({state, commit}) {
+      instance
+          .get(
+              "/api/v1/questions/categories",
+              {
+                headers: {
+                  access_token: localStorage.access_token
+                }
+              }
+          )
+          .then(r => r.data)
+          .then(categories => {
+            commit("setCategories", categories);
+          })
+          .catch(error => {
+            console.log(error);
+          });
     },
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
@@ -505,11 +554,16 @@ export default new Vuex.Store({
           })
               .then((resp) => {
                   commit('login', resp.data.user)
-                  console.log(resp.data.msg)
+                  //console.log(resp.data.msg)
               }).catch((err) => console.log(err))
       },
       logout({ commit }) {
-          commit('logout')
+          instance.get("/logout")
+              .then((r) => {
+                  commit('logout')
+                  //console.log(r.data.msg)
+              }).catch((err) => console.log(err))
+          
       },
       async tryAutoLogin({ commit }) {
         try {

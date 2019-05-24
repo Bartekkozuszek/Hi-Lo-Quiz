@@ -13,8 +13,10 @@
         <div class="form-group" :class="{error: validation.hasError('userName')}">
             <div class="label">* Username</div>
             <div class="content"><input type="text" class="form-control" v-model="userName" /></div>
-            <div class="message" >{{ validation.firstError('userName') }}</div>
+            <div class="message">{{ validation.firstError('userName') }}</div>
             <div v-if="registerError !== ''"> {{registerError}}</div>
+            <i v-if="validation.isValidating('userName')" class="fa fa-spinner fa-spin"></i>
+            <i v-if="userName && validation.isPassed('userName')" class="text-success fa fa-check-circle"></i>
         </div>
         <div class="form-group" :class="{error: validation.hasError('password')}">
             <div class="label">* Password</div>
@@ -48,7 +50,7 @@
           lastName: '',
           userName: '',
           password: '',
-        repeat: '',
+          repeat: '',
           submitted: false,
           registerError: null,
           status: 0,
@@ -61,8 +63,27 @@
         lastName: function (value) {
             return Validator.value(value).required().minLength(1).maxLength(50);
         },
-                userName: function (value) {
-                    return Validator.value(value).required().minLength(3).maxLength(15);
+        userName: function (value) {
+                    var tempUserName = ''
+                    return Validator.value(value).required().minLength(3).maxLength(15)
+                        //.custom(function () {
+                        //    if (!Validator.isEmpty(value)) {
+                        //        return axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users', {
+                        //            userName: this.userName,
+                        //            firstName: '',
+                        //            lastName: '',
+                        //            password: '',
+                        //            isAdmin: false
+                        //        }).then((r) => {
+                        //            tempUserName = r.data.userName
+                        //        }).delay(1000)
+                        //            .then(function () {
+                        //                if (value !== tempUserName) {
+                        //                    return 'Already taken!';
+                        //                }
+                        //            })
+                        //    }
+                        //});
                     // try with a GET request
         },
         password: function (value) {
@@ -79,13 +100,13 @@
             let isValid = false;
             this.submitted = true;
             this.$validate()
-          .then(function (success) {
+          .then(function (success) { //validates the form and displays appropriate message
               if (success) {
                   isValid= true;
               } else {
                   alert('You have not filled in the form correctly, please check it again.')
               }
-          }).then(() => {
+          }).then(() => { //goes on with sending axios to submit to the db
             if (isValid) {
                  axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users', {
                     firstName: this.firstName,
@@ -98,7 +119,7 @@
                     this.$store.commit('login', resp.data)
                     this.registerError = ''
                     alert('Registration succeeded!');
-
+                    this.$router.push('/')
 
                 }).catch((err) => {
                     this.registerError = err.response.data.msg
@@ -111,7 +132,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .form-control{
         border-radius: 4px;
     }

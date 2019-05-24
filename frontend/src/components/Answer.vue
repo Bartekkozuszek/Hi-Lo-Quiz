@@ -37,7 +37,7 @@
       Submit
     </button>
     <br />
-    <label for="hardMode">Hard (No slider)</label>
+    <label for="hardMode">Hard Mode (No slider)</label>
     <input type="checkbox" id="hardMode" v-model="checked" />
     <!--select v-model="selected" @change="assignQuestion">
       <option v-for="(o, index) in loadedQuestions">{{ o.question }}</option>
