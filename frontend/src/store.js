@@ -277,7 +277,7 @@ export default new Vuex.Store({
       }
     ],
     isLoggedIn: false,
-    user: "guest"
+        user: "guest"
   },
   getters: {
     isLoggedIn: state => {
@@ -304,10 +304,10 @@ export default new Vuex.Store({
       },
       login(state, payload) {
           state.isLoggedIn = true,
-          state.currentUser.id = payload._id,
-          state.currentUser.wins = payload.wins,
-          state.currentUser.losses = payload.losses,
-          state.currentUser.score = payload.score,
+          state.currentUser.id = payload._id
+          state.currentUser.wins = payload.wins
+          state.currentUser.losses = payload.losses
+          state.currentUser.score = payload.score
           state.currentUser.name = payload.userName
           state.currentUser.image = avatar1;
           state.sessionPlayersArray[0] = state.currentUser
@@ -319,6 +319,12 @@ export default new Vuex.Store({
           state.isLoggedIn = false
           state.currentUser.name = 'guest'
           state.gameState = 1
+          state.currentUser.wins = 5
+          state.currentUser.losses = 7
+          state.currentUser.rank = 3
+          state.currentUser.score = 1
+          state.gameState = 1
+          //TODO add the rest of the object
       }
   },
   actions: {
@@ -506,11 +512,16 @@ export default new Vuex.Store({
           })
               .then((resp) => {
                   commit('login', resp.data.user)
-                  console.log(resp.data.msg)
+                  //console.log(resp.data.msg)
               }).catch((err) => console.log(err))
       },
       logout({ commit }) {
-          commit('logout')
+          axios.get("http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/logout")
+              .then((r) => {
+                  commit('logout')
+                  //console.log(r.data.msg)
+              }).catch((err) => console.log(err))
+          
       },
       async tryAutoLogin({ commit }) {
         try {
