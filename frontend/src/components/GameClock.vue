@@ -58,7 +58,7 @@
                     this.timerRunning = true;
                     clearInterval(this.interval);
                    // clearInterval( () => { this.interval; });
-                    this.totalTime = (30);
+                    this.totalTime = this.$store.state.totalMatchTime;
                 },
                 countdownTimer() {
                     if (this.timerRunning == true) {

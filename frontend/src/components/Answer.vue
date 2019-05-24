@@ -156,6 +156,9 @@
       },
       wantLastMove() {
         return this.$store.state.wantLastMove;
+      },
+      timesUp() {
+        return this.$store.state.timesUp;
       }
     },
     watch: {
@@ -194,7 +197,13 @@
           this.setBoxShadowOnRail();
           this.$refs.input.focus();
         } else this.unsetBoxShadowOnRail();
+      },
+      timesUp() {
+        if (this.timesUp) {
+          this.submitAnswer()
+        }
       }
+
     },
     methods: {
       // Metod som körs när man klickar på submit eller tiden har gått ut.
@@ -213,7 +222,7 @@
         this.$store
                 .dispatch("addMove", newMove)
                 .then(() => this.$store.dispatch("turnFinished"))
-                .then(() => this.updateValue);
+                .then(() => this.updateValue).then(() => this.$store.state.timesUp = false);
       },
       setValueToGuess() {
         this.value = this.guess;
