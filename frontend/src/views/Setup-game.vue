@@ -23,6 +23,10 @@
       <div></div>
     </div>
     <div class="link"><router-link to="/bots">Change players</router-link></div>
+    <div>Selected category is: {{selected}}</div>
+    <select v-model="selected" @change="setSelectedCategory">
+      <option v-for="(o, index) in categories">{{ o }}</option>
+    </select>
   </div>
 </template>
 
@@ -42,6 +46,11 @@ export default {
     HighScore,
     SelectBots
   },
+  data: function() {
+    return {
+      selected : "random",
+    }
+  },
   methods: {
     startGame() {
       this.$store.dispatch("loadQuestions", 1);
@@ -54,12 +63,26 @@ export default {
         this.$store.dispatch("loadHighScores");
         this.$store.state.showHighScore=true;
       }
+    },
+    setSelectedCategory() {
+      this.$store.commit("setSelectedCategory", this.selectedIndex)
     }
+
   },
   computed: {
     bots() {
       return this.$store.state.sessionPlayersArray;
-    }
+    },
+    categories() {
+      return this.$store.state.categories;
+    },
+    selectedIndex() {
+      return this.categories.indexOf(this.selected);
+    },
+
+  },
+  mounted() {
+   this.$store.dispatch("loadCategories");
   }
 };
 </script>
