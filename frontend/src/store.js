@@ -35,6 +35,7 @@ export default new Vuex.Store({
     matchesPlayed: 0,
     timesUp: false,
     showHighScore: false,
+    showAddQuestion: false,
     currentPlayerIndex: 0,
     images: {
       tooHigh: ImageTooHigh,
