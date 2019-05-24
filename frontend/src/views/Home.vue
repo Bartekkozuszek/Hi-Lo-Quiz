@@ -8,21 +8,23 @@
 
 <script>
 // @ is an alias to /src
-import Game from "./Game";
-import Setupgame from "./Setup-game.vue";
-import WinScreen from "./Win-screen";
+import Menu from "@/components/Menu.vue";
+    import Game from "./Game";
+    import Setupgame from "./Setup-game.vue";
+    import WinScreen from "./Win-screen";
+
 export default {
   name: "Home",
   components: {
     Game,
     WinScreen,
     Setupgame
-  },
-  computed: {
-    gameState() {
-      return this.$store.state.gameState;
-    }
-  }
+        },
+        computed: {
+            gameState() {
+                return this.$store.state.gameState
+            }
+        }
 };
 </script>
 
