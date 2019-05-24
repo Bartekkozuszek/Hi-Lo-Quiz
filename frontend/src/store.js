@@ -1,3 +1,4 @@
+/*eslint-disable */
 import Vue from "vue";
 import Vuex from "vuex";
 import avatar1 from "../public/images/avatar1test.png";
@@ -11,6 +12,9 @@ import botr from "../public/images/bot.png";
 import ImageBubble from "../public/images/bubble.png";
 import ImageWantToKnowMore from "../public/images/wantToKnowMore.png";
 import axios from "axios";
+
+//const serverURL = 'http://localhost:3000'
+const serverURL = 'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com'
 
 Vue.use(Vuex, axios);
 
@@ -308,8 +312,10 @@ export default new Vuex.Store({
           state.currentUser.image = avatar1;
           state.sessionPlayersArray[0] = state.currentUser
           state.user = payload.userName
+          localStorage.access_token = payload.access_token
       },
       logout(state) {
+          localStorage.removeItem('access_token')
           state.isLoggedIn = false
           state.currentUser.name = 'guest'
           state.gameState = 1
@@ -319,7 +325,12 @@ export default new Vuex.Store({
       async loadHighScores({state}){
           //top 5.
           let tempArray= await axios.get(
-              "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users?sort=score&amount=5"
+              serverURL+"/api/v1/users?sort=score&amount=5",
+              {
+                headers: {
+                  access_token: localStorage.access_token
+                }
+              }
           );
           state.highScore=tempArray.data.slice(0,5);
 
@@ -332,8 +343,13 @@ export default new Vuex.Store({
           if(state.currentUser.id != 0) {
               //user ranking
               tempArray = await axios.get(
-                  "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users/score-rank/" +
-                  state.currentUser.id
+                  serverURL+"/api/v1/users/score-rank/" +
+                  state.currentUser.id,
+                  {
+                    headers: {
+                      access_token: localStorage.access_token
+                    }
+                  }
               );
               console.log(tempArray.data);
               state.currentUser.rank = tempArray.data.rank+1;
@@ -343,7 +359,12 @@ export default new Vuex.Store({
       state.wantAnswers = false;
       axios
         .get(
-          "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions?amount=20"
+          serverURL+"/api/v1/questions?amount=20",
+          {
+            headers: {
+              access_token: localStorage.access_token
+            }
+          }
         )
         .then(r => r.data)
         .then(loadedQuestions => {
@@ -478,7 +499,7 @@ export default new Vuex.Store({
       root.style.setProperty("--animationTime", state.timeoutMultiplier);
       },
       async login({ commit }, payload) {
-          await axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/login', {
+          await axios.post(serverURL+'/login', {
               userName: payload.userName,
               password: payload.password
 
@@ -491,6 +512,23 @@ export default new Vuex.Store({
       logout({ commit }) {
           commit('logout')
       },
+      async tryAutoLogin({ commit }) {
+        try {
+          var reLoginResponse = await axios.post(
+            serverURL + '/relogin',            
+            {},
+            {
+              headers: {
+                access_token: localStorage.access_token
+              }
+            }
+          )
+          console.log(reLoginResponse.data.user)
+          commit('login', reLoginResponse.data.user)
+        } catch (error) {
+          console.log(error)
+        }
+      },
       async postGameStats({ state }) {
         try {
           let game = {}
@@ -501,8 +539,13 @@ export default new Vuex.Store({
           game.botIDs = [...new Set(state.moveHistory.botsIDs)]
           game.moves = state.moveHistory.moves
           var res = await axios.post(
-            'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/games',
-            game
+            serverURL+'/api/v1/games',
+            game,
+            {
+              headers: {
+                access_token: localStorage.access_token
+              }
+            }
           )
           console.log(res)
         } catch (error) {
