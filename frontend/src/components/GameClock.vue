@@ -1,12 +1,10 @@
 <template>
 
-    <div class="container center" id="app">
+    <div class="container center" v-show="showClock()" id="app">
         <div class="center padding-4">
             <div id="timer2" v-html="time"></div>
             <div class="placeholder">
-                <div v-bind="clockLogic">clocklogic</div>
-                <div @click="timerPause" v-if="!timerRunning">Pause</div>
-                <div @click="timerReset" v-if="!timerRunning">Restart</div>
+                <div v-bind="clockLogic"></div>
             </div>
         </div>
     </div>
@@ -46,10 +44,19 @@
                 }
             },
             methods: {
+                showClock:function(){
+
+                    if(this.$store.state.sessionPlayersArray[this.$store.state.currentPlayerIndex].isPlayer &&
+                        this.$store.state.animatingCharacters ==false){
+                        return true;
+                    }
+                    return false;
+                },
                 timerRun() {
                     this.timerRunning = true;
                     this.interval = setInterval(this.countdownTimer, 1000);
                 },
+                //Prepared function if we want to implement a total time for an entire round
                 timerPause() {
                     this.timerRunning = false;
                     clearInterval(this.interval);
@@ -57,7 +64,6 @@
                 timerReset() {
                     this.timerRunning = true;
                     clearInterval(this.interval);
-                   // clearInterval( () => { this.interval; });
                     this.totalTime = this.$store.state.totalMatchTime;
                 },
                 countdownTimer() {
@@ -78,19 +84,12 @@
 <style scoped>
 
    #timer2{
-       font-size: 70px;
-
+       position: absolute;
+       z-index: 100;
+       left: 73%;
+       font-size: 50px;
+       background-color: rgba(0,9,25,0.9);
+       color: beige;
    }
-
-   /*.buttons {
-       text-align: center;
-   }*/
-
-/*   .buttons button {
-       background-color: #363636;
-       color: #f5f5f5;
-       border: none;
-       padding:12px;
-   }*/
 
 </style>
