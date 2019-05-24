@@ -16,13 +16,18 @@
                  v-for="bot in bots"
                  :style="{
           'background-image': `url(${require('../../public/images/header1.png')})`
-        }">
-                <img class="playersImage" v-bind:src="bot.image" /> {{ bot.name }}
-            </div>
-            <div></div>
-        </div>
-        <div class="link"><router-link to="/bots">Change players</router-link></div>
+        }"
+      >
+        <img class="playersImage" v-bind:src="bot.image" /> {{ bot.name }}
+      </div>
+      <div></div>
     </div>
+    <div class="link"><router-link to="/bots">Change players</router-link></div>
+    <div>Selected category is: {{selected}}</div>
+    <select v-model="selected" @change="setSelectedCategory">
+      <option v-for="(o, index) in categories">{{ o }}</option>
+    </select>
+  </div>
 </template>
 
 <script>
@@ -44,6 +49,11 @@ export default {
       SelectBots,
     AddQuestion
   },
+  data: function() {
+    return {
+      selected : "random",
+    }
+  },
   methods: {
     startGame() {
       this.$store.dispatch("loadQuestions", 1);
@@ -64,10 +74,22 @@ export default {
               this.$store.state.showAddQuestion = true
           }
       }
+
   },
   computed: {
     bots() {
       return this.$store.state.sessionPlayersArray;
+    },
+    categories() {
+      return this.$store.state.categories;
+    },
+    selectedIndex() {
+      return this.categories.indexOf(this.selected);
+    },
+
+  },
+  mounted() {
+   this.$store.dispatch("loadCategories");
       },
       showAddQuestion() {
           return this.$store.state.showAddQuestion;

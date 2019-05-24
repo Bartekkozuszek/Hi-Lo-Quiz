@@ -33,6 +33,8 @@ export default new Vuex.Store({
     wantLastMove: false,
     totalMatchTime: 30,
     matchesPlayed: 0,
+    selectedCategory: '',
+    categories: [],
     timesUp: false,
     showHighScore: false,
     showAddQuestion: false,
@@ -303,6 +305,12 @@ export default new Vuex.Store({
       state.loadedQuestions = loadedQuestions;
 
       },
+    setCategories(state, loadedCategories) {
+      state.categories = loadedCategories;
+    },
+    setSelectedCategory(state, index) {
+      state.selectedCategory = state.categories[index]
+    },
       login(state, payload) {
           state.isLoggedIn = true,
           state.currentUser.id = payload._id
@@ -366,7 +374,7 @@ export default new Vuex.Store({
       state.wantAnswers = false;
       axios
         .get(
-          serverURL+"/api/v1/questions?amount=20",
+          serverURL+"/api/v1/questions?amount=20&category=" + state.selectedCategory,
           {
             headers: {
               access_token: localStorage.access_token
@@ -425,6 +433,24 @@ export default new Vuex.Store({
           high: state.currentQuestion.high
         }
       ];
+    },
+    async loadCategories({state, commit}) {
+      axios
+          .get(
+              serverURL+"/api/v1/questions/categories",
+              {
+                headers: {
+                  access_token: localStorage.access_token
+                }
+              }
+          )
+          .then(r => r.data)
+          .then(categories => {
+            commit("setCategories", categories);
+          })
+          .catch(error => {
+            console.log(error);
+          });
     },
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
