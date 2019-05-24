@@ -336,6 +336,20 @@ export default new Vuex.Store({
       }
   },
   actions: {
+      async loadBotStats({state}){
+          let tempArray= await axios.get(
+              serverURL+"/api/v1/bots",
+              {
+                  headers: {
+                      access_token: localStorage.access_token
+                  }
+              }
+          );
+          console.log(tempArray);
+          for(let i=0; i< state.loadedBots.length; i++){
+              state.loadedBots[i].wins=1;
+          }
+    },
       async loadHighScores({state}){
           //top 5.
           let tempArray= await axios.get(
