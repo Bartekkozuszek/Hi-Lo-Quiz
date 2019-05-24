@@ -27,8 +27,9 @@ export default new Vuex.Store({
     animatingCharacters: false,
     wantAnswers: false,
     wantLastMove: false,
-    totalMatchTime: 50,
+    totalMatchTime: 30,
     matchesPlayed: 0,
+    timesUp: false,
     showHighScore: false,
     currentPlayerIndex: 0,
     images: {
@@ -480,7 +481,7 @@ export default new Vuex.Store({
           await axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/login', {
               userName: payload.userName,
               password: payload.password
-            
+
           })
               .then((resp) => {
                   commit('login', resp.data.user)
@@ -508,6 +509,6 @@ export default new Vuex.Store({
           console.log(error)
         }
       }
-      
+
   }
 });

@@ -4,7 +4,7 @@
         <div class="center padding-4">
             <div id="timer2" v-html="time"></div>
             <div class="placeholder">
-                <div v-bind="timerRun()" v-if="!timerRunning">Start</div>
+                <div v-bind="clockLogic">clocklogic</div>
                 <div @click="timerPause" v-if="!timerRunning">Pause</div>
                 <div @click="timerReset" v-if="!timerRunning">Restart</div>
             </div>
@@ -18,7 +18,7 @@
         name: "GameClock",
         data: function() {
             return {
-                totalTime: (30),
+                totalTime:this.$store.state.totalMatchTime,
                 timerRunning: false,
                 timerPaused: false,
                 interval: null
@@ -35,6 +35,14 @@
                 seconds: function() {
                     var sec = this.totalTime - (this.minutes * 60);
                     return sec >= 0 ? sec : '0' + sec;
+                },
+                clockLogic: function(){
+                    let run=this.$store.state.sessionPlayersArray[this.$store.state.currentPlayerIndex].isPlayer;
+                    if (run && this.$store.state.animatingCharacters ==false){
+                        this.timerRun();
+                    }else {
+                        this.timerReset();
+                    }
                 }
             },
             methods: {
@@ -56,11 +64,13 @@
                     if (this.timerRunning == true) {
                         this.totalTime--;
                     }if(this.totalTime == 0){
+                        this.$store.state.timesUp = true;
                         return this.timerReset();
 
                     }
-                }
-            }
+                },
+            },
+
         }
 
 </script>
