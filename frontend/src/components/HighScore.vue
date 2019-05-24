@@ -17,7 +17,7 @@
         >
             <p class="rank">{{index+1}}</p>
             <img class="playerImage" :src="player.image">
-            <p>{{player.name}}</p>
+            <p>{{player.userName}}</p>
             <p>{{player.score}}</p>
             <p>{{Math.round(player.wins/(player.wins + player.losses)*100)}}%</p>
         </div>

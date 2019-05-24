@@ -13,9 +13,7 @@
     export default {
         name: "SpeechBubble",
         methods:{
-            showBubble:function(){
-                return true;
-            }
+
         },
         computed:{
             imageBubble:function(){
