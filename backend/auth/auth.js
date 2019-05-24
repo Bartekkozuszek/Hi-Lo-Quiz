@@ -1,18 +1,25 @@
 var jwt = require('jsonwebtoken')
-var config = require('../jwt.js')
+var jwtSecret = require('../jwt.js')
 
 module.exports = function(req, res, next) {
   var cookie = req.cookies.access_token
   if (cookie === undefined) {
     //No access_token cookie = continue as guest
     req.user = {
-      name: 'Guest',
-      isAdmin: false
+      userName: 'Guest',
+      isAdmin: false,
+      role: 'Guest'
     }
     console.log('No cookie access_token found')
   } else {
     //Set user from jwt token
-    req.user = jwt.verify(cookie, config.JWT_SECRET)
+    user = jwt.verify(cookie, jwtSecret.JWT_SECRET)
+    req.user = {
+      id: user.id,
+      userName: user.userName,
+      isAdmin: user.isAdmin,
+      role: user.role
+    }
     console.log('Cookie access_token=' + cookie)
   }
   next()
