@@ -5,7 +5,7 @@
                 <label>Question:</label><br />
                 <input required autofocus v-model="submitedQuestion" placeholder="Type your question here" /><br />
                 <label>Answer:</label><br />
-                <input required type="number" v-model="submitedAnswer" placeholder="Type the answer here" /><br />
+                <input required type="number" min=0 v-model="submitedAnswer" placeholder="Type the answer here" /><br />
                 <button type="button" @click="toggleAddQuestion">Cancel</button>
                 <button type="submit">Submit</button>
             </form>
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
         name: "AddQuestion",
         data() {
@@ -24,9 +26,15 @@
         },
         methods: {
             submitQuestion() {
-
+                axios.post('http://localhost:3000/api/v1/questions', {
+                    question: this.submitedQuestion,
+                    answer: this.submitedAnswer
+                })
+                .then(()=> console.log('Sent')).catch((err) => {
+                    this.registerError = err.response.data.msg
+                })  
             },
-                  toggleAddQuestion() {
+          toggleAddQuestion() {
           if (this.$store.state.showAddQuestion == true) {
               this.$store.state.showAddQuestion = false
           } else {
@@ -44,7 +52,7 @@
         left:24%;
         width:50%;
         height:50%;
-        background-color:rgba(0, 0, 0, 0.9);
+        background-color:rgba(0, 5, 20, 0.9);
         padding: 1em;
     }
 
