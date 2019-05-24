@@ -73,7 +73,10 @@ export default {
           } else {
               this.$store.state.showAddQuestion = true
           }
-      }
+      },
+          setSelectedCategory() {
+      this.$store.commit("setSelectedCategory", this.selectedIndex)
+    }
 
   },
   computed: {
@@ -85,16 +88,17 @@ export default {
     },
     selectedIndex() {
       return this.categories.indexOf(this.selected);
-    },
-
-  },
-  mounted() {
-   this.$store.dispatch("loadCategories");
       },
       showAddQuestion() {
           return this.$store.state.showAddQuestion;
       }
-  }
+
+  },
+  mounted() {
+   this.$store.dispatch("loadCategories");
+      }
+      
+  
 };
 </script>
 
