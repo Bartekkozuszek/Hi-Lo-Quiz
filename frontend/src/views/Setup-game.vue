@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import SelectBots from "./SelectBots.vue";
+import SelectBots from "../components/SelectBots.vue";
 import { dragscroll } from "vue-dragscroll";
 import HighScore from "../components/HighScore";
 export default {
@@ -51,6 +51,7 @@ export default {
       if (this.$store.state.showHighScore==true){
         this.$store.state.showHighScore=false;
       }else{
+        this.$store.dispatch("loadHighScores");
         this.$store.state.showHighScore=true;
       }
     }
