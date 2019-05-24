@@ -20,6 +20,12 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 //make all req query params lowercase
 app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, access_token')
+  res.header('Access-Control-Allow-Credentials', true)
+
+  console.log('app.js header: ' + req.headers['access_token'])
+
   for (var key in req.query) {
     req.query[key.toLowerCase()] = req.query[key]
   }
