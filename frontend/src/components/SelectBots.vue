@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD:frontend/src/views/SelectBots.vue
   <div id="wrap":style="{'background-image': `url(${require('../../public/images/background2fixed.jpg')})`}" >
     <div v-if="!toggle" id="botinfo" >
       <img v-bind:src="loadedBots[num].image"
@@ -26,23 +25,10 @@
       </router-link>
     </button>
   </div>
-=======
-  <div id="wrap">
-
-<div class="flex-container">
-		<Bot v-for='loadedBots, index in loadedBots'
-		v-bind:key='index' v-bind:bot='loadedBots'
-		v-bind:index='index'/>
-		</div>
- <button class="select-btn" id="sbt1">
- <router-link to="/"><h1>DONE!</h1></router-link>
-        </button>
- </div>
->>>>>>> 99b9d4b16f115e0a8b27c12807940d80cb61ca3c:frontend/src/components/SelectBots.vue
 </template>
 
 <script>
-import Bot from "./Bot.vue";
+import Bot from "@/components/Bot.vue";
 export default {
   name: "SelectBots",
   data() {
@@ -55,7 +41,6 @@ export default {
   props: {
     user: String,
     settings: String,
-<<<<<<< HEAD:frontend/src/views/SelectBots.vue
     newGame: String
   },
   computed: {
@@ -66,39 +51,20 @@ export default {
   },
   methods: {
     setActiveState: function (index, bool) {
-
-
       this.$store.dispatch('toggleBotChosen', index);
-
-
     }
   },
   components: {
     Bot
   }
-=======
-	newGame: String
-	},
-    computed: {
-        //Fetch values from vuex
-		loadedBots: function() {
-            return this.$store.state.loadedBots
-        }}
-		,
-	components: {
-		Bot
-	}
->>>>>>> 99b9d4b16f115e0a8b27c12807940d80cb61ca3c:frontend/src/components/SelectBots.vue
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-<<<<<<< HEAD:frontend/src/views/SelectBots.vue
 #wrap {
   background-size: cover;
 }
-
 #botinfo {
   justify-content: center;
   min-height: 80vh;
@@ -107,11 +73,9 @@ export default {
   margin: auto;
   max-height: 80vh;
 }
-
 #botinfo>img {
   margin-top: 4vh;
 }
-
 .flex-container {
   justify-content: center;
   min-height: 80vh;
@@ -120,21 +84,10 @@ export default {
   width: 50%;
   margin: auto;
 }
-
 selectbots {
   padding: 1vh;
   text-align: center;
 }
-=======
-#wrap{
-background-color: orange;
-}
-selectbots{
-	padding: 1vh;
-	text-align: center;
-	}
->>>>>>> 99b9d4b16f115e0a8b27c12807940d80cb61ca3c:frontend/src/components/SelectBots.vue
-
 h1 {
   color: white;
   font-size: 4vh;
@@ -142,19 +95,16 @@ h1 {
   padding: 1vh;
   text-align: center;
 }
-
 h2 {
   color: white;
   font-size: 2vh;
   text-align: center;
 }
-
 #title {
   background-color: yellow;
   font-family: 'Days One', sans-serif;
   font-size: 3vh;
 }
-
 select {
   color: WHITE;
   font-size: 3vh;
@@ -163,12 +113,10 @@ select {
   text-decoration: none;
   border: none;
 }
-
 img {
   width: 100%;
   max-width: 500px;
 }
-
 .button {
   background-color: burlywood;
   border: none;
@@ -180,7 +128,6 @@ img {
   font-size: 3vh;
   margin-bottom: 1vh;
 }
-
 .select-btn {
   color: WHITE;
   font-size: 3vh;
@@ -192,7 +139,6 @@ img {
   border: none;
   width: 100%;
 }
-
 @media screen and (orientation: portrait) {
   .flex-container {
     width: 100%;
@@ -200,32 +146,23 @@ img {
   #botinfo {
     width: 100%;
   }
-<<<<<<< HEAD:frontend/src/views/SelectBots.vue
   img {
     width: auto;
     max-height: 25vh;
   }
 }
-
 a:link {
   text-decoration: none;
 }
-
 .flex-container>div {
-=======
-
-.flex-container > div {
->>>>>>> 99b9d4b16f115e0a8b27c12807940d80cb61ca3c:frontend/src/components/SelectBots.vue
   display: flex;
   justify-content: center;
   text-align: center;
   background-size: 100%;
 }
-
 .inactive {
   filter: grayscale(0%);
 }
-
 .active {
   filter: grayscale(100%);
 }
