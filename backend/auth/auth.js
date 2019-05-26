@@ -30,7 +30,7 @@ module.exports = function(req, res, next) {
       isAdmin: false,
       role: 'Guest'
     }
-    console.log('No cookie access_token found')
+    console.log('auth.js No cookie access_token found')
   } else {
     //Set user from jwt token
     let user = jwt.verify(cookie, jwtSecret.JWT_SECRET)
@@ -40,7 +40,7 @@ module.exports = function(req, res, next) {
       isAdmin: user.isAdmin,
       role: user.role
     }
-    console.log('Cookie access_token=' + cookie)
+    console.log('auth.js Cookie access_token=' + cookie)
   }
   next()
   return

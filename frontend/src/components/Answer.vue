@@ -13,7 +13,7 @@
               :disabled="!showSubmit"
               :key="componentKey"
               v-on:change="setValueToGuess"
-              v-show="!checked"
+              v-bind:class="{hide: checked}"
       >
         <template v-slot:mark="{ pos, label }">
           <div class="custom-mark" :style="{ left: `${pos}%` }">
@@ -22,7 +22,6 @@
         </template>
       </vue-slider>
     </div>
-    <!--Just nu submitbutton för enkelhetens skull men sen fixa så att värdet skickas ändå om tiden går ut-->
     <br />
     <div>{{ msg }}</div>
     <br />
@@ -33,10 +32,9 @@
             v-on:change="setGuessToValue"
             autofocus="autofocus"
     />
-    <button v-if="showSubmit" id="submit-button" v-on:click="submitAnswer">
+    <button id="submit-button" v-on:click="submitAnswer" :disabled="!showSubmit">
       Submit
     </button>
-    <br />
     <label for="hardMode">Hard Mode (No slider)</label>
     <input type="checkbox" id="hardMode" v-model="checked" />
     <!--select v-model="selected" @change="assignQuestion">
@@ -202,7 +200,7 @@
         if (this.timesUp) {
           this.submitAnswer()
         }
-      }
+      },
 
     },
     methods: {
@@ -219,6 +217,7 @@
           );
         }
         let newMove = { guess: this.value, timeTook: 10 };
+        newMove.id=this.$store.state.currentUser.id
         this.$store
                 .dispatch("addMove", newMove)
                 .then(() => this.$store.dispatch("turnFinished"))
@@ -281,7 +280,7 @@
         this.forceRerender();
       },
       unsetBoxShadowOnRail() {
-        this.options.railStyle = {};
+        this.options.railStyle = "var(--glow-off)";
         this.forceRerender();
       },
       // Används när man spelare /bottar har gissat för att byta tur.
@@ -363,14 +362,20 @@
     padding: 30px;
     background-image: url("../../public/images/btnwood.jpg");
     background-size: 20%;
-    box-shadow: 0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0);
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
   }
   .boxShadowClass {
     box-shadow: 0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   #submit-button {
     margin: 10px;
+
   }
+
+  .hide {
+    opacity: 0;
+  }
+
   .custom-mark {
     color: beige;
     font-weight: bold;

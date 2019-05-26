@@ -65,16 +65,16 @@ router.get('/logout', function(req, res) {
   res.json({ msg: 'logged out' })
 })
 
-router.post('/relogin', async function(req, res) {
+router.get('/relogin', async function(req, res) {
   let access_token_header = req.headers['access_token']
-
+  //console.log(access_token_header)
   if (access_token_header !== undefined) {
     try {
       let user = jwt.verify(access_token_header, jwtSecret.JWT_SECRET)
       let userFromDb = await User.findOne({ userName: user.userName })
       let userPresentable = userFromDb.presentable()
       userPresentable.access_token = access_token_header
-      console.log('RELOGIN:' + userPresentable)
+      console.log('RELOGIN:' + userPresentable.userName)
       res.json({ msg: 'Relogged in as: ' + userPresentable.userName, user: userPresentable })
       return
     } catch (error) {

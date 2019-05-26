@@ -61,10 +61,10 @@ router.post('/', async function(req, res, next) {
 
   let bots = []
   //add statistics for bots
-  const winnerBotId = sanitized.moves[sanitized.moves.length - 1].id
+  const winnerId = sanitized.moves[sanitized.moves.length - 1].id
   for (let i = 0; i < sanitized.botIDs.length; i++) {
     let element = sanitized.botIDs[i]
-    let won = element === winnerBotId ? true : false
+    let won = element === winnerId ? true : false
     let win = won ? 1 : 0
     let loss = won ? 0 : 1
 
@@ -82,26 +82,28 @@ router.post('/', async function(req, res, next) {
   }
 
   //add statistics for user
-  var userID = sanitized.userID
+  let userID = sanitized.userID
   console.log('userID ' + userID)
   console.log('req.user.id ' + req.user.id)
   //if (req.user.id === userID) {
-  var score = sanitized.score
-  var lastMoveId = sanitized.moves[sanitized.moves.length - 1].id
+  if (true) {
+    //temp
+    let score = sanitized.score
 
-  var won = lastMoveId === userID ? true : false
-  var win = won ? 1 : 0
-  var loss = won ? 0 : 1
-
-  try {
-    var updatedUser = await User.findByIdAndUpdate(
-      userID,
-      { $inc: { score: score, wins: win, losses: loss } },
-      { new: true, runValidators: true, useFindAndModify: false }
-    )
-  } catch (err) {
-    res.status(400).json({ msg: 'Error updating statistics for user ' + err.message })
-    return
+    let won = winnerId === userID ? true : false
+    let win = won ? 1 : 0
+    let loss = won ? 0 : 1
+    console.log('W:' + winnerId + ' Uid: ' + userID + ' win: ' + win + ' loss: ' + loss)
+    try {
+      var updatedUser = await User.findByIdAndUpdate(
+        userID,
+        { $inc: { score: score, wins: win, losses: loss } },
+        { new: true, runValidators: true, useFindAndModify: false }
+      )
+    } catch (err) {
+      res.status(400).json({ msg: 'Error updating statistics for user ' + err.message })
+      return
+    }
   }
   //}
 
