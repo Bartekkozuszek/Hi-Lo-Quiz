@@ -30,6 +30,7 @@
         </div>
         <div class="form-group">
             <div class="actions">
+                <button type="button" @click="goBack">Cancel</button>
                 <button type="button" class="btn btn-primary" @click="submit">Submit</button>
             </div>
         </div>
@@ -95,8 +96,11 @@
         }
       }
     },
-    methods: {
-        submit: function () {
+        methods: {
+        goBack() {
+                this.$router.push('/')
+            },
+        submit() {
             let isValid = false;
             this.submitted = true;
             this.$validate()

@@ -2,12 +2,13 @@
     <div class="aq">
         <div>
             <form @submit.prevent="submitQuestion">
-                <label>Question:</label><br />
-                <input required autofocus v-model="submitedQuestion" placeholder="Type your question here" /><br />
-                <label>Answer:</label><br />
-                <input required type="number" min=0 v-model="submitedAnswer" placeholder="Type the answer here" /><br />
+                <h3 class="message" v-show="!isLoggedIn">* You have to log in or register in order to submit a question.</h3>
+                <label class="label">Question:</label><br />
+                <input :disabled="isLoggedIn ? false : true" required autofocus v-model="submitedQuestion" placeholder="Type your question here" /><br />
+                <label class="label">Answer:</label><br />
+                <input :disabled="isLoggedIn ? false : true" required type="number" min=0 v-model="submitedAnswer" placeholder="Type the answer here" /><br />
                 <button type="button" @click="toggleAddQuestion">Cancel</button>
-                <button type="submit">Submit</button>
+                <button :disabled="isLoggedIn ? false : true" type="submit">Submit</button>
             </form>
         </div>
     </div>
@@ -21,7 +22,12 @@
         data() {
             return {
                 submitedQuestion: "",
-                submitedAnswer: 0
+                submitedAnswer: 0,
+            }
+        },
+        computed: {
+            isLoggedIn() {
+                return this.$store.state.isLoggedIn
             }
         },
         methods: {
@@ -40,7 +46,7 @@
           } else {
               this.$store.state.showAddQuestion = true
           }
-      }
+            }
         }
     }
 </script>
@@ -54,6 +60,14 @@
         height:50%;
         background-color:rgba(0, 5, 20, 0.9);
         padding: 1em;
+    }
+
+    .message{
+        color: orangered;
+    }
+
+    .label {
+        color: azure
     }
 
 </style>
