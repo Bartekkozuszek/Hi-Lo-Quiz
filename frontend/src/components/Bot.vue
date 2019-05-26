@@ -1,13 +1,11 @@
 <template>
-	
-		<div id="bot">  
-		<img v-bind:src="bot.image" 
-		v-bind:class="[bot.enabled ? 'inactive' : 'active']"
-		v-on:click="toggleActive(index)"
-		
-		/>
- <div class="top-right"><p>{{bot.name}}</p></div>
-</div>
+
+    <div id="bot">
+        <img v-bind:src="bot.image" v-bind:class="[bot.enabled ? 'inactive' : 'active']" v-on:click="toggleActive(index)" />
+        <div class="top-right">
+            <p>{{bot.name}}</p>
+        </div>
+    </div>
 </template>
 
 <script>
