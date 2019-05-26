@@ -2,9 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\api",
+    "\\api\\user",
     "\\routes",
     "\\routes\\api"
   ],
-  "SelectedNode": "\\routes\\login.js",
+  "SelectedNode": "\\config.js",
   "PreviewInSolutionExplorer": false
 }
