@@ -69,7 +69,7 @@ export default {
   justify-content: center;
   min-height: 80vh;
   text-align: center;
-  width: 50%;
+  width: 100%;
   margin: auto;
   max-height: 80vh;
 }
@@ -114,8 +114,8 @@ select {
   border: none;
 }
 img {
-  width: 100%;
-  max-width: 500px;
+    width: auto;
+    max-height: 25vh;
 }
 .button {
   background-color: burlywood;
@@ -147,8 +147,7 @@ img {
     width: 100%;
   }
   img {
-    width: auto;
-    max-height: 25vh;
+
   }
 }
 a:link {
