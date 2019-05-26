@@ -2,11 +2,12 @@
 // Parts from https://github.com/juffalow/express-jwt-example
 // But updated with cookies
 
-var jwt = require('jsonwebtoken')
-var config = require('../jwt.js')
+const jwt = require('jsonwebtoken')
+const config = require('../jwt.js')
 const express = require('express')
 const router = express.Router()
 const User = require('../api/user/user')
+const jwtSecret = require('../jwt.js')
 
 router.post('/login', function(req, res) {
   var name = req.body.userName
@@ -45,7 +46,9 @@ router.post('/login', function(req, res) {
           expires: new Date(Date.now() + 900000),
           httpOnly: true
         })
-        res.status(202).json({ msg: 'Logged in as: ' + user.userName, user: user.presentable() })
+        let userPresentable = user.presentable()
+        userPresentable.access_token = user.jwt
+        res.status(202).json({ msg: 'Logged in as: ' + user.userName, user: userPresentable })
       } else {
         res.status(401).json({ msg: 'no password match' })
       }
@@ -60,6 +63,26 @@ router.get('/logout', function(req, res) {
     httpOnly: true
   })
   res.json({ msg: 'logged out' })
+})
+
+router.get('/relogin', async function(req, res) {
+  let access_token_header = req.headers['access_token']
+  //console.log(access_token_header)
+  if (access_token_header !== undefined) {
+    try {
+      let user = jwt.verify(access_token_header, jwtSecret.JWT_SECRET)
+      let userFromDb = await User.findOne({ userName: user.userName })
+      let userPresentable = userFromDb.presentable()
+      userPresentable.access_token = access_token_header
+      console.log('RELOGIN:' + userPresentable.userName)
+      res.json({ msg: 'Relogged in as: ' + userPresentable.userName, user: userPresentable })
+      return
+    } catch (error) {
+      console.log('RELOGIN No HEADER access_token found ' + error.message)
+    }
+  }
+
+  return res.status(404).json({ msg: 'User not recognized' })
 })
 
 module.exports = router

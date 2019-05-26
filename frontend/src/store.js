@@ -1,3 +1,4 @@
+/*eslint-disable */
 import Vue from "vue";
 import Vuex from "vuex";
 import avatar1 from "../public/images/avatar1test.png";
@@ -11,6 +12,11 @@ import botr from "../public/images/bot.png";
 import ImageBubble from "../public/images/bubble.png";
 import ImageWantToKnowMore from "../public/images/wantToKnowMore.png";
 import axios from "axios";
+
+//const serverURL = 'http://localhost:3000'
+const serverURL = 'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com'
+
+const instance = axios.create({baseURL: serverURL});
 
 Vue.use(Vuex, axios);
 
@@ -27,9 +33,13 @@ export default new Vuex.Store({
     animatingCharacters: false,
     wantAnswers: false,
     wantLastMove: false,
-    totalMatchTime: 50,
+    totalMatchTime: 30,
     matchesPlayed: 0,
+    selectedCategory: '',
+    categories: [],
+    timesUp: false,
     showHighScore: false,
+    showAddQuestion: false,
     currentPlayerIndex: 0,
     images: {
       tooHigh: ImageTooHigh,
@@ -272,7 +282,7 @@ export default new Vuex.Store({
       }
     ],
     isLoggedIn: false,
-    user: "guest"
+        user: "guest"
   },
   getters: {
     isLoggedIn: state => {
@@ -297,28 +307,60 @@ export default new Vuex.Store({
       state.loadedQuestions = loadedQuestions;
 
       },
+    setCategories(state, loadedCategories) {
+      state.categories = loadedCategories;
+    },
+    setSelectedCategory(state, index) {
+      state.selectedCategory = state.categories[index]
+    },
       login(state, payload) {
           state.isLoggedIn = true,
-          state.currentUser.id = payload._id,
-          state.currentUser.wins = payload.wins,
-          state.currentUser.losses = payload.losses,
-          state.currentUser.score = payload.score,
+          state.currentUser.id = payload._id
+          state.currentUser.wins = payload.wins
+          state.currentUser.losses = payload.losses
+          state.currentUser.score = payload.score
           state.currentUser.name = payload.userName
           state.currentUser.image = avatar1;
           state.sessionPlayersArray[0] = state.currentUser
           state.user = payload.userName
+          localStorage.access_token = payload.access_token
       },
       logout(state) {
+          localStorage.removeItem('access_token')
           state.isLoggedIn = false
           state.currentUser.name = 'guest'
           state.gameState = 1
+          state.currentUser.wins = 5
+          state.currentUser.losses = 7
+          state.currentUser.rank = 3
+          state.currentUser.score = 1
+          state.gameState = 1
+          //TODO add the rest of the object
       }
   },
   actions: {
+      async loadBotStats({state}){
+          let tempArray= await instance.get(
+              "/api/v1/bots",
+              {
+                  headers: {
+                      access_token: localStorage.access_token
+                  }
+              }
+          );
+          console.log(tempArray);
+          for(let i=0; i< state.loadedBots.length; i++){
+              state.loadedBots[i].wins=1;
+          }
+    },
       async loadHighScores({state}){
           //top 5.
-          let tempArray= await axios.get(
-              "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users?sort=score&amount=5"
+          let tempArray= await instance.get("/api/v1/users?sort=score&amount=5",
+              {
+                headers: {
+                  access_token: localStorage.access_token
+                }
+              }
           );
           state.highScore=tempArray.data.slice(0,5);
 
@@ -330,9 +372,13 @@ export default new Vuex.Store({
 
           if(state.currentUser.id != 0) {
               //user ranking
-              tempArray = await axios.get(
-                  "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users/score-rank/" +
-                  state.currentUser.id
+              tempArray = await instance.get("/api/v1/users/score-rank/" +
+                  state.currentUser.id,
+                  {
+                    headers: {
+                      access_token: localStorage.access_token
+                    }
+                  }
               );
               console.log(tempArray.data);
               state.currentUser.rank = tempArray.data.rank+1;
@@ -340,9 +386,15 @@ export default new Vuex.Store({
       },
     async loadQuestions({ commit, dispatch, state }, amount) {
       state.wantAnswers = false;
-      axios
-        .get(
-          "http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions?amount=20"
+
+      instance
+        .get("/api/v1/questions?amount=20&category=" + state.selectedCategory,
+
+          {
+            headers: {
+              access_token: localStorage.access_token
+            }
+          }
         )
         .then(r => r.data)
         .then(loadedQuestions => {
@@ -396,6 +448,24 @@ export default new Vuex.Store({
           high: state.currentQuestion.high
         }
       ];
+    },
+    async loadCategories({state, commit}) {
+      instance
+          .get(
+              "/api/v1/questions/categories",
+              {
+                headers: {
+                  access_token: localStorage.access_token
+                }
+              }
+          )
+          .then(r => r.data)
+          .then(categories => {
+            commit("setCategories", categories);
+          })
+          .catch(error => {
+            console.log(error);
+          });
     },
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
@@ -477,18 +547,39 @@ export default new Vuex.Store({
       root.style.setProperty("--animationTime", state.timeoutMultiplier);
       },
       async login({ commit }, payload) {
-          await axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/login', {
+          await instance.post('/login', {
               userName: payload.userName,
               password: payload.password
-            
+
           })
               .then((resp) => {
                   commit('login', resp.data.user)
-                  console.log(resp.data.msg)
+                  //console.log(resp.data.msg)
               }).catch((err) => console.log(err))
       },
       logout({ commit }) {
-          commit('logout')
+          instance.get("/logout")
+              .then((r) => {
+                  commit('logout')
+                  //console.log(r.data.msg)
+              }).catch((err) => console.log(err))
+          
+      },
+      async tryAutoLogin({ commit }) {
+        try {
+          var reLoginResponse = await instance.get('/relogin',  
+            {
+              headers: {
+                access_token: localStorage.access_token
+              }
+            }
+          )
+          console.log(reLoginResponse.data)
+          console.log(reLoginResponse.data.user)
+          commit('login', reLoginResponse.data.user)
+        } catch (error) {
+          console.log(error)
+        }
       },
       async postGameStats({ state }) {
         try {
@@ -499,15 +590,19 @@ export default new Vuex.Store({
           game.score = 5
           game.botIDs = [...new Set(state.moveHistory.botsIDs)]
           game.moves = state.moveHistory.moves
-          var res = await axios.post(
-            'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/games',
-            game
+          var res = await instance.post('/api/v1/games',
+            game,
+            {
+              headers: {
+                access_token: localStorage.access_token              
+              }
+            }
           )
           console.log(res)
         } catch (error) {
           console.log(error)
         }
       }
-      
+
   }
 });

@@ -1,9 +1,9 @@
 <template>
     <div>
         <h2>Login</h2>
-        <form class="login" @submit.prevent="login">
+        <form class="form" @submit.prevent="login">
             <label>Username:</label><br />
-            <input required autocomplete="on" v-model="userName" placeholder="Type your username here" /><br />
+            <input required autofocus autocomplete="on" v-model="userName" placeholder="Type your username here" /><br />
             <label>Password:</label><br />
             <input required type="password" v-model="password" placeholder="Type your password here" /><br />
             <footer>
@@ -38,9 +38,12 @@
                 let password = this.password
                 this.$store.dispatch('login', { userName, password })
                     .then(() => {
-                        if (this.isLoggedIn) this.$router.push('/')
+                        if (this.isLoggedIn) {
+                            alert('Login successful')
+                             this.$router.push('/')
+                        }
                         else {
-                            console.log('wrong') //to be replaced with a modal or notification with appropriate message
+                            alert('Wrong username and/or password') 
                         }
                     })
                     .catch(err => console.log(err))
@@ -62,4 +65,6 @@
     footer {
         margin: 3vw
     }
+
+ 
 </style>

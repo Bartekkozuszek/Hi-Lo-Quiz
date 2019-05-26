@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home";
 import Rules from "./components/Rules";
-import SelectBots from "./views/SelectBots.vue";
+import SelectBots from "./components/SelectBots.vue";
 import Login from "./views/Login.vue";
 import About from "./views/About.vue";
 import Register from "./components/Register.vue";

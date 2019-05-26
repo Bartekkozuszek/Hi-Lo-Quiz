@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD:frontend/src/views/SelectBots.vue
   <div id="wrap":style="{'background-image': `url(${require('../../public/images/background2fixed.jpg')})`}" >
     <div v-if="!toggle" id="botinfo" >
       <img v-bind:src="loadedBots[num].image"
@@ -25,10 +26,23 @@
       </router-link>
     </button>
   </div>
+=======
+  <div id="wrap">
+
+<div class="flex-container">
+		<Bot v-for='loadedBots, index in loadedBots'
+		v-bind:key='index' v-bind:bot='loadedBots'
+		v-bind:index='index'/>
+		</div>
+ <button class="select-btn" id="sbt1">
+ <router-link to="/"><h1>DONE!</h1></router-link>
+        </button>
+ </div>
+>>>>>>> 99b9d4b16f115e0a8b27c12807940d80cb61ca3c:frontend/src/components/SelectBots.vue
 </template>
 
 <script>
-import Bot from "@/components/Bot.vue";
+import Bot from "./Bot.vue";
 export default {
   name: "SelectBots",
   data() {
@@ -41,6 +55,7 @@ export default {
   props: {
     user: String,
     settings: String,
+<<<<<<< HEAD:frontend/src/views/SelectBots.vue
     newGame: String
   },
   computed: {
@@ -61,11 +76,25 @@ export default {
   components: {
     Bot
   }
+=======
+	newGame: String
+	},
+    computed: {
+        //Fetch values from vuex
+		loadedBots: function() {
+            return this.$store.state.loadedBots
+        }}
+		,
+	components: {
+		Bot
+	}
+>>>>>>> 99b9d4b16f115e0a8b27c12807940d80cb61ca3c:frontend/src/components/SelectBots.vue
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+<<<<<<< HEAD:frontend/src/views/SelectBots.vue
 #wrap {
   background-size: cover;
 }
@@ -96,6 +125,15 @@ selectbots {
   padding: 1vh;
   text-align: center;
 }
+=======
+#wrap{
+background-color: orange;
+}
+selectbots{
+	padding: 1vh;
+	text-align: center;
+	}
+>>>>>>> 99b9d4b16f115e0a8b27c12807940d80cb61ca3c:frontend/src/components/SelectBots.vue
 
 h1 {
   color: white;
@@ -162,6 +200,7 @@ img {
   #botinfo {
     width: 100%;
   }
+<<<<<<< HEAD:frontend/src/views/SelectBots.vue
   img {
     width: auto;
     max-height: 25vh;
@@ -173,6 +212,10 @@ a:link {
 }
 
 .flex-container>div {
+=======
+
+.flex-container > div {
+>>>>>>> 99b9d4b16f115e0a8b27c12807940d80cb61ca3c:frontend/src/components/SelectBots.vue
   display: flex;
   justify-content: center;
   text-align: center;

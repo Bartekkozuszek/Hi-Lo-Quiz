@@ -27,19 +27,15 @@ methods:{
 *{
 margin-left:2vh;
 margin-right:2vh;
-
 }
 p {
   font-size: 2vh;	
 	color:white;
-
 	}
-
 .top-right {
   position: absolute;
   top: 8px;
   right: 16px;
-
 }
 #bot{
 display: inline;
@@ -56,8 +52,6 @@ margin:2vh;
 height:100%;
 width:100%;
 text-align: center;
-
-
 }
 img{
 height:20%;

@@ -1,20 +1,20 @@
 <template>
-  <div
-    id="setup"
-    :style="{
+    <div id="setup"
+         :style="{
       'background-image': `url(${require('../../public/images/background1.jpg')})`
-    }"
-  >
-    <HighScore v-if="this.$store.state.showHighScore "></HighScore>
-    <button @click="startGame" class="startButton">Start!</button>
-    <br>
-    <button @click="toggeShowHighscore" class="startButton">Highscores</button>
-    <div class="botContainer" v-dragscroll.x="true">
-      <div></div>
-      <div
-        class="loadedBots"
-        v-for="bot in bots"
-        :style="{
+    }">
+        <HighScore v-if="this.$store.state.showHighScore "></HighScore>
+        <add-question v-if="showAddQuestion"></add-question>
+        <button @click="startGame" class="startButton">Start!</button>
+        <br>
+        <button @click="toggleAddQuestion" class="startButton">Submit a question</button>
+        <br>
+        <button @click="toggeShowHighscore" class="startButton">Highscores</button>
+        <div class="botContainer" v-dragscroll.x="true">
+            <div></div>
+            <div class="loadedBots"
+                 v-for="bot in bots"
+                 :style="{
           'background-image': `url(${require('../../public/images/header1.png')})`
         }"
       >
@@ -23,13 +23,19 @@
       <div></div>
     </div>
     <div class="link"><router-link to="/bots">Change players</router-link></div>
+    <div>Selected category is: {{selected}}</div>
+    <select v-model="selected" @change="setSelectedCategory">
+      <option v-for="(o, index) in categories">{{ o }}</option>
+    </select>
   </div>
 </template>
 
 <script>
-import SelectBots from "./SelectBots.vue";
+import SelectBots from "../components/SelectBots.vue";
 import { dragscroll } from "vue-dragscroll";
-import HighScore from "../components/HighScore";
+    import HighScore from "../components/HighScore";
+    import AddQuestion from "../components/AddQuestion.vue"
+
 export default {
   directives: {
     dragscroll
@@ -40,7 +46,13 @@ export default {
   //},
   components: {
     HighScore,
-    SelectBots
+      SelectBots,
+    AddQuestion
+  },
+  data: function() {
+    return {
+      selected : "random",
+    }
   },
   methods: {
     startGame() {
@@ -51,15 +63,42 @@ export default {
       if (this.$store.state.showHighScore==true){
         this.$store.state.showHighScore=false;
       }else{
+        this.$store.dispatch("loadHighScores");
         this.$store.state.showHighScore=true;
       }
+      },
+      toggleAddQuestion() {
+          if (this.$store.state.showAddQuestion == true) {
+              this.$store.state.showAddQuestion = false
+          } else {
+              this.$store.state.showAddQuestion = true
+          }
+      },
+          setSelectedCategory() {
+      this.$store.commit("setSelectedCategory", this.selectedIndex)
     }
+
   },
   computed: {
     bots() {
       return this.$store.state.sessionPlayersArray;
-    }
-  }
+    },
+    categories() {
+      return this.$store.state.categories;
+    },
+    selectedIndex() {
+      return this.categories.indexOf(this.selected);
+      },
+      showAddQuestion() {
+          return this.$store.state.showAddQuestion;
+      }
+
+  },
+  mounted() {
+   this.$store.dispatch("loadCategories");
+      }
+      
+  
 };
 </script>
 
