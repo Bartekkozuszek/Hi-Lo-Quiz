@@ -1,5 +1,6 @@
 :root {
   --glow-on: 0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  --glow-off: 0px 0px 0px 0px rgba(0,0,0,0);
 }
 
 /* component style */
