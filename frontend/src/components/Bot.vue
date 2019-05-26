@@ -16,7 +16,7 @@ name: "Bot",
 props: ['bot','index'],
 methods:{
 		toggleActive: function(index) {
-			this.$store.dispatch('toggleBotChosen',index);
+			
             }
 }
 };
@@ -31,7 +31,7 @@ margin-right:2vh;
 }
 p {
   font-size: 2vh;	
-	color:yellow;
+	color:white;
 
 	}
 

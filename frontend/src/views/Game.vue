@@ -1,10 +1,6 @@
 <template>
   <div
-    class="thisDiv"
-    :style="{
-      'background-image': `url(${require('../../public/images/background2fixed.jpg')})`
-    }"
-  >
+    class="thisDiv":style="{'background-image': `url(${require('../../public/images/background2fixed.jpg')})`}">
     <question-display></question-display>
     <guess-response></guess-response>
     <SpeechBubble></SpeechBubble>
