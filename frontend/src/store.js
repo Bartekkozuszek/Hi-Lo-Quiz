@@ -16,6 +16,8 @@ import axios from "axios";
 //const serverURL = 'http://localhost:3000'
 const serverURL = 'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com'
 
+const instance = axios.create({baseURL: serverURL});
+
 Vue.use(Vuex, axios);
 
 export default new Vuex.Store({
@@ -337,10 +339,23 @@ export default new Vuex.Store({
       }
   },
   actions: {
+      async loadBotStats({state}){
+          let tempArray= await instance.get(
+              "/api/v1/bots",
+              {
+                  headers: {
+                      access_token: localStorage.access_token
+                  }
+              }
+          );
+          console.log(tempArray);
+          for(let i=0; i< state.loadedBots.length; i++){
+              state.loadedBots[i].wins=1;
+          }
+    },
       async loadHighScores({state}){
           //top 5.
-          let tempArray= await axios.get(
-              serverURL+"/api/v1/users?sort=score&amount=5",
+          let tempArray= await instance.get("/api/v1/users?sort=score&amount=5",
               {
                 headers: {
                   access_token: localStorage.access_token
@@ -357,8 +372,7 @@ export default new Vuex.Store({
 
           if(state.currentUser.id != 0) {
               //user ranking
-              tempArray = await axios.get(
-                  serverURL+"/api/v1/users/score-rank/" +
+              tempArray = await instance.get("/api/v1/users/score-rank/" +
                   state.currentUser.id,
                   {
                     headers: {
@@ -372,9 +386,10 @@ export default new Vuex.Store({
       },
     async loadQuestions({ commit, dispatch, state }, amount) {
       state.wantAnswers = false;
-      axios
-        .get(
-          serverURL+"/api/v1/questions?amount=20&category=" + state.selectedCategory,
+
+      instance
+        .get("/api/v1/questions?amount=20&category=" + state.selectedCategory,
+
           {
             headers: {
               access_token: localStorage.access_token
@@ -435,9 +450,9 @@ export default new Vuex.Store({
       ];
     },
     async loadCategories({state, commit}) {
-      axios
+      instance
           .get(
-              serverURL+"/api/v1/questions/categories",
+              "/api/v1/questions/categories",
               {
                 headers: {
                   access_token: localStorage.access_token
@@ -532,7 +547,7 @@ export default new Vuex.Store({
       root.style.setProperty("--animationTime", state.timeoutMultiplier);
       },
       async login({ commit }, payload) {
-          await axios.post(serverURL+'/login', {
+          await instance.post('/login', {
               userName: payload.userName,
               password: payload.password
 
@@ -543,7 +558,7 @@ export default new Vuex.Store({
               }).catch((err) => console.log(err))
       },
       logout({ commit }) {
-          axios.get("http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/logout")
+          instance.get("/logout")
               .then((r) => {
                   commit('logout')
                   //console.log(r.data.msg)
@@ -552,15 +567,14 @@ export default new Vuex.Store({
       },
       async tryAutoLogin({ commit }) {
         try {
-          var reLoginResponse = await axios.post(
-            serverURL + '/relogin',            
-            {},
+          var reLoginResponse = await instance.get('/relogin',  
             {
               headers: {
                 access_token: localStorage.access_token
               }
             }
           )
+          console.log(reLoginResponse.data)
           console.log(reLoginResponse.data.user)
           commit('login', reLoginResponse.data.user)
         } catch (error) {
@@ -576,12 +590,11 @@ export default new Vuex.Store({
           game.score = 5
           game.botIDs = [...new Set(state.moveHistory.botsIDs)]
           game.moves = state.moveHistory.moves
-          var res = await axios.post(
-            serverURL+'/api/v1/games',
+          var res = await instance.post('/api/v1/games',
             game,
             {
               headers: {
-                access_token: localStorage.access_token
+                access_token: localStorage.access_token              
               }
             }
           )
