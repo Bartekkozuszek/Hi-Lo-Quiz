@@ -21,7 +21,6 @@ import GameTable from "../components/GameTable.vue";
 import GuessResponse from "../components/GuessResponse";
 import SpeechBubble from "../components/SpeechBubble";
 import GameClock from "../components/GameClock";
-
 export default {
   name: "Game",
   computed: {},
