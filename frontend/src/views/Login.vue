@@ -14,6 +14,9 @@
         <div>
             <router-link to="/register"><span>Register new user</span></router-link>
         </div>
+        <modal :width=250 :height=100 class="md" name="loginFail">
+            <div class="md-content">Wrong username and/or password.</div>
+        </modal>
     </div>
     
 </template>
@@ -42,13 +45,17 @@
                              this.$router.push('/')
                         }
                         else {
-                            alert('Wrong username and/or password') 
+                            //alert('Wrong username and/or password') 
+                            this.showLoginFail()
                         }
                     })
                     .catch(err => console.log(err))
             },
             goBack() {
                 this.$router.push('/')
+            },
+            showLoginFail() {
+                this.$modal.show('loginFail')
             }
         }
     }
@@ -65,5 +72,10 @@
         margin: 3vw
     }
 
- 
+     .md-content {
+        padding: 10px;
+        text-align: center;
+        font-weight: 600;
+        overflow: auto;
+    }
 </style>

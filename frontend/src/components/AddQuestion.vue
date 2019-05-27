@@ -38,7 +38,7 @@
         },
         methods: {
             submitQuestion() {
-                axios.post('http://localhost:3000/api/v1/questions', {
+                axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions', {
                     question: this.submitedQuestion,
                     answer: this.submitedAnswer
                 })
