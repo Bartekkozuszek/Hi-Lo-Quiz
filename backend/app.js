@@ -23,7 +23,14 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, access_token')
   res.header('Access-Control-Allow-Credentials', true)
 
-  console.log('ip:' + req.connection.remoteAddress + ', app.js header: ' + req.headers['access_token'])
+  console.log(
+    'App.js, ip:' +
+      req.connection.remoteAddress +
+      ', has access_token header: ' +
+      (req.headers['access_token'] !== undefined) +
+      ', has access_token cookie: ' +
+      (req.cookies.access_token !== undefined)
+  )
 
   for (var key in req.query) {
     req.query[key.toLowerCase()] = req.query[key]
