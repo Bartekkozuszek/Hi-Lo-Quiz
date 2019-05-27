@@ -32,18 +32,22 @@
         },
         methods: {
             submitQuestion() {
-                axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions', {
+                axios.post('http://localhost:3000/api/v1/questions', {
                     question: this.submitedQuestion,
                     answer: this.submitedAnswer
                 })
                     .then((resp) => {
                         if (resp.status === 201)
+                        {
                             alert('Question submited successfully')
+                            this.submitedQuestion = ""
+                            this.submitedAnswer = 0
+                        }
                         else {
                             alert('Something went wrong')
                         }
                     }).catch((err) => {
-                    this.registerError = err.response.data.msg
+                        console.log(err)
                 })  
             },
           toggleAddQuestion() {
