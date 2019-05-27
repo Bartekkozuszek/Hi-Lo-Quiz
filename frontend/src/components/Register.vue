@@ -67,24 +67,18 @@
         userName: function (value) {
                     var tempUserName = ''
                     return Validator.value(value).required().minLength(3).maxLength(15)
-                        //.custom(function () {
-                        //    if (!Validator.isEmpty(value)) {
-                        //        return axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users', {
-                        //            userName: this.userName,
-                        //            firstName: '',
-                        //            lastName: '',
-                        //            password: '',
-                        //            isAdmin: false
-                        //        }).then((r) => {
-                        //            tempUserName = r.data.userName
-                        //        }).delay(1000)
-                        //            .then(function () {
-                        //                if (value !== tempUserName) {
-                        //                    return 'Already taken!';
-                        //                }
-                        //            })
-                        //    }
-                        //});
+                        .custom(async function () {
+                            if (!Validator.isEmpty(value)) {
+                                var promise = await axios.get('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users')
+                                 
+                                for (var i = 0; i < promise.data.length; i++) {
+                                    if (promise.data[i].userName === value) {
+                                        return 'This username is already taken!'
+                                    }
+                                }
+
+                            }
+                        });
                     // try with a GET request
         },
         password: function (value) {
@@ -122,7 +116,6 @@
                 }).then((resp) => {
                     this.$store.commit('login', resp.data)
                     this.registerError = ''
-                    alert('Registration succeeded!');
                     this.$router.push('/')
 
                 }).catch((err) => {
