@@ -335,7 +335,7 @@ export default new Vuex.Store({
           state.currentUser.rank = 3
           state.currentUser.score = 1
           state.gameState = 1
-          //TODO add the rest of the object
+          
       },
     clearMoveHistory(state) {
       state.moveHistory = {
