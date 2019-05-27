@@ -336,7 +336,23 @@ export default new Vuex.Store({
           state.currentUser.score = 1
           state.gameState = 1
           //TODO add the rest of the object
+      },
+    clearMoveHistory(state) {
+      state.moveHistory = {
+        questionID: "",
+            userID: "",
+            botsIDs: [],
+            score: "",
+            question: null,
+            moves: [
+          {
+            low: 0,
+            high: 200
+          }
+        ]
       }
+    }
+
   },
   actions: {
       async loadBotStats({state}){
