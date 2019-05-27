@@ -83,29 +83,30 @@ router.post('/', async function(req, res, next) {
 
   //add statistics for user
   let userID = sanitized.userID
-  console.log('userID ' + userID)
-  console.log('req.user.id ' + req.user.id)
-  //if (req.user.id === userID) {
-  if (true) {
-    //temp
+
+  if (req.user.id === userID) {
     let score = sanitized.score
 
     let won = winnerId === userID ? true : false
     let win = won ? 1 : 0
     let loss = won ? 0 : 1
-    console.log('W:' + winnerId + ' Uid: ' + userID + ' win: ' + win + ' loss: ' + loss)
+
     try {
       var updatedUser = await User.findByIdAndUpdate(
         userID,
         { $inc: { score: score, wins: win, losses: loss } },
         { new: true, runValidators: true, useFindAndModify: false }
       )
+      console.log(
+        'Saved user data for userID: ' + userID + ' req.user.id: ' + req.user.id + ' win: ' + win + ' loss: ' + loss
+      )
     } catch (err) {
       res.status(400).json({ msg: 'Error updating statistics for user ' + err.message })
       return
     }
+  } else {
+    console.log('Did NOT save user data for userID: ' + userID + ' req.user.id ' + req.user.id)
   }
-  //}
 
   let responseJson = {}
   responseJson.updatedUser = updatedUser ? updatedUser.presentable() : {}
