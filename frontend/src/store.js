@@ -1,14 +1,14 @@
 /*eslint-disable */
 import Vue from "vue";
 import Vuex from "vuex";
-import avatar1 from "../public/images/avatar1test.png";
-import avatar2 from "../public/images/avatar2test.png";
-import avatar3 from "../public/images/avatar3test.png";
-import optimus from "../public/images/avatar5test.png";
+import avatar1 from "../public/images/avatar1.png";
+import avatar2 from "../public/images/avatar2.png";
+import avatar3 from "../public/images/avatar3.png";
+import optimus from "../public/images/avatar4.png";
 import ImageTooHigh from "../public/images/tooHigh.png";
 import ImageTooLow from "../public/images/tooLow.png";
-import pontus from "../public/images/pontusBot.png";
-import botr from "../public/images/bot.png";
+import pontus from "../public/images/avatar5.png";
+import botr from "../public/images/avatar6.png";
 import ImageBubble from "../public/images/bubble.png";
 import ImageWantToKnowMore from "../public/images/wantToKnowMore.png";
 import axios from "axios";
@@ -335,7 +335,7 @@ export default new Vuex.Store({
           state.currentUser.rank = 3
           state.currentUser.score = 1
           state.gameState = 1
-          
+
       },
     clearMoveHistory(state) {
       state.moveHistory = {
@@ -364,7 +364,6 @@ export default new Vuex.Store({
                   }
               }
           );
-          console.log(tempArray);
           tempArray.data.forEach(function(dbBot) {
             state.loadedBots.forEach(function(loadBot) {
               if(loadBot.id==dbBot.botID){
@@ -488,6 +487,10 @@ export default new Vuex.Store({
             console.log(error);
           });
     },
+    setTheme({}){
+      document.documentElement.style.setProperty("--themeColor1", "#2e358b");
+      document.documentElement.style.setProperty("--themeColor2", "#db6124");
+    },
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
       if (getters.lastMove.guess == state.currentQuestion.answer) {
@@ -584,11 +587,11 @@ export default new Vuex.Store({
                   commit('logout')
                   //console.log(r.data.msg)
               }).catch((err) => console.log(err))
-          
+
       },
       async tryAutoLogin({ commit }) {
         try {
-          var reLoginResponse = await instance.get('/relogin',  
+          var reLoginResponse = await instance.get('/relogin',
             {
               headers: {
                 access_token: localStorage.access_token
@@ -607,7 +610,8 @@ export default new Vuex.Store({
           let game = {}
           game.questionID = state.currentQuestion._id
           game.userID = state.currentUser.id
-          // TODO calculate score to be added
+
+
           game.score = 5
           game.botIDs = [...new Set(state.moveHistory.botsIDs)]
           game.moves = state.moveHistory.moves
@@ -615,7 +619,7 @@ export default new Vuex.Store({
             game,
             {
               headers: {
-                access_token: localStorage.access_token              
+                access_token: localStorage.access_token
               }
             }
           )
