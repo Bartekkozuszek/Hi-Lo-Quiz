@@ -487,6 +487,10 @@ export default new Vuex.Store({
             console.log(error);
           });
     },
+    setTheme({}){
+      document.documentElement.style.setProperty("--themeColor1", "#2e358b");
+      document.documentElement.style.setProperty("--themeColor2", "#db6124");
+    },
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
       if (getters.lastMove.guess == state.currentQuestion.answer) {
@@ -607,6 +611,9 @@ export default new Vuex.Store({
           game.questionID = state.currentQuestion._id
           game.userID = state.currentUser.id
           // TODO calculate score to be added
+
+
+
           game.score = 5
           game.botIDs = [...new Set(state.moveHistory.botsIDs)]
           game.moves = state.moveHistory.moves
