@@ -63,6 +63,7 @@ export default {
       if (this.$store.state.showHighScore==true){
         this.$store.state.showHighScore=false;
       }else{
+          this.$store.dispatch("loadBotStats");
         this.$store.dispatch("loadHighScores");
         this.$store.state.showHighScore=true;
       }

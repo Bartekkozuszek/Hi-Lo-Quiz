@@ -347,9 +347,14 @@ export default new Vuex.Store({
               }
           );
           console.log(tempArray);
-          for(let i=0; i< state.loadedBots.length; i++){
-              state.loadedBots[i].wins=1;
-          }
+          tempArray.forEach(function(dbBot) {
+              state.loadedBots.forEach(function(loadBot) {
+                  if(loadBot.id==dbBot.id){
+                      loadbot.wins=dbBot.wins;
+                      loadbot.losses=dbBot.losses;
+                  }
+              });
+          });
     },
       async loadHighScores({state}){
           //top 5.
