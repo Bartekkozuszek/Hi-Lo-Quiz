@@ -6,10 +6,8 @@
     <div id="setup">
 
         <div class="container">
-            <br>
-            <br>
-            <br>
-            <br>
+
+            <select-avatar></select-avatar>
             <div class="row">
                 <div class="col-md-12">
                     <p>Your opponents:</p>
@@ -79,10 +77,11 @@
 </template>
 
 <script>
-import SelectBots from "../components/SelectBots.vue";
+import SelectBots from '../components/SelectBots.vue'
 import { dragscroll } from "vue-dragscroll";
     import HighScore from "../components/HighScore";
     import AddQuestion from "../components/AddQuestion.vue"
+import SelectAvatar from '../components/SelectAvatar.vue'
 
 export default {
   directives: {
@@ -95,7 +94,8 @@ export default {
   components: {
     HighScore,
       SelectBots,
-    AddQuestion
+    AddQuestion,
+      SelectAvatar,
   },
   data: function() {
     return {

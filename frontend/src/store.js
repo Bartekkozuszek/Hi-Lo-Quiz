@@ -41,6 +41,11 @@ export default new Vuex.Store({
     showHighScore: false,
     showAddQuestion: false,
     currentPlayerIndex: 0,
+    avatarList: [
+        avatar1,
+        avatar2,
+        avatar3,
+    ],
     images: {
       tooHigh: ImageTooHigh,
       tooLow: ImageTooLow,
