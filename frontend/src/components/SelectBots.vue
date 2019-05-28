@@ -77,13 +77,15 @@ export default {
   margin-top: 4vh;
 }
 .flex-container {
-  justify-content: center;
+  display:flex;
+flex-wrap: wrap;
   min-height: 80vh;
   max-height: 80vh;
   text-align: center;
-  width: 50%;
+  width:50%;
   margin: auto;
-}
+flex-direction: row;
+  }
 selectbots {
   padding: 1vh;
   text-align: center;
