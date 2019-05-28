@@ -83,7 +83,7 @@ h1 {
 
 #title {
   background-color: yellow;
-  font-family: "Days One", sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   font-size: 3vh;
 }
 

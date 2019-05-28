@@ -3,25 +3,25 @@
         <div class="tableSlot tableSlot1" v-bind:class="{slot1Animate: this.$store.state.animatingCharacters}">
             <img :src="slot1Image"></img>
             <p class="namebtn"
-               :style="{'background-image': `url(${require('../../public/images/btnwood.jpg')})`}"
+               :style="{'background-image': `url(${require('../../public/images/bg.jpg')})`}"
             >{{whatPlayer(1).name}}</p>
         </div>
         <div class="tableSlot tableSlot2" v-bind:class="{slot2Animate: this.$store.state.animatingCharacters}">
             <img :src="slot2Image"></img>
             <p class="namebtn"
-               :style="{'background-image': `url(${require('../../public/images/btnwood.jpg')})`}"
+               :style="{'background-image': `url(${require('../../public/images/bg.jpg')})`}"
             >{{whatPlayer(2).name}}</p>
         </div>
         <div class="tableSlot tableSlot3" v-bind:class="{slot3Animate: this.$store.state.animatingCharacters}">
             <img :src="slot3Image"></img>
             <p class="namebtn"
-               :style="{'background-image': `url(${require('../../public/images/btnwood.jpg')})`}"
+               :style="{'background-image': `url(${require('../../public/images/bg.jpg')})`}"
             >{{whatPlayer(3).name}}</p>
         </div>
         <div class="tableSlot tableSlot4" v-bind:class="{slot4Animate: this.$store.state.animatingCharacters}">
             <img :src="slot4Image"></img>
             <p class="namebtn"
-               :style="{'background-image': `url(${require('../../public/images/btnwood.jpg')})`}"
+               :style="{'background-image': `url(${require('../../public/images/bg.jpg')})`}"
             >{{whatPlayer(4).name}}</p>
         </div>
     </div>
@@ -130,7 +130,7 @@
         padding: 11px 20px;
         border-radius: 6px;
         text-decoration: none;
-        font-family: "Avenir", Helvetica, Arial, sans-serif;
+        font-family: 'Source Sans Pro', sans-serif;
         color: beige;
         border: 1px solid #a0a08d;
         width: 27vw;
