@@ -46,7 +46,7 @@ transition: all .2s ease-in-out;
 
 }
 img:hover{
-	transform: scale(1.1);
+	filter:hue-rotate(180deg);
 }
 .inactive{
   filter: grayscale(0%);
