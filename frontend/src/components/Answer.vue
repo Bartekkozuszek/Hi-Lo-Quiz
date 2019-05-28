@@ -218,7 +218,7 @@
                   "no guess was made, so guess automatically set to lowest of span"
           );
         }
-        let newMove = { guess: this.value, timeTook: 10 };
+        let newMove = { guess: this.value, timeTook: 10};
         newMove.id=this.$store.state.currentUser.id
         this.$store
                 .dispatch("addMove", newMove)
@@ -354,9 +354,13 @@
       updated: debounce(function () {
           this.$nextTick(() => {
               if(this.isPlayer === true) {
+                if (this.$refs.input!='undefined') {
                   this.$refs.input.focus()
+                }
               } else
-                this.$refs.input.blur()
+                if (!this.$refs.input!='undefined') {
+                  this.$refs.input.blur()
+                }
           })
       }, 250)
   };

@@ -55,6 +55,7 @@
         z-index: 1;
     }
     p{
+        font-family: 'Source Sans Pro', sans-serif;;
         font-size:1.5vw;
     }
     .firstLine{
