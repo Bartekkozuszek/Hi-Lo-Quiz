@@ -9,7 +9,9 @@ var app = express()
 app.use(logger('combined'))
 app.use(
   cors({
-    exposedHeaders: ['access_token']
+    origin: 'http://localhost:8080',
+    exposedHeaders: ['access_token'],
+    credentials: true
   })
 )
 app.use(express.json())
@@ -19,16 +21,14 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 //make all req query params lowercase
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, access_token')
-  res.header('Access-Control-Allow-Credentials', true)
-
   console.log(
-    'App.js, ip:' +
-      req.connection.remoteAddress +
-      ', has access_token header: ' +
+    '' +
+      req.path +
+      ' ' +
+      req.headers.origin +
+      ', access_token header: ' +
       (req.headers['access_token'] !== undefined) +
-      ', has access_token cookie: ' +
+      ', cookie: ' +
       (req.cookies.access_token !== undefined)
   )
 
