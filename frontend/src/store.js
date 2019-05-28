@@ -488,8 +488,8 @@ export default new Vuex.Store({
           });
     },
     setTheme({}){
-      root.style.setProperty("--themeColor1", "#2e358b");
-      root.style.setProperty("--themeColor2", "#db6124");
+      document.documentElement.style.setProperty("--themeColor1", "#2e358b");
+      document.documentElement.style.setProperty("--themeColor2", "#db6124");
     },
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
