@@ -39,7 +39,6 @@
                 this.$store.dispatch('login', { userName, password })
                     .then(() => {
                         if (this.isLoggedIn) {
-                            alert('Login successful')
                              this.$router.push('/')
                         }
                         else {

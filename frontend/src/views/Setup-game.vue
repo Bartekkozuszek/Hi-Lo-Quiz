@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     startGame() {
+        this.$store.commit("clearMoveHistory")
       this.$store.dispatch("loadQuestions", 1);
       this.$store.dispatch("changeGameState", 2);
     },

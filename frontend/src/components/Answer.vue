@@ -32,7 +32,7 @@
             v-on:change="setGuessToValue"
             autofocus="autofocus"
     />
-    <button id="submit-button" v-on:click="submitAnswer" :disabled="!showSubmit">
+    <button id="submit-button" v-on:click.self="submitAnswer" :disabled="!showSubmit">
       Submit
     </button>
     <label for="hardMode">Hard Mode (No slider)</label>
@@ -46,6 +46,7 @@
 <script>
   import VueSlider from "vue-slider-component";
   import "../assets/default.css";
+  import { debounce } from "debounce";
   export default {
     name: "Answer",
     components: {
@@ -161,9 +162,11 @@
     },
     watch: {
       //Watcher på när wantAnswer ändras och det är första rundan
+        // Updatar values och fokusar inputfältet
       wantAnswers() {
-        if (this.wantAnswers === true && this.firstRound === true)
-          this.updateValueForSubmit();
+        if (this.wantAnswers === true && this.firstRound === true) {
+            this.updateValueForSubmit();
+        }
         this.resetGuessToMiddle();
         this.setValueToGuess();
       },
@@ -193,11 +196,10 @@
       isPlayer() {
         if (this.isPlayer) {
           this.setBoxShadowOnRail();
-          this.$refs.input.focus();
         } else this.unsetBoxShadowOnRail();
       },
       timesUp() {
-        if (this.timesUp) {
+        if (this.timesUp===true) {
           this.submitAnswer()
         }
       },
@@ -347,7 +349,16 @@
       } else {
         this.unsetBoxShadowOnRail();
       }
-    }
+    },
+    // för att fokusera input fältet, debounce för att updated inte ska kolla för ofta.
+      updated: debounce(function () {
+          this.$nextTick(() => {
+              if(this.isPlayer === true) {
+                  this.$refs.input.focus()
+              } else
+                this.$refs.input.blur()
+          })
+      }, 250)
   };
 </script>
 
