@@ -1,33 +1,68 @@
 <template>
   <header class="header">
     <div class="flex-container"
-         :style="{
-      'background-image': `url(${require('../../public/images/btnwood.jpg')})`,
-      'background-size':`6%`
-      }"
+        
     >
 
       <div>
-        <button class="select-btn" id="sbt1">{{ user }}</button>
+       
+	    <img src="../../public/images/logo.png"> 
       </div>
       <div>
-        <select id="subject" v-on:change="goToLink">
-          <option>{{ settings }}</option>
-          <option v-bind:value="start.value">{{ start.name }}</option>
-          <option v-bind:value="rules.value">{{ rules.name }}</option>
-        </select>
+
       </div>
 
-      <div>
-        <button class="select-btn" id="sbt1">
-          <router-link class="login" to="/login" v-if="!isLoggedIn">Login</router-link><span v-if="isLoggedIn" @click="logout">Logout</span>
-        </button>
+      <div id="gg">
+
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+<label class="dropdown">
+<img src="../../public/images/hamburger.png"> 
+  <div class="dd-button">
+    
+  </div>
+
+  <input type="checkbox" class="dd-input" id="test">
+
+  <ul class="dd-menu">
+    <li><a href="/rules">Rules</a></li>
+    <li><a href="../">Home</a></li>
+      <li><a href="/login">Login</a></li>
+  
+     
+    
+  </ul>
+  
+</label>
+	  
+	  
+	  
+	  
+	  
+	  
       </div>
     </div>
   </header>
 </template>
 
 <script>
+
+
+
+
+
+
+
+
+
+
+
 export default {
   name: "Menu",
   props: {
@@ -52,7 +87,10 @@ export default {
                 return this.$store.getters.isLoggedIn
             }
         },
-  methods: {
+
+
+
+ methods: {
     goToLink: function(event) {
       if (event.target.value == 1) {
         this.$router.push({ path: "/" });
@@ -88,15 +126,7 @@ h1 {
 }
 
 select {
-  color: WHITE;
-  font-size: 3vh;
-  display: inline;
-  padding: 1vh;
-  background-color: purple;
-  max-height: 5.4vh;
 
-  text-decoration: none;
-  border: none;
 }
 select:hover {
   background-color: aqua;
@@ -120,15 +150,96 @@ button:hover {
 .flex-container {
   display: flex;
   justify-content: center;
-  background-color: pink;
+  background-color: darkblue;
   justify-content: space-between;
-}
 
-.flex-container > div {
-  text-align: center;
-}
 
-.login {
+  
+  }
+img{
+padding-left:1vh;
+padding-right:1vh;
+
+padding-top:1vh;
+max-height:3vh;
     color: white
 }
+
+
+
+
+
+/* Dropdown */
+
+.dropdown {
+  display: inline-block;
+  position: relative;
+
+  }
+
+.dd-button {
+display:none;
+}
+
+.dd-button:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid black;
+
+  }
+
+
+
+
+.dd-input {
+  display: none;
+}
+
+.dd-menu {
+    overflow: auto;
+  position:relative;
+  top: 10%;
+  padding: 0;
+  margin: 2px 0 0 0;
+  transition: height 2s;
+  background-color: #ffffff;
+
+ display: none;
+  }
+
+
+
+.dd-input:checked + .dd-menu {
+  display: block;
+} 
+
+.dd-menu li {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color:darkblue;
+color:white;
+  
+  }
+
+
+
+.dd-menu li a {
+  display: block;
+  margin: -10px -20px;
+  padding: 10px 20px;
+color:white;
+  }
+
+
+
+
+
+
 </style>
