@@ -364,6 +364,7 @@ export default new Vuex.Store({
                   }
               }
           );
+          console.log(tempArray);
           tempArray.data.forEach(function(dbBot) {
             state.loadedBots.forEach(function(loadBot) {
               if(loadBot.id==dbBot.botID){
@@ -402,6 +403,18 @@ export default new Vuex.Store({
               );
               console.log(tempArray.data);
               state.currentUser.rank = tempArray.data.rank+1;
+            tempArray = await instance.get("/api/v1/users/" +
+                state.currentUser.id,
+                {
+                  headers: {
+                    access_token: localStorage.access_token
+                  }
+                }
+            );
+              state.currentUser.score = tempArray.data.score;
+            state.currentUser.wins = tempArray.data.wins;
+            state.currentUser.losses = tempArray.data.losses;
+
           }
       },
     async loadQuestions({ commit, dispatch, state }, amount) {
@@ -610,11 +623,14 @@ export default new Vuex.Store({
           let game = {}
           game.questionID = state.currentQuestion._id
           game.userID = state.currentUser.id
-          // TODO calculate score to be added
-
-
-
-          game.score = 5
+          if(state.moveHistory.moves[state.moveHistory.moves.length-1].id === game.userID) {
+                        //                                                400/          1 /5
+           game.score = Math.round(((state.sessionPlayersArray.length-1) * 100)/(((state.moveHistory.moves.length-1)/state.sessionPlayersArray.length)+1));
+            console.log('score ' + game.score)
+          } else {
+           game.score = -Math.round(50/(state.sessionPlayersArray.length-1))
+            console.log(game.score)
+          }
           game.botIDs = [...new Set(state.moveHistory.botsIDs)]
           game.moves = state.moveHistory.moves
           var res = await instance.post('/api/v1/games',
