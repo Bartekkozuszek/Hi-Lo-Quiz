@@ -25,7 +25,7 @@ methods:{
 
 }
 p {
-  font-size: 2vh;	
+  font-size: 3vh;	
 	color:white;
 	}
 
