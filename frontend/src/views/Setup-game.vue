@@ -198,7 +198,7 @@ export default {
         font-family: 'Source Sans Pro', sans-serif;
         font-size: 11px;
         letter-spacing: 0.5px;
-        border-bottom: 1px solid #db6124;
+        border-bottom: 1px solid var(--themeColor2);
         text-decoration:none;
     }
 
@@ -269,7 +269,7 @@ export default {
 
 .startButton {
 
-    background-color: #db6124; /* Green */
+    background-color: var(--themeColor2); /* Green */
     border: none;
     color: white;
     padding: 10px;

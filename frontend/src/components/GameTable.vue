@@ -130,7 +130,7 @@
         padding: 11px 20px;
         border-radius: 6px;
         text-decoration: none;
-        font-family: "Avenir", Helvetica, Arial, sans-serif;
+        font-family: 'Source Sans Pro', sans-serif;
         color: beige;
         border: 1px solid #a0a08d;
         width: 27vw;
