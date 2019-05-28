@@ -383,9 +383,31 @@
     box-shadow: 0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   #submit-button {
-    margin: 10px;
+    background-color: var(--themeColor2); /* Green */
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 4px 2px;
+    cursor: pointer;
+    min-width: 200px;
+    border-radius: 22px;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin: 10px 0;
 
   }
+  #submit-button:hover{
+    background-color: #ce4010;
+    transition: 0.4s;
+  }
+
+
 
   .hide {
     opacity: 0;
