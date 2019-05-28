@@ -5,7 +5,33 @@
 
     <div id="setup">
 
-        <div class="container">
+        <div class="container">+
+            <br>
+            <br>
+            <br>
+            <div id="carouselExampleControls" class="carousel slide" data-interval="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class=".img-fluid" src="../../public/images/avatar1.png" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class=".img-fluid" src="../../public/images/avatar2.png" alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class=".img-fluid" src="../../public/images/avatar3.png" alt="Third slide">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"
+                v-on:click="indexMinus">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"
+                   v-on:click="indexPlus">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
             <br>
             <br>
             <br>
@@ -99,10 +125,29 @@
         data: function() {
             return {
                 selected : "random",
+                wantedImageIndex:0
             }
         },
         methods: {
+            indexPlus(){
+                if (this.wantedImageIndex>2){
+                    this.wantedImageIndex0;
+                }else{
+                    this.wantedImageIndex++;
+                }
+                this.$store.state.currentUser.image=this.$store.state.playerAvatars[this.wantedImageIndex]
+
+            },
+            indexMinus(){
+                if (this.wantedImageIndex<1){
+                    this.wantedImageIndex=3;
+                }else{
+                    this.wantedImageIndex--;
+                }
+                this.$store.state.currentUser.image=this.$store.state.playerAvatars[this.wantedImageIndex]
+            },
             startGame() {
+                this.$store.state.sessionPlayersArray[0]=this.$store.state.currentUser;
                 this.$store.commit("clearMoveHistory")
                 this.$store.dispatch("loadQuestions", 1);
                 this.$store.dispatch("changeGameState", 2);
@@ -207,6 +252,12 @@
         letter-spacing: 0.5px;
         text-transform: uppercase;
     }
+    .carousel-item{
+        text-align: center;
+        padding: 10px 8px;
+        border-radius: 24px;
+    }
+
     .botContainer {
         width: 100%;
         margin-left: auto;
