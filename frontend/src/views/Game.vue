@@ -2,7 +2,7 @@
   <div
     class="thisDiv"
     :style="{
-      'background-image': `url(${require('../../public/images/background2fixed.jpg')})`
+      'background-image': `url(${require('../../public/images/bg.jpg')})`
     }"
   >
     <question-display></question-display>
