@@ -10,8 +10,8 @@
       <h2>Catchphrase: {{loadedBots[num].catchphrase}}</h2>
       <h2>Description: {{loadedBots[num].description}}</h2>
       <h2>Enabled: {{loadedBots[num].enabled}}</h2>
-      <button class="button" v-on:click="setActiveState(num),toggle = !toggle" >Toggle on/off (Beep boop..)</button>
-      <button class="button" v-on:click="toggle = !toggle" >Back</button>
+      <button class="startButton" v-on:click="setActiveState(num),toggle = !toggle" >Toggle on/off (Beep boop..)</button>
+      <button class="startButton" v-on:click="toggle = !toggle" >Back</button>
     </div>
     <div v-if="toggle"  class="flex-container"  >
       <Bot  v-for='loadedBots, index in loadedBots'
@@ -19,11 +19,11 @@
         v-bind:index='index' v-on:click.native="num = index,toggle = !toggle"
         />
     </div>
-    <button class="select-btn":style="{'background-image': `url(${require('../../public/images/btnwood.jpg')})`}" id="sbt1" >
-      <router-link to="/">
+       <button class="startButton">     <router-link to="/">
         <h1>DONE!</h1>
-      </router-link>
-    </button>
+      </router-link></button>
+ 
+    
   </div>
 </template>
 
@@ -67,23 +67,26 @@ export default {
 }
 #botinfo {
   justify-content: center;
-  min-height: 80vh;
+  min-height: 85.5vh;
   text-align: center;
   width: 100%;
   margin: auto;
-  max-height: 80vh;
+  max-height: 100vh;
 }
 #botinfo>img {
   margin-top: 4vh;
 }
 .flex-container {
-  justify-content: center;
-  min-height: 80vh;
-  max-height: 80vh;
+padding-top:4vh; 
+ display:flex;
+flex-wrap: wrap;
+  min-height: 85.5vh;
+  max-height: 100vh;
   text-align: center;
-  width: 50%;
+  width:50%;
   margin: auto;
-}
+flex-direction: row;
+  }
 selectbots {
   padding: 1vh;
   text-align: center;
@@ -96,8 +99,8 @@ h1 {
   text-align: center;
 }
 h2 {
-  color: white;
-  font-size: 2vh;
+  font-size: 3vh;	
+	color:white;
   text-align: center;
 }
 #title {
@@ -165,4 +168,32 @@ a:link {
 .active {
   filter: grayscale(100%);
 }
+.startButton {
+
+    background-color: var(--themeColor2); /* Green */
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 4px 2px;
+    cursor: pointer;
+    min-width: 200px;
+    border-radius: 22px;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin: 10px 0;
+	
+	}
+    .startButton:hover{
+        background-color: #ce4010;
+        transition: 0.4s;
+    }
+
+
+
 </style>
