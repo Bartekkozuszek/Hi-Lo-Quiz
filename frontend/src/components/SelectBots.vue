@@ -1,5 +1,5 @@
 <template>
-  <div id="wrap":style="{'background-image': `url(${require('../../public/images/background2fixed.jpg')})`}" >
+  <div id="wrap":style="{'background-image': `url(${require('../../public/images/blue.jpg')})`}" >
     <div v-if="!toggle" id="botinfo" >
       <img v-bind:src="loadedBots[num].image"
         v-bind:class="[loadedBots[num].enabled ? 'inactive' : 'active']"
@@ -14,8 +14,8 @@
       <button class="button" v-on:click="toggle = !toggle" >Back</button>
     </div>
     <div v-if="toggle"  class="flex-container"  >
-      <Bot  v-for='loadedBots, index in loadedBots' 
-        v-bind:key='index' v-bind:bot='loadedBots' 
+      <Bot  v-for='loadedBots, index in loadedBots'
+        v-bind:key='index' v-bind:bot='loadedBots'
         v-bind:index='index' v-on:click.native="num = index,toggle = !toggle"
         />
     </div>

@@ -2,7 +2,7 @@
   <header class="header">
     <div class="flex-container"
          :style="{
-      'background-image': `url(${require('../../public/images/btnwood.jpg')})`,
+      'background-image': `url(${require('../../public/images/blue.jpg')})`,
       'background-size':`6%`
       }"
     >
@@ -12,7 +12,7 @@
       </div>
       <div>
         <select id="subject" v-on:change="goToLink">
-          <option>{{ settings }}</option>
+          <option>Home</option>
           <option v-bind:value="start.value">{{ start.name }}</option>
           <option v-bind:value="rules.value">{{ rules.name }}</option>
         </select>
@@ -38,11 +38,11 @@ export default {
   data: function() {
     return {
       rules: {
-        name: "rules",
+        name: "Rules",
         value: 2
       },
       start: {
-        name: "startpage",
+        name: "Home",
         value: 1
       }
     };
@@ -90,32 +90,32 @@ h1 {
 select {
   color: WHITE;
   font-size: 3vh;
-  display: inline;
+  display: inline-list-item;
   padding: 1vh;
-  background-color: purple;
+  background-color: #db482c;
   max-height: 5.4vh;
 
   text-decoration: none;
   border: none;
 }
-select:hover {
+/*select:hover {
   background-color: aqua;
-}
+}*/
 .select-btn {
   max-height: 5.4vh;
   color: WHITE;
   font-size: 3vh;
   display: inline;
   padding: 1vh;
-  background-color: purple;
+  background-color: #a41a19;
 
   text-decoration: none;
   border: none;
 }
 
-button:hover {
+/*button:hover {
   background-color: aqua;
-}
+}*/
 
 .flex-container {
   display: flex;
