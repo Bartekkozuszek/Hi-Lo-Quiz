@@ -45,7 +45,6 @@
                              this.$router.push('/')
                         }
                         else {
-                            //alert('Wrong username and/or password') 
                             this.showLoginFail()
                         }
                     })
