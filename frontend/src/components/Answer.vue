@@ -354,9 +354,13 @@
       updated: debounce(function () {
           this.$nextTick(() => {
               if(this.isPlayer === true) {
+                if (this.$refs.input!='undefined') {
                   this.$refs.input.focus()
+                }
               } else
-                this.$refs.input.blur()
+                if (!this.$refs.input!='undefined') {
+                  this.$refs.input.blur()
+                }
           })
       }, 250)
   };

@@ -10,13 +10,19 @@
                 <button type="button" @click="toggleAddQuestion">Cancel</button>
                 <button :disabled="isLoggedIn ? false : true" type="submit">Submit</button>
             </form>
+            <modal :width=250 :height=100 class="md" name="success">
+                <div class="md-content">Question submitted successfully</div>
+            </modal>
+            <modal :width=250 :height=100 class="md" name="fail">
+                <div class="md-content">Something went wrong :( Please try again.</div>
+            </modal>
         </div>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
-
+   
     export default {
         name: "AddQuestion",
         data() {
@@ -37,21 +43,28 @@
                     answer: this.submitedAnswer
                 })
                     .then((resp) => {
-                        if (resp.status === 201)
-                            alert('Question submited successfully')
-                        else {
-                            alert('Something went wrong')
+                        if (resp.status === 201) {
+                            this.showSuccess()
+                            this.submitedQuestion = ""
+                            this.submitedAnswer = 0
                         }
                     }).catch((err) => {
-                    this.registerError = err.response.data.msg
-                })  
+                        console.log(err)
+                        this.showFail()
+                    })
             },
-          toggleAddQuestion() {
-          if (this.$store.state.showAddQuestion == true) {
-              this.$store.state.showAddQuestion = false
-          } else {
-              this.$store.state.showAddQuestion = true
-          }
+            toggleAddQuestion() {
+                if (this.$store.state.showAddQuestion == true) {
+                    this.$store.state.showAddQuestion = false
+                } else {
+                    this.$store.state.showAddQuestion = true
+                }
+            },
+            showSuccess() {
+                this.$modal.show('success')
+            },
+            showFail() {
+                this.$modal.show('fail')
             }
         }
     }
@@ -74,6 +87,22 @@
 
     .label {
         color: azure
+    }
+
+    /*.md{
+        color:chocolate;
+        text-align: center;
+    }*/
+
+    .v--modal-overlay[data-modal="success"] {
+  color:chocolate;
+  text-align: center;
+  transition: box-shadow 1s;
+}
+    .md-content {
+        padding: 10px;
+        text-align: center;
+        font-weight: 600;
     }
 
 </style>
