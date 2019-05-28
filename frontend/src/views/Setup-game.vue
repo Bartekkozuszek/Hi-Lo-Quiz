@@ -113,6 +113,7 @@ export default {
         this.$store.state.showHighScore=false;
       }else{
         this.$store.dispatch("loadHighScores");
+        this.$store.dispatch("loadBotStats");
         this.$store.state.showHighScore=true;
       }
       },

@@ -364,7 +364,6 @@ export default new Vuex.Store({
                   }
               }
           );
-          console.log(tempArray);
           tempArray.data.forEach(function(dbBot) {
             state.loadedBots.forEach(function(loadBot) {
               if(loadBot.id==dbBot.botID){
