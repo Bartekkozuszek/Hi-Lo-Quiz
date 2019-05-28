@@ -383,7 +383,7 @@
     box-shadow: 0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   #submit-button {
-    background-color: var(--themeColor2); /* Green */
+    background-color: var(--themeColor2);
     border: none;
     color: white;
     padding: 10px;
@@ -407,6 +407,17 @@
     transition: 0.4s;
   }
 
+  input{
+    padding:10px 8px;
+    border-radius: 22px;
+    min-width: 200px;
+    background:#3c47a5;
+    border: none;
+    color: #ffffff;
+    font-size: 13px;
+    text-align: center;
+
+  }
 
 
   .hide {

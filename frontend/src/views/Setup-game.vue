@@ -1,8 +1,4 @@
 <template>
-
-
-
-
     <div id="setup">
 
         <div class="container">
@@ -64,13 +60,13 @@
 
 
         </div>
-        <HighScore v-if="this.$store.state.showHighScore "></HighScore>
-        <add-question v-if="showAddQuestion"></add-question>
+      <!--  <HighScore v-if="this.$store.state.showHighScore "></HighScore>
+        <add-question v-if="showAddQuestion"></add-question>-->
 
         <br>
-        <button @click="toggleAddQuestion" class="startButton">Submit a question</button>
-        <br>
-        <button @click="toggeShowHighscore" class="startButton">Highscores</button>
+        <!--<button @click="toggleAddQuestion" class="startButton">Submit a question</button>-->
+        <!--<br>
+        <button @click="toggeShowHighscore" class="startButton">Highscores</button>-->
 
 
 
@@ -81,8 +77,7 @@
 <script>
 import SelectBots from "../components/SelectBots.vue";
 import { dragscroll } from "vue-dragscroll";
-    import HighScore from "../components/HighScore";
-    import AddQuestion from "../components/AddQuestion.vue"
+
 
 export default {
   directives: {
@@ -93,9 +88,7 @@ export default {
   //    this.$store.dispatch('loadQuestions')
   //},
   components: {
-    HighScore,
       SelectBots,
-    AddQuestion
   },
   data: function() {
     return {
@@ -108,22 +101,7 @@ export default {
       this.$store.dispatch("loadQuestions", 1);
       this.$store.dispatch("changeGameState", 2);
     },
-    toggeShowHighscore:function(){
-      if (this.$store.state.showHighScore==true){
-        this.$store.state.showHighScore=false;
-      }else{
-        this.$store.dispatch("loadHighScores");
-        this.$store.dispatch("loadBotStats");
-        this.$store.state.showHighScore=true;
-      }
-      },
-      toggleAddQuestion() {
-          if (this.$store.state.showAddQuestion == true) {
-              this.$store.state.showAddQuestion = false
-          } else {
-              this.$store.state.showAddQuestion = true
-          }
-      },
+
           setSelectedCategory() {
       this.$store.commit("setSelectedCategory", this.selectedIndex)
     }
