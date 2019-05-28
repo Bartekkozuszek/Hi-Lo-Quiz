@@ -15,8 +15,6 @@
             <div class="content"><input type="text" class="form-control" v-model="userName" /></div>
             <div class="message">{{ validation.firstError('userName') }}</div>
             <div v-if="registerError !== ''"> {{registerError}}</div>
-            <i v-if="validation.isValidating('userName')" class="fa fa-spinner fa-spin"></i>
-            <i v-if="userName && validation.isPassed('userName')" class="text-success fa fa-check-circle"></i>
         </div>
         <div class="form-group" :class="{error: validation.hasError('password')}">
             <div class="label">* Password</div>
@@ -57,7 +55,7 @@
           status: 0,
       };
     },
-    validators: {
+    validators: { //these validators validate each input field
         firstName: function (value) {
             return Validator.value(value).required().minLength(1).maxLength(50);
         },
@@ -79,7 +77,6 @@
 
                             }
                         });
-                    // try with a GET request
         },
         password: function (value) {
         return Validator.value(value).required().minLength(6);
@@ -101,9 +98,7 @@
           .then(function (success) { //validates the form and displays appropriate message
               if (success) {
                   isValid= true;
-              } else {
-                  alert('You have not filled in the form correctly, please check it again.')
-              }
+              } 
           }).then(() => { //goes on with sending axios to submit to the db
             if (isValid) {
                  axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/users', {
@@ -124,7 +119,7 @@
             }
           });
             
-        },
+            }
     }
     }
 </script>
@@ -137,4 +132,5 @@
     .message {
         color: red;
     }
+
 </style>
