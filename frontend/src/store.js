@@ -365,15 +365,15 @@ export default new Vuex.Store({
               }
           );
           console.log(tempArray);
-          tempArray.forEach(function(dbBot) {
-              state.loadedBots.forEach(function(loadBot) {
-                  if(loadBot.id==dbBot.id){
-                      loadbot.wins=dbBot.wins;
-                      loadbot.losses=dbBot.losses;
-                  }
-              });
+          tempArray.data.forEach(function(dbBot) {
+            state.loadedBots.forEach(function(loadBot) {
+              if(loadBot.id==dbBot.botID){
+                loadBot.wins=dbBot.wins;
+                loadBot.losses=dbBot.losses;
+              }
+            });
           });
-    },
+      },
       async loadHighScores({state}){
           //top 5.
           let tempArray= await instance.get("/api/v1/users?sort=score&amount=5",
