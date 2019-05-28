@@ -4,12 +4,23 @@ var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 var cors = require('cors')
 
+const whitelist = ['http://localhost:8080', 'http://localhost:8081']
+const corsOptions = {
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 var app = express()
 
 app.use(logger('combined'))
 app.use(
   cors({
-    origin: 'http://localhost:8080',
+    origin: corsOptions.origin,
     exposedHeaders: ['access_token'],
     credentials: true
   })
