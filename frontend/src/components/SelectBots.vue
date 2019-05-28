@@ -99,8 +99,8 @@ h1 {
   text-align: center;
 }
 h2 {
-  color: white;
-  font-size: 2vh;
+  font-size: 3vh;	
+	color:white;
   text-align: center;
 }
 #title {
@@ -187,7 +187,8 @@ a:link {
     letter-spacing: 0.5px;
     font-weight: 600;
     margin: 10px 0;
-}
+	
+	}
     .startButton:hover{
         background-color: #ce4010;
         transition: 0.4s;
