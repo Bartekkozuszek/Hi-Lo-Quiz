@@ -21,7 +21,7 @@ router.use(function(req, res, next) {
   // isAdmin: true
   //}
 
-  console.log(req.user)
+  //console.log(req.user)
   next()
 })
 

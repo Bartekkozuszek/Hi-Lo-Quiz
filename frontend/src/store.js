@@ -1,14 +1,14 @@
 /*eslint-disable */
 import Vue from "vue";
 import Vuex from "vuex";
-import avatar1 from "../public/images/avatar1test.png";
-import avatar2 from "../public/images/avatar2test.png";
-import avatar3 from "../public/images/avatar3test.png";
-import optimus from "../public/images/avatar5test.png";
+import avatar1 from "../public/images/avatar1.png";
+import avatar2 from "../public/images/avatar2.png";
+import avatar3 from "../public/images/avatar3.png";
+import optimus from "../public/images/avatar4.png";
 import ImageTooHigh from "../public/images/tooHigh.png";
 import ImageTooLow from "../public/images/tooLow.png";
-import pontus from "../public/images/pontusBot.png";
-import botr from "../public/images/bot.png";
+import pontus from "../public/images/avatar5.png";
+import botr from "../public/images/avatar6.png";
 import ImageBubble from "../public/images/bubble.png";
 import ImageWantToKnowMore from "../public/images/wantToKnowMore.png";
 import axios from "axios";
@@ -335,7 +335,7 @@ export default new Vuex.Store({
           state.currentUser.rank = 3
           state.currentUser.score = 1
           state.gameState = 1
-          
+
       },
     clearMoveHistory(state) {
       state.moveHistory = {
@@ -365,10 +365,15 @@ export default new Vuex.Store({
               }
           );
           console.log(tempArray);
-          for(let i=0; i< state.loadedBots.length; i++){
-              state.loadedBots[i].wins=1;
-          }
-    },
+          tempArray.data.forEach(function(dbBot) {
+            state.loadedBots.forEach(function(loadBot) {
+              if(loadBot.id==dbBot.botID){
+                loadBot.wins=dbBot.wins;
+                loadBot.losses=dbBot.losses;
+              }
+            });
+          });
+      },
       async loadHighScores({state}){
           //top 5.
           let tempArray= await instance.get("/api/v1/users?sort=score&amount=5",
@@ -398,6 +403,18 @@ export default new Vuex.Store({
               );
               console.log(tempArray.data);
               state.currentUser.rank = tempArray.data.rank+1;
+            tempArray = await instance.get("/api/v1/users/" +
+                state.currentUser.id,
+                {
+                  headers: {
+                    access_token: localStorage.access_token
+                  }
+                }
+            );
+              state.currentUser.score = tempArray.data.score;
+            state.currentUser.wins = tempArray.data.wins;
+            state.currentUser.losses = tempArray.data.losses;
+
           }
       },
     async loadQuestions({ commit, dispatch, state }, amount) {
@@ -482,6 +499,10 @@ export default new Vuex.Store({
           .catch(error => {
             console.log(error);
           });
+    },
+    setTheme({}){
+      document.documentElement.style.setProperty("--themeColor1", "#2e358b");
+      document.documentElement.style.setProperty("--themeColor2", "#db6124");
     },
     turnFinished({ state, getters, dispatch }) {
       //if someone won:
@@ -579,11 +600,11 @@ export default new Vuex.Store({
                   commit('logout')
                   //console.log(r.data.msg)
               }).catch((err) => console.log(err))
-          
+
       },
       async tryAutoLogin({ commit }) {
         try {
-          var reLoginResponse = await instance.get('/relogin',  
+          var reLoginResponse = await instance.get('/relogin',
             {
               headers: {
                 access_token: localStorage.access_token
@@ -602,15 +623,21 @@ export default new Vuex.Store({
           let game = {}
           game.questionID = state.currentQuestion._id
           game.userID = state.currentUser.id
-          // TODO calculate score to be added
-          game.score = 5
+          if(state.moveHistory.moves[state.moveHistory.moves.length-1].id === game.userID) {
+                        //                                                400/          1 /5
+           game.score = Math.round(((state.sessionPlayersArray.length-1) * 100)/(((state.moveHistory.moves.length-1)/state.sessionPlayersArray.length)+1));
+            console.log('score ' + game.score)
+          } else {
+           game.score = -Math.round(50/(state.sessionPlayersArray.length-1))
+            console.log(game.score)
+          }
           game.botIDs = [...new Set(state.moveHistory.botsIDs)]
           game.moves = state.moveHistory.moves
           var res = await instance.post('/api/v1/games',
             game,
             {
               headers: {
-                access_token: localStorage.access_token              
+                access_token: localStorage.access_token
               }
             }
           )
