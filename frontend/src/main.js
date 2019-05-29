@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import Vmodal from 'vue-js-modal';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 Vue.use(Vmodal)
 Vue.config.productionTip = false;
 
