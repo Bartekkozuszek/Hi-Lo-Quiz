@@ -28,7 +28,7 @@
 										<a href="/addquestion">Submit a question</a>
 									</li>								
 									<li>
-										<a href="">Something</a>
+										<a href="/highscores">Highscores</a>
 									</li>
 								
 								</ul>
