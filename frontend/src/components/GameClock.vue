@@ -1,13 +1,12 @@
 <template>
 
     <div class="container center" v-show="showClock()" id="app">
-        <div class="center padding-4">
             <div id="timer2" v-html="time"></div>
             <div class="placeholder">
                 <div v-bind="clockLogic"></div>
             </div>
         </div>
-    </div>
+
 
 </template>
 
@@ -88,8 +87,16 @@
        z-index: 100;
        left: 73%;
        font-size: 50px;
-       background-color: rgba(0,9,25,0.9);
        color: beige;
    }
-
+   @media screen and (max-width: 600px) {
+       #timer2{
+           position: absolute;
+           padding: 20%;
+           left: 30%;
+           right: 30%;
+           font-size: 50px;
+           color: #db8635;
+       }
+   }
 </style>

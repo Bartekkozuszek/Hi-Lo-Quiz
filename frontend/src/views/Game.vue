@@ -2,10 +2,11 @@
   <div class="first">
 
     <question-display></question-display>
-    <GameClock></GameClock>
+
     <guess-response></guess-response>
     <SpeechBubble></SpeechBubble>
     <GameTable></GameTable>
+    <GameClock></GameClock>
     <answer></answer>
   </div>
 </template>
