@@ -1,15 +1,12 @@
 <template>
-  <div
-    class="thisDiv"
-    :style="{
-      'background-image': `url(${require('../../public/images/bg.jpg')})`
-    }"
-  >
+  <div class="first">
+
     <question-display></question-display>
-    <GameClock></GameClock>
+
     <guess-response></guess-response>
     <SpeechBubble></SpeechBubble>
     <GameTable></GameTable>
+    <GameClock></GameClock>
     <answer></answer>
   </div>
 </template>
@@ -36,9 +33,19 @@ export default {
 </script>
 
 <style>
-.thisDiv {
-  height: 94.5vh;
-  background-position: center;
-  background-size: 310vh;
-}
+    html {
+        background: url(../../public/images/bg.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+    .first {
+        background: url(../../public/images/bg.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+
+    }
 </style>

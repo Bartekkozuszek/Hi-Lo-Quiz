@@ -53,6 +53,11 @@ export default new Vuex.Store({
       bubble: ImageBubble,
       wantToKnowMore: ImageWantToKnowMore
     },
+    playerAvatars:[
+        avatar1,
+        avatar2,
+        avatar3
+    ],
     currentQuestion: {
       userSubmitted: false,
       author: "guest",

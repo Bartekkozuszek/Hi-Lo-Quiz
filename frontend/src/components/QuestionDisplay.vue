@@ -1,6 +1,6 @@
 <template>
   <div class="question">
-    <h3>{{ currentQuestion }}</h3>
+    <p class="col-md-12 row">{{ currentQuestion }}</p>
   </div>
 </template>
 
@@ -17,7 +17,34 @@ export default {
 
 <style>
 .question {
-  border: thin solid black;
-  background-color: lemonchiffon;
+  background-color: #3c47a5;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 22px;
+  margin: 4px 2px;
+  min-width: 200px;
+  font-family: 'Source Sans Pro', sans-serif;
+  border-radius: 22px;
+}
+@media screen and (max-width: 600px){
+  .question {
+    background-color: #3c47a5;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    min-width: 200px;
+    font-family: 'Source Sans Pro', sans-serif;
+    border-radius: 22px;
+  }
+
 }
 </style>

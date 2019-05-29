@@ -9,6 +9,7 @@ import AddQuestion from "./views/AddQuestion.vue";
 import HighScore from "./views/HighScore.vue"
 
 
+
 Vue.use(Router);
 
 export default new Router({
@@ -49,6 +50,7 @@ export default new Router({
       path: "/about",
       name: "about",
       component: About
-    }
+    },
+
   ]
 });

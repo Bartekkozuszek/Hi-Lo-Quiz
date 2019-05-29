@@ -1,5 +1,5 @@
 :root {
-  --glow-on: 0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  --glow-on: 0 4px 8px 0 #949fff, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   --glow-off: 0px 0px 0px 0px rgba(0,0,0,0);
 }
 
@@ -17,7 +17,7 @@
 
 /* process style */
 .vue-slider-process {
-  background-color: #db6124;
+  background-color: #db8635;
   border-radius: 15px;
 }
 
@@ -44,7 +44,7 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: #db8635;
   box-sizing: border-box;
   box-shadow: 0.5px 0.5px 2px 1px rgba(0, 0, 0, 0.32);
 }
@@ -65,8 +65,8 @@
   text-align: center;
   color: #fff;
   border-radius: 5px;
-  border-color: #3498db;
-  background-color: #3498db;
+  border-color: #db8635;
+  background-color: #db8635;
   box-sizing: content-box;
 }
 .vue-slider-dot-tooltip-inner::after {

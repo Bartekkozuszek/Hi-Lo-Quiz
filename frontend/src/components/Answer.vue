@@ -22,8 +22,8 @@
         </template>
       </vue-slider>
     </div>
-    <br />
-    <div>{{ msg }}</div>
+
+    <div class="textChoice">Make your choice!</div>
     <br />
     <input
             ref="input"
@@ -32,7 +32,7 @@
             v-on:change="setGuessToValue"
             autofocus="autofocus"
     />
-    <button id="submit-button" v-on:click.self="submitAnswer" :disabled="!showSubmit">
+    <button class="submit-button" v-on:click.self="submitAnswer" :disabled="!showSubmit">
       Submit
     </button>
     <label for="hardMode">Hard Mode (No slider)</label>
@@ -375,24 +375,58 @@
     justify-content: center;
     align-items: center;
     padding: 30px;
-    background-image: url("../../public/images/btnwood.jpg");
-    background-size: 20%;
-    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
-  }
-  .boxShadowClass {
-    box-shadow: 0 4px 8px 0 beige, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  #submit-button {
-    margin: 10px;
-
   }
 
+  .submit-button {
+    background-color: var(--themeColor2);
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 4px 2px;
+    cursor: pointer;
+    min-width: 200px;
+    border-radius: 22px;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin: 10px 0;
+
+  }
+  .submit-button:hover{
+    background-color: #ce4010;
+    transition: 0.4s;
+  }
+
+  input{
+    padding:10px 8px;
+    border-radius: 22px;
+    min-width: 200px;
+    background:#3c47a5;
+    border: none;
+    color: #ffffff;
+    font-size: 13px;
+    text-align: center;
+
+  }
   .hide {
     opacity: 0;
   }
+  .textChoice {
+    color: #ffffff;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+
+    text-decoration:underline solid var(--themeColor2);
+  }
 
   .custom-mark {
-    color: beige;
+    color: white;
     font-weight: bold;
     position: absolute;
     top: 15px;

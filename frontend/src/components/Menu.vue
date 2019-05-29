@@ -30,7 +30,7 @@
 									<li>
 										<a href="/highscores">Highscores</a>
 									</li>
-								
+
 								</ul>
 							</label>
 						</div>
