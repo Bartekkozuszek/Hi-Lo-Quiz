@@ -1,10 +1,10 @@
 <template>
     <div class="aq">
         <div>
-            <h4>Here you can submit your own question to the database. The question is reviewed and then added to the game. 
-            Remember that the answer needs to be a number.</h4>
+            <h5>Here you can submit your own question to the database. The question is reviewed and then added to the game. 
+            Remember that the answer needs to be a number.</h5>
             <form @submit.prevent="submitQuestion">
-                <h3 class="message" v-show="!isLoggedIn">* You have to log in or register in order to submit a question.</h3>
+                <h5 class="message" v-show="!isLoggedIn">* You have to log in or register in order to submit a question.</h5>
                 <label class="label">Question:</label><br />
                 <input :disabled="isLoggedIn ? false : true" required autofocus v-model="submitedQuestion" placeholder="Type your question here" /><br />
                 <label class="label">Answer:</label><br />
@@ -55,13 +55,6 @@
                         this.showFail()
                     })
             },
-            toggleAddQuestion() {
-                if (this.$store.state.showAddQuestion == true) {
-                    this.$store.state.showAddQuestion = false
-                } else {
-                    this.$store.state.showAddQuestion = true
-                }
-            },
             showSuccess() {
                 this.$modal.show('success')
             },
@@ -82,7 +75,7 @@
         padding: 1em;
     }
 
-    h4 {
+    h5 {
         color: white;
     }
 

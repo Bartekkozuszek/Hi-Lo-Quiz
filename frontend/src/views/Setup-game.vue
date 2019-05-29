@@ -82,36 +82,21 @@
 
         </div>
         </div>
-        <!--<HighScore v-if="this.$store.state.showHighScore "></HighScore>-->
-        <!--<add-question v-if="showAddQuestion"></add-question>-->
-
-        <!--<br>
-        <button @click="toggleAddQuestion" class="startButton">Submit a question</button>-->
-        <!--<br>
-        <button @click="toggeShowHighscore" class="startButton">Highscores</button>-->
-
-
-
 
 </template>
 
 <script>
     import SelectBots from "../components/SelectBots.vue";
     import { dragscroll } from "vue-dragscroll";
-    //import HighScore from "../components/HighScore";
-    //import AddQuestion from "../components/AddQuestion.vue"
+
     export default {
         directives: {
             dragscroll
         },
         name: "SetupGame",
-        //mounted() {
-        //    this.$store.dispatch('loadQuestions')
-        //},
+
         components: {
-            //HighScore,
-            SelectBots,
-            //AddQuestion
+            SelectBots
         },
         data: function() {
             return {
