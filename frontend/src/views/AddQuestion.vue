@@ -1,6 +1,8 @@
 <template>
     <div class="aq">
         <div>
+            <h4>Here you can submit your own question to the database. The question is reviewed and then added to the game. 
+            Remember that the answer needs to be a number.</h4>
             <form @submit.prevent="submitQuestion">
                 <h3 class="message" v-show="!isLoggedIn">* You have to log in or register in order to submit a question.</h3>
                 <label class="label">Question:</label><br />
@@ -72,12 +74,13 @@
 
 <style scoped>
     .aq{
-        top:5%;
-        left:24%;
-        width:50%;
-        height:50%;
+       
         background-color:rgba(0, 5, 20, 0.9);
         padding: 1em;
+    }
+
+    h4 {
+        color: white;
     }
 
     .message{
