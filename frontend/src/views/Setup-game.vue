@@ -81,6 +81,7 @@
 
 
         </div>
+        </div>
         <!--<HighScore v-if="this.$store.state.showHighScore "></HighScore>-->
         <!--<add-question v-if="showAddQuestion"></add-question>-->
 

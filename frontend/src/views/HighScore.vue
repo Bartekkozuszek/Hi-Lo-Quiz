@@ -91,7 +91,10 @@
              playerField:true
             }
         },
-
+        mounted() {
+            this.$store.dispatch("loadHighScores");
+            this.$store.dispatch("loadBotStats");
+        },
         computed:{
             playerBadEnough:function(){
                 if(this.$store.state.currentUser.rank>5){
