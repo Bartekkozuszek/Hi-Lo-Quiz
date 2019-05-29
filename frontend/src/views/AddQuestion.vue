@@ -9,11 +9,11 @@
                 <input :disabled="isLoggedIn ? false : true" required autofocus v-model="submitedQuestion" placeholder="Type your question here" /><br />
                 <label class="label">Answer:</label><br />
                 <input :disabled="isLoggedIn ? false : true" required type="number" min=0 v-model="submitedAnswer" placeholder="Type the answer here" /><br />
-                <button type="button" @click="toggleAddQuestion">Cancel</button>
+                <button type="button" @click="goBack">Cancel</button>
                 <button :disabled="isLoggedIn ? false : true" type="submit">Submit</button>
             </form>
             <modal :width=250 :height=100 class="md" name="success">
-                <div class="md-content">Question submitted successfully</div>
+                <div class="md-content" id="success">Question submitted successfully</div>
             </modal>
             <modal :width=250 :height=100 class="md" name="fail">
                 <div class="md-content">Something went wrong :( Please try again.</div>
@@ -67,6 +67,9 @@
             },
             showFail() {
                 this.$modal.show('fail')
+            },
+            goBack() {
+                this.$router.push('/')
             }
         }
     }
@@ -105,6 +108,10 @@
         padding: 10px;
         text-align: center;
         font-weight: 600;
+    }
+
+    #success {
+        color: forestgreen;
     }
 
 </style>
