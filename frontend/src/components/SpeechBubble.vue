@@ -59,14 +59,44 @@
         font-size:1.5vw;
     }
     .firstLine{
-        position:absolute;
+        position:center;
+        font-family: 'Source Sans Pro', sans-serif;
+        text-align: center;
+        text-transform: uppercase;
+
         left:2vw;
         z-index: 100;
     }
     .secondLine{
         position:absolute;
+        font-family: 'Source Sans Pro', sans-serif;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 30px;
         left:2vw;
         top:2vw;
         z-index: 100;
+    }
+    @media screen and (max-width: 600px){
+        .firstLine{
+            position:center;
+            font-family: 'Source Sans Pro', sans-serif;
+            text-align: center;
+            text-transform: uppercase;
+
+            left:2vw;
+            z-index: 100;
+        }
+        .secondLine{
+            position:absolute;
+            font-family: 'Source Sans Pro', sans-serif;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 10px;
+            left:2vw;
+            top:2vw;
+            z-index: 100;
+        }
+
     }
 </style>

@@ -1,26 +1,33 @@
 <template>
     <div id="winScreenWindow"
-         :style="{'background-image': `url(${require('../../public/images/background2fixed.jpg')})`}">
+         :style="{'background-image': `url(${require('../../public/images/bg.jpg')})`}">
         <question-display></question-display>
         <a :href="getUrl()" target="_blank">
             <img id="knowMore" :src="this.$store.state.images.wantToKnowMore">
         </a>
+        <br>
+        <br>
         <div class="answerText">
-            <p class="darkenBG answerText">The right answer is: {{this.$store.state.currentQuestion.answer}} </p>
+            <p class=" answerText">The right answer is: {{this.$store.state.currentQuestion.answer}} </p>
         </div>
+        <br>
+
 
         <div class="winnerImage">
-            <img class="darkenBG" :src="winnerImage"></img>
-            <div class="darkenBG">
-                <p>Player:{{this.$store.state.sessionPlayersArray[this.$store.state.currentPlayerIndex].name}}</p>
-                <p>Guesses:{{totalGuesses}}</p>
+            <img class="BG" :src="winnerImage"></img>
+            <div class="BG">
+                <p>Player: {{this.$store.state.sessionPlayersArray[this.$store.state.currentPlayerIndex].name}}</p>
+                <p>Guesses: {{totalGuesses}}</p>
                 <p>Wins: {{this.$store.state.sessionPlayersArray[this.$store.state.currentPlayerIndex].wins}}</p>
                 <p>Losses: {{this.$store.state.sessionPlayersArray[this.$store.state.currentPlayerIndex].losses}}</p>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
 
-        <div :style="{'background-image': `url(${require('../../public/images/btnwood.jpg')})`}"
-                class="Backbtn" @click="goToMenu">Back</div>
+        <div class="Backbtn" @click="goToMenu">Back</div>
     </div>
 </template>
 
@@ -81,8 +88,11 @@
     .darkenBG{
         background-color: rgba(0,0,0,0.5);
     }
+    #knowMore{
+        margin: 20px;
+    }
     p{
-        color:beige;
+        color:white;
     }
     img{
         width: 35vw;
@@ -94,24 +104,28 @@
         background-size: 310vh;
     }
     .Backbtn{
-        display: inline-block;
-        padding: 11px 20px;
-        border-radius: 6px;
+        background-color: var(--themeColor2); /* Green */
+        border: none;
+        color: white;
+        padding: 10px;
+        text-align: center;
         text-decoration: none;
+        display: inline-block;
+        font-size: 13px;
+        margin: 4px 2px;
+        cursor: pointer;
+        min-width: 200px;
+        border-radius: 22px;
         font-family: 'Source Sans Pro', sans-serif;
-        color: beige;
-        border: 1px solid #a0a08d;
-        width: 250px;
-        font-size: 14px;
-        font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        transition: 0.4s;
-        cursor: pointer;
+        font-weight: 600;
+        margin: 10px 0;
     }
 
     .Backbtn:hover {
-        border: #474a5d;
+        background-color: #ce4010;
+        transition: 0.4s;
     }
 
 
