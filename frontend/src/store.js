@@ -33,7 +33,7 @@ export default new Vuex.Store({
     animatingCharacters: false,
     wantAnswers: false,
     wantLastMove: false,
-    totalMatchTime: 30,
+    totalMatchTime: 300000,
     matchesPlayed: 0,
     totalGameCount: 0,
     selectedCategory: '',

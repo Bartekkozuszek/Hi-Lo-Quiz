@@ -85,18 +85,15 @@
    #timer2{
        position: absolute;
        z-index: 100;
-       left: 73%;
-       font-size: 50px;
-       color: beige;
+       left: 60%;
+       font-size: 70px;
+       color: var(--themeColor2);
    }
    @media screen and (max-width: 600px) {
        #timer2{
-           position: absolute;
-           padding: 20%;
            left: 30%;
-           right: 30%;
            font-size: 50px;
-           color: #db8635;
+           color: var(--themeColor2);
        }
    }
 </style>

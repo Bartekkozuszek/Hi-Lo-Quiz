@@ -32,7 +32,7 @@
             v-on:change="setGuessToValue"
             autofocus="autofocus"
     />
-    <button id="submit-button" v-on:click.self="submitAnswer" :disabled="!showSubmit">
+    <button class="submit-button" v-on:click.self="submitAnswer" :disabled="!showSubmit">
       Submit
     </button>
     <label for="hardMode">Hard Mode (No slider)</label>
@@ -377,7 +377,7 @@
     padding: 30px;
   }
 
-  #submit-button {
+  .submit-button {
     background-color: var(--themeColor2);
     border: none;
     color: white;
@@ -397,7 +397,7 @@
     margin: 10px 0;
 
   }
-  #submit-button:hover{
+  .submit-button:hover{
     background-color: #ce4010;
     transition: 0.4s;
   }
