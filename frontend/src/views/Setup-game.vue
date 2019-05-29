@@ -78,7 +78,7 @@
 import SelectBots from '../components/SelectBots.vue'
 import { dragscroll } from "vue-dragscroll";
     import HighScore from "../components/HighScore";
-    import AddQuestion from "../components/AddQuestion.vue"
+    //import AddQuestion from "../components/AddQuestion.vue"
 
 export default {
   directives: {
@@ -91,8 +91,8 @@ export default {
   components: {
     HighScore,
       SelectBots,
-    AddQuestion,
-      SelectAvatar,
+    //AddQuestion,
+      //SelectAvatar,
   },
   data: function() {
     return {

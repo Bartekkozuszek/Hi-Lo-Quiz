@@ -5,6 +5,7 @@ import SelectBots from "./components/SelectBots.vue";
 import Login from "./views/Login.vue";
 import About from "./components/About.vue";
 import Register from "./components/Register.vue";
+import AddQuestion from "./views/AddQuestion.vue"
 
 
 Vue.use(Router);
@@ -32,7 +33,12 @@ export default new Router({
       path: "/register",
       name: "register",
       component: Register
-    },
+      },
+      {
+          path: "/addquestion",
+          name: "addquestion",
+          component: AddQuestion
+      },
     {
       path: "/about",
       name: "about",

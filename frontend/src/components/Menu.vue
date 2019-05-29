@@ -24,7 +24,7 @@
 										<a href="/login">Login</a>
 									</li>
 									<li>
-										<a href="">Something</a>
+										<a href="/addquestion">Submit a question</a>
 									</li>								
 									<li>
 										<a href="">Something</a>
