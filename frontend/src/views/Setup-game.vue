@@ -1,24 +1,21 @@
 <template>
-
-
-
-
     <div id="setup">
 
-        <div class="container">+
+        <div class="container">
             <br>
-            <br>
-            <br>
+            <div class="row"></div>
+            <div class="col-md-12"></div>
+                    <p>Select character:</p>
             <div id="carouselExampleControls" class="carousel slide" data-interval="false">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class=".img-fluid" src="../../public/images/avatar1.png" alt="First slide">
+                        <img class="test .img-fluid" src="../../public/images/avatar1.png" alt="#">
                     </div>
                     <div class="carousel-item">
-                        <img class=".img-fluid" src="../../public/images/avatar2.png" alt="Second slide">
+                        <img class="test .img-fluid" src="../../public/images/avatar2.png" alt="#">
                     </div>
                     <div class="carousel-item">
-                        <img class=".img-fluid" src="../../public/images/avatar3.png" alt="Third slide">
+                        <img class="test .img-fluid" src="../../public/images/avatar3.png" alt="#">
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"
@@ -33,9 +30,8 @@
                 </a>
             </div>
             <br>
-            <br>
-            <br>
-            <br>
+            <br class="smallerdevice">
+
             <div class="row">
                 <div class="col-md-12">
                     <p>Your opponents:</p>
@@ -48,24 +44,20 @@
                     </a>
                 </div>
                 <div class="col-md-6 col-8">
-                    <div class="botContainer" v-dragscroll.x="true">
-                        <div></div>
-                        <div class="loadedBots"
-                             v-for="bot in bots"
-
-                        >
-                            <img class="playersImage" v-bind:src="bot.image" /> <p>{{ bot.name }}</p>
-                        </div>
-
+                <div class="botContainer" v-dragscroll.x="true">
+                    <div></div>
+                    <div class="loadedBots"
+                         v-for="bot in bots">
+                        <img class="playersImage" v-bind:src="bot.image" />
                     </div>
                 </div>
+            </div>
 
                 <div class="col-md-3 col-2 arrow_container_right">
                     <a href="#" class="arrow_blue">
                         <img src="../../public/images/arrow_right.png" alt="">
                     </a>
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-md-12 change_player_link_container">
@@ -80,16 +72,14 @@
                     </select>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <button @click="startGame" class="startButton">Play</button>
                 </div>
             </div>
-            <br>
-            <br>
 
 
-        </div>
         <HighScore v-if="this.$store.state.showHighScore "></HighScore>
         <add-question v-if="showAddQuestion"></add-question>
 
@@ -97,11 +87,12 @@
         <button @click="toggleAddQuestion" class="startButton">Submit a question</button>
         <br>
         <button @click="toggeShowHighscore" class="startButton">Highscores</button>
-
-
-
-
     </div>
+    </div>
+
+
+
+
 </template>
 
 <script>
@@ -131,7 +122,7 @@
         methods: {
             indexPlus(){
                 if (this.wantedImageIndex>2){
-                    this.wantedImageIndex0;
+                    this.wantedImageIndex=0;
                 }else{
                     this.wantedImageIndex++;
                 }
@@ -148,7 +139,7 @@
             },
             startGame() {
                 this.$store.state.sessionPlayersArray[0]=this.$store.state.currentUser;
-                this.$store.commit("clearMoveHistory")
+                this.$store.commit("clearMoveHistory");
                 this.$store.dispatch("loadQuestions", 1);
                 this.$store.dispatch("changeGameState", 2);
             },
@@ -206,6 +197,7 @@
         font-size: 14px;
         letter-spacing: 0.5px;
     }
+
     .arrow_container_left {
         text-align: right;
     }
@@ -252,49 +244,51 @@
         letter-spacing: 0.5px;
         text-transform: uppercase;
     }
-    .carousel-item{
-        text-align: center;
-        padding: 10px 8px;
-        border-radius: 24px;
+    .carousel-inner {
+        min-height: 100px;
     }
+    .test{
+        height: 180px;
 
+    }
     .botContainer {
-        width: 100%;
+        width: 80%;
         margin-left: auto;
         margin-right: auto;
         height: 12vw;
         display: grid;
-        grid-template-columns: 1px repeat(var(--playerAmount), 10vw) 1px;
+        grid-template-columns: 2px repeat(var(--playerAmount), 10vw) 2px;
         grid-template-rows: none;
         overflow: hidden;
     }
     .playersImage {
         grid-column: 2 / -2;
         height: 8vw;
+
+        margin: 10px;
+
+
+
     }
     .link {
         color: white;
         padding: 2em;
     }
     .loadedBots {
-        height: 90%;
+        height: 20%;
         display: inline;
     }
     .loadedBots p {
         font-size: 11px;
         color: #ffffff;
+        font-family: 'Source Sans Pro', sans-serif;
         padding-top: 10px;
     }
     #setup {
         position: absolute;
-        background-image: linear-gradient(#1e1c1c, #645c5c);
-        height: 94.5%;
         width:100%;
         alignment: center;
         background-size: 200%;
-        background-position: top; /* Center the image */
-        background-repeat: no-repeat;
-        background-color: #2c231c;
         flex-grow : 1;
         background: url(../../public/images/bg.jpg) no-repeat center center fixed;
         -webkit-background-size: cover;
@@ -325,4 +319,27 @@
         background-color: #ce4010;
         transition: 0.4s;
     }
+    @media screen and (max-width: 600px) {
+        .botContainer {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            height: 20vw;
+            display: grid;
+            grid-template-columns: 2px repeat(var(--playerAmount), 18vw) 2px;
+            grid-template-rows: none;
+            overflow: hidden;
+        }
+
+        .playersImage {
+            grid-column: 2 / -2;
+            height: 14vw;
+
+            margin: 10px;
+        }
+        .smallerdevice {
+            display: none;
+        }
+    }
+
 </style>

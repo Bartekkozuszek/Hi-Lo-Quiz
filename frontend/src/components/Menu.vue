@@ -25,11 +25,11 @@
 									</li>
 									<li>
 										<a href="">Something</a>
-									</li>								
+									</li>
 									<li>
 										<a href="">Something</a>
 									</li>
-								
+
 								</ul>
 							</label>
 						</div>
