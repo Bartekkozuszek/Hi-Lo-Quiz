@@ -15,7 +15,7 @@
 							<input type="checkbox" class="dd-input" id="test">
 								<ul class="dd-menu":style="{'background-image': `url(${require('../../public/images/blue.jpg')})`,'background-size':`6%`}">
 									<li>
-										<a href="/rules">Rules</a>
+										<a href="/about">About</a>
 									</li>
 									<li>
 										<a href="../">Home</a>
