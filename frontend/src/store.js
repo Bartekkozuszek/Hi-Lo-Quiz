@@ -35,6 +35,7 @@ export default new Vuex.Store({
     wantLastMove: false,
     totalMatchTime: 30,
     matchesPlayed: 0,
+    totalGameCount: 0,
     selectedCategory: '',
     categories: [],
     timesUp: false,
@@ -352,6 +353,9 @@ export default new Vuex.Store({
     setCategories(state, loadedCategories) {
       state.categories = loadedCategories;
     },
+    setTotalGameCount(state, totalGames) {
+      state.totalGameCount = totalGames;
+    },
     setSelectedCategory(state, index) {
       state.selectedCategory = state.categories[index]
     },
@@ -660,6 +664,25 @@ export default new Vuex.Store({
           console.log(error)
         }
       },
+    async getTotalGames({state, commit}){
+      instance
+          .get(
+              "/api/v1/games/played",
+              {
+                headers: {
+                  access_token: localStorage.access_token
+                }
+              }
+          )
+          .then(r => r.data)
+          .then(totalGames => {
+            commit("setTotalGameCount", totalGames.played);
+          })
+          .catch(error => {
+            console.log(error);
+            commit("setTotalGameCount", "error loading at this time, try again later!")
+          });
+    },
       async postGameStats({ state }) {
         try {
           let game = {}

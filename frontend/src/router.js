@@ -1,10 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home";
-import Rules from "./components/Rules";
 import SelectBots from "./components/SelectBots.vue";
 import Login from "./views/Login.vue";
-import About from "./views/About.vue";
+import About from "./components/About.vue";
 import Register from "./components/Register.vue";
 
 
@@ -23,12 +22,6 @@ export default new Router({
       path: "/bots",
       name: "selectBots",
       component: SelectBots
-    },
-
-    {
-      path: "/rules",
-      name: "rules",
-      component: Rules
     },
     {
       path: "/login",
