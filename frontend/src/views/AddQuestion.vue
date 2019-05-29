@@ -72,7 +72,6 @@
 
 <style scoped>
     .aq{
-        position: absolute;
         top:5%;
         left:24%;
         width:50%;

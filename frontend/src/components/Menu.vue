@@ -21,7 +21,8 @@
 										<a href="../">Home</a>
 									</li>
 									<li>
-										<a href="/login">Login</a>
+										<a v-if="!isLoggedIn" href="/login">Login</a>
+                                        <a v-else @click="logout">Logout</a>
 									</li>
 									<li>
 										<a href="/addquestion">Submit a question</a>
@@ -39,7 +40,17 @@
 <script>
 export default {
     name: "Menu",
-    props: {}
+        props: {},
+        computed: {
+            isLoggedIn() {
+                return this.$store.getters.isLoggedIn
+            }
+        },
+        methods: {
+            logout() {
+                this.$store.dispatch('logout')
+            }
+        }
 };
 </script>
 
