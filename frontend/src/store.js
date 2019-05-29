@@ -16,7 +16,7 @@ import axios from "axios";
 //const serverURL = 'http://localhost:3000'
 const serverURL = 'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com'
 
-const instance = axios.create({baseURL: serverURL});
+const instance = axios.create({baseURL: serverURL,withCredentials:true});
 
 Vue.use(Vuex, axios);
 
@@ -246,6 +246,43 @@ export default new Vuex.Store({
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
         }
+      },
+	        {
+        name: "Normal bot",
+        isPlayer: false,
+        id: 6,
+        wins: 1337,
+        losses: 0,
+        catchphrase: "Beep Boop",
+        description: "Crashingly good",
+        image: botr,
+        enabled: false,
+        timeleft: 1337, //totalMatchTime,
+        move(allMoves) {
+          let newMove = {
+            guess: Math.round(
+              allMoves.moves[allMoves.moves.length - 1].low +
+                (allMoves.moves[allMoves.moves.length - 1].high -
+                  allMoves.moves[allMoves.moves.length - 1].low) /
+                  2
+            ),
+            timeTook: 1800,
+            id: this.id //*timeoutMultiplier();
+          };
+          var i = 1;
+          var guessModifier = "a";
+          var guess = "MyGuess";
+          alert("I never asked for this");
+          if (typeof InstallTrigger !== "undefined") {
+            window.location.href =
+              "https://www.youtube.com/watch?v=HJO57totNyw&autoplay=1";
+          }
+          while (i) {
+            guessModifier = guessModifier += "My guess is" + guess;
+          }
+          console.log("botten " + this.name + "gissar: " + newMove.guess);
+          return newMove;
+        }
       }
     ],
     currentUser: {
@@ -369,6 +406,7 @@ export default new Vuex.Store({
                   }
               }
           );
+          console.log(tempArray);
           tempArray.data.forEach(function(dbBot) {
             state.loadedBots.forEach(function(loadBot) {
               if(loadBot.id==dbBot.botID){
@@ -407,6 +445,18 @@ export default new Vuex.Store({
               );
               console.log(tempArray.data);
               state.currentUser.rank = tempArray.data.rank+1;
+            tempArray = await instance.get("/api/v1/users/" +
+                state.currentUser.id,
+                {
+                  headers: {
+                    access_token: localStorage.access_token
+                  }
+                }
+            );
+              state.currentUser.score = tempArray.data.score;
+            state.currentUser.wins = tempArray.data.wins;
+            state.currentUser.losses = tempArray.data.losses;
+
           }
       },
     async loadQuestions({ commit, dispatch, state }, amount) {
@@ -615,11 +665,14 @@ export default new Vuex.Store({
           let game = {}
           game.questionID = state.currentQuestion._id
           game.userID = state.currentUser.id
-          // TODO calculate score to be added
-
-
-
-          game.score = 5
+          if(state.moveHistory.moves[state.moveHistory.moves.length-1].id === game.userID) {
+                        //                                                400/          1 /5
+           game.score = Math.round(((state.sessionPlayersArray.length-1) * 100)/(((state.moveHistory.moves.length-1)/state.sessionPlayersArray.length)+1));
+            console.log('score ' + game.score)
+          } else {
+           game.score = -Math.round(50/(state.sessionPlayersArray.length-1))
+            console.log(game.score)
+          }
           game.botIDs = [...new Set(state.moveHistory.botsIDs)]
           game.moves = state.moveHistory.moves
           var res = await instance.post('/api/v1/games',

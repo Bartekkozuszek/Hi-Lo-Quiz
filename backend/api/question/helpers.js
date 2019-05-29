@@ -28,6 +28,6 @@ module.exports.editQuestion = function(req) {
     question.high = req.body.high
   }
 
-  question.reviewedBy = req.user && req.user.isAdmin ? req.user.name : ''
+  question.reviewedBy = req.user && req.user.isAdmin ? req.user.userName : ''
   return question
 }

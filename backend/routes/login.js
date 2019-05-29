@@ -42,10 +42,9 @@ router.post('/login', function(req, res) {
           config.JWT_SECRET,
           { expiresIn: expireTime }
         )
-        res.cookie('access_token', user.jwt, {
-          expires: new Date(Date.now() + 900000),
-          httpOnly: true
-        })
+         res.cookie('access_token', user.jwt, {
+           expires: new Date(Date.now() + 90000000)
+         })
         let userPresentable = user.presentable()
         userPresentable.access_token = user.jwt
         res.status(202).json({ msg: 'Logged in as: ' + user.userName, user: userPresentable })
