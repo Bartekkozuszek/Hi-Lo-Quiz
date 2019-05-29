@@ -272,9 +272,7 @@
     #setup {
         position: absolute;
         width:100%;
-        alignment: center;
-        background-size: 200%;
-        flex-grow : 1;
+        height: 100%;
         background: url(../../public/images/bg.jpg) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
