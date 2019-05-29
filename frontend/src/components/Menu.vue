@@ -21,13 +21,14 @@
 										<a href="../">Home</a>
 									</li>
 									<li>
-										<a href="/login">Login</a>
+										<a v-if="!isLoggedIn" href="/login">Login</a>
+                                        <a v-else @click="logout">Logout</a>
 									</li>
 									<li>
-										<a href="">Something</a>
-									</li>
+										<a href="/addquestion">Submit a question</a>
+									</li>								
 									<li>
-										<a href="">Something</a>
+										<a href="/highscores">Highscores</a>
 									</li>
 
 								</ul>
@@ -39,7 +40,17 @@
 <script>
 export default {
     name: "Menu",
-    props: {}
+        props: {},
+        computed: {
+            isLoggedIn() {
+                return this.$store.getters.isLoggedIn
+            }
+        },
+        methods: {
+            logout() {
+                this.$store.dispatch('logout')
+            }
+        }
 };
 </script>
 

@@ -1,17 +1,19 @@
 <template>
     <div class="aq">
         <div>
+            <h5>Here you can submit your own question to the database. The question is reviewed and then added to the game. 
+            Remember that the answer needs to be a number.</h5>
             <form @submit.prevent="submitQuestion">
-                <h3 class="message" v-show="!isLoggedIn">* You have to log in or register in order to submit a question.</h3>
+                <h5 class="message" v-show="!isLoggedIn">* You have to log in or register in order to submit a question.</h5>
                 <label class="label">Question:</label><br />
                 <input :disabled="isLoggedIn ? false : true" required autofocus v-model="submitedQuestion" placeholder="Type your question here" /><br />
                 <label class="label">Answer:</label><br />
                 <input :disabled="isLoggedIn ? false : true" required type="number" min=0 v-model="submitedAnswer" placeholder="Type the answer here" /><br />
-                <button type="button" @click="toggleAddQuestion">Cancel</button>
+                <button type="button" @click="goBack">Cancel</button>
                 <button :disabled="isLoggedIn ? false : true" type="submit">Submit</button>
             </form>
             <modal :width=250 :height=100 class="md" name="success">
-                <div class="md-content">Question submitted successfully</div>
+                <div class="md-content" id="success">Question submitted successfully</div>
             </modal>
             <modal :width=250 :height=100 class="md" name="fail">
                 <div class="md-content">Something went wrong :( Please try again.</div>
@@ -53,18 +55,14 @@
                         this.showFail()
                     })
             },
-            toggleAddQuestion() {
-                if (this.$store.state.showAddQuestion == true) {
-                    this.$store.state.showAddQuestion = false
-                } else {
-                    this.$store.state.showAddQuestion = true
-                }
-            },
             showSuccess() {
                 this.$modal.show('success')
             },
             showFail() {
                 this.$modal.show('fail')
+            },
+            goBack() {
+                this.$router.push('/')
             }
         }
     }
@@ -72,13 +70,13 @@
 
 <style scoped>
     .aq{
-        position: absolute;
-        top:5%;
-        left:24%;
-        width:50%;
-        height:50%;
+       
         background-color:rgba(0, 5, 20, 0.9);
         padding: 1em;
+    }
+
+    h5 {
+        color: white;
     }
 
     .message{
@@ -103,6 +101,10 @@
         padding: 10px;
         text-align: center;
         font-weight: 600;
+    }
+
+    #success {
+        color: forestgreen;
     }
 
 </style>

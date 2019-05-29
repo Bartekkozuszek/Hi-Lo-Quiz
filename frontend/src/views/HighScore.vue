@@ -14,7 +14,7 @@
                 <p v-bind:class="{activeTab: !this.playerField}" >Bots</p>
             </div>
             <p>Global Rankings</p>
-            <p class="back"@click="toggeShowHighscore">BACK</p>
+            <p class="back"@click="goBack">BACK</p>
         </div>
 
         <div id="botZone" v-if="!this.playerField">
@@ -81,6 +81,9 @@
             },
             activateBotTab:function () {
                 this.playerField=false;
+            },
+            goBack() {
+                this.$router.push('/')
             }
         },
         data: function(){
@@ -88,7 +91,10 @@
              playerField:true
             }
         },
-
+        mounted() {
+            this.$store.dispatch("loadHighScores");
+            this.$store.dispatch("loadBotStats");
+        },
         computed:{
             playerBadEnough:function(){
                 if(this.$store.state.currentUser.rank>5){
@@ -103,11 +109,11 @@
 
 <style scoped>
     .Hs{
-        position: absolute;
+        /*position: absolute;
         top:5%;
         left:5%;
         width:90%;
-        height:80%;
+        height:80%;*/
     }
     .back{
 
