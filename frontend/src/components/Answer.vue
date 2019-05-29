@@ -13,7 +13,7 @@
               :disabled="!showSubmit"
               :key="componentKey"
               v-on:change="setValueToGuess"
-              v-bind:class="{hide: checked}"
+              v-bind:class="{hide: pressed}"
       >
         <template v-slot:mark="{ pos, label }">
           <div class="custom-mark" :style="{ left: `${pos}%` }">
@@ -35,8 +35,7 @@
     <button class="submit-button" v-on:click.self="submitAnswer" :disabled="!showSubmit">
       Submit
     </button>
-    <label for="hardMode">Hard Mode (No slider)</label>
-    <input type="checkbox" id="hardMode" v-model="checked" />
+    <button class="submit-button" v-on:click="pressed = !pressed">{{this.buttonMessage}}</button>
     <!--select v-model="selected" @change="assignQuestion">
       <option v-for="(o, index) in loadedQuestions">{{ o.question }}</option>
     </-_select/-->
@@ -59,7 +58,7 @@
         selected: "",
         marks: [],
         value: 0,
-        checked: false,
+        pressed: false,
         options: {
           dotSize: 20,
           width: "90%",
@@ -91,6 +90,12 @@
       msg() {
         if (this.isPlayer) return "Make your choice!";
         else return "Other players turn, please wait";
+      },
+      buttonMessage() {
+        if (this.pressed){
+          return "Easy mode (Show Slider)"
+        }
+        else return "Hard mode (Hide Slider)"
       },
       //Funktion för vilka tal som ska visas under slidern. Mer än 4 tal visas 5 alternativ, 4-tal 4 etc.
       marksArray() {
