@@ -7,7 +7,7 @@
 		v-bind:index='index'/>
 		</div>
  <button class="select-btn" id="sbt1">
- <router-link to="/"><h1>DONE!</h1></router-link>
+ <router-link to="/"><h1>Done</h1></router-link>
         </button>
  </div>
 </template>
@@ -52,7 +52,7 @@ h1 {
 	}
 #title {
 	background-color: yellow;
-	font-family: 'Days One', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
 	font-size: 3vh;
 	}
 select {
@@ -65,15 +65,23 @@ select {
 	border: none;
 	}
 .select-btn {
-	color: WHITE;
-	font-size: 3vh;
-	display: inline;
-	padding: 1vh;
-	background-color:purple;
-min-height: 20vh;
-	text-decoration: none;
-	border: none;
-	width: 100%;
+    background-color: var(--themeColor2); /* Green */
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 4px 2px;
+    cursor: pointer;
+    min-width: 200px;
+    border-radius: 22px;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin: 10px 0;
 	}
 .flex-container {
   justify-content: center;

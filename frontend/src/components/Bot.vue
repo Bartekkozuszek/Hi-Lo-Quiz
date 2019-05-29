@@ -13,7 +13,7 @@ name: "Bot",
 props: ['bot','index'],
 methods:{
 		toggleActive: function(index) {
-			
+
             }
 }
 };
@@ -25,18 +25,21 @@ methods:{
 
 }
 p {
-  font-size: 3vh;	
+  font-size: 3vh;
+    font-family: 'Source Sans Pro', sans-serif;
 	color:white;
 	}
 
 #bot{
-display:inline;
-height:100%;
-width:100%;
-text-align: center;
-position:relative;
- width: 33%;
-  box-sizing: border-box;
+    display:inline;
+    height:100%;
+    width:100%;
+    text-align: center;
+    font-family: 'Source Sans Pro', sans-serif;
+    letter-spacing: 0.5px;
+    position:relative;
+    width: 33%;
+    box-sizing: border-box;
 }
 
 img{
@@ -55,7 +58,7 @@ img:hover{
   filter: grayscale(100%);
 }
  @media screen and (orientation: portrait) {
- 
+
  *{
 margin-left:0;
 margin-right:0;
@@ -65,7 +68,7 @@ margin-right:0;
  width: 33%;
 
 }
-  
-  
+
+
   }
 </style>

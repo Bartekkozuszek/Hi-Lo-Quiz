@@ -20,10 +20,10 @@
         />
     </div>
        <button class="startButton">     <router-link to="/">
-        <h1>DONE!</h1>
+        <h1>Done</h1>
       </router-link></button>
- 
-    
+
+
   </div>
 </template>
 
@@ -77,7 +77,7 @@ export default {
   margin-top: 4vh;
 }
 .flex-container {
-padding-top:4vh; 
+padding-top:4vh;
  display:flex;
 flex-wrap: wrap;
   min-height: 85.5vh;
@@ -99,7 +99,7 @@ h1 {
   text-align: center;
 }
 h2 {
-  font-size: 3vh;	
+  font-size: 3vh;
 	color:white;
   text-align: center;
 }
@@ -170,24 +170,24 @@ a:link {
 }
 .startButton {
 
-    background-color: var(--themeColor2); /* Green */
-    border: none;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 13px;
-    margin: 4px 2px;
-    cursor: pointer;
-    min-width: 200px;
-    border-radius: 22px;
-    font-family: 'Source Sans Pro', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-    margin: 10px 0;
-	
+  background-color: var(--themeColor2); /* Green */
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  margin: 4px 2px;
+  cursor: pointer;
+  min-width: 200px;
+  border-radius: 22px;
+  font-family: 'Source Sans Pro', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin: 10px 0;
+
 	}
     .startButton:hover{
         background-color: #ce4010;
