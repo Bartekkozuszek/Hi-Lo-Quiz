@@ -1,14 +1,14 @@
 <template>
-        <div id="loginWindow" :style="{'background-image': `url(${require('../../public/images/blue.jpg')})`}">
+        <div id="loginWindow">
             <h2>Login</h2>
             <form class="form" @submit.prevent="login">
                 <label>Username:</label><br />
-                <input required autofocus autocomplete="on" v-model="userName" placeholder=" Type your username here" /><br />
+                <input class="username" required autofocus autocomplete="on" v-model="userName" placeholder=" Type your username here" /><br />
                 <label>Password:</label><br />
-                <input required type="password" v-model="password" placeholder=" Type your password here" /><br />
+                <input class="password" required type="password" v-model="password" placeholder=" Type your password here" /><br />
                 <footer>
-                    <button type="button" @click="goBack">Cancel</button>
-                    <button type="submit">OK</button>
+                    <button class="cancel" type="button" @click="goBack">Cancel</button>
+                    <button class="login" type="submit" @click="login">OK</button>
                 </footer>
             </form>
             <div id="regLink">
@@ -22,7 +22,11 @@
 </template>
 
 <script>
+    import Vmodal from 'vue-js-modal';
+
     export default {
+        name: 'Login',
+        components: {Vmodal },
         data() {
             return {
                 userName: "",
@@ -62,6 +66,7 @@
 
 <style scoped>
     #loginWindow{
+        background: url(../../public/images/bg.jpg);
         height: 100vh;
         background-position: center;
         background-size: 310vh;
@@ -70,7 +75,7 @@
 
     }
 
-    input{
+    input {
         width: 20em;
         height: 2em;
         margin: 1em 2em;

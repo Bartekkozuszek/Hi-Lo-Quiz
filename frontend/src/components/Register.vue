@@ -1,5 +1,5 @@
 <template>
-    <div class="layout-form" :style="{'background-image': `url(${require('../../public/images/blue.jpg')})`}">
+    <div class="layout-form">
         <h2>Register</h2>
         <div class="form-group" :class="{error: validation.hasError('firstName')}">
             <div class="label">* First name</div>
@@ -142,6 +142,9 @@
     }
 
     .layout-form{
+        background: url(../../public/images/bg.jpg);
+        background-position: center;
+        background-size: 310vh;
         height: 100vh;
         font-family: 'Source Sans Pro', sans-serif;
         color: white;
