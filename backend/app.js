@@ -4,10 +4,16 @@ var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 var cors = require('cors')
 
-const whitelist = ['http://localhost:8080', 'http://localhost:8081']
+const whitelist = [
+  'http://localhost:8080',
+  'http://localhost:8081',
+  'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com'
+]
 const corsOptions = {
   origin: function(origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+    console.log('whitelist: ' + origin)
+
+    if (origin === undefined || whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
@@ -17,7 +23,6 @@ const corsOptions = {
 
 var app = express()
 
-app.use(logger('combined'))
 app.use(
   cors({
     origin: corsOptions.origin,
@@ -25,6 +30,9 @@ app.use(
     credentials: true
   })
 )
+
+app.use(logger('combined'))
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())

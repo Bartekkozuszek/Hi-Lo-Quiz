@@ -128,22 +128,22 @@
                 this.$store.dispatch("loadQuestions", 1);
                 this.$store.dispatch("changeGameState", 2);
             },
-            toggeShowHighscore:function(){
-                if (this.$store.state.showHighScore==true){
-                    this.$store.state.showHighScore=false;
-                }else{
-                    this.$store.dispatch("loadHighScores");
-                    this.$store.dispatch("loadBotStats");
-                    this.$store.state.showHighScore=true;
-                }
-            },
-            toggleAddQuestion() {
-                if (this.$store.state.showAddQuestion == true) {
-                    this.$store.state.showAddQuestion = false
-                } else {
-                    this.$store.state.showAddQuestion = true
-                }
-            },
+            //toggeShowHighscore:function(){
+            //    if (this.$store.state.showHighScore==true){
+            //        this.$store.state.showHighScore=false;
+            //    }else{
+            //        this.$store.dispatch("loadHighScores");
+            //        this.$store.dispatch("loadBotStats");
+            //        this.$store.state.showHighScore=true;
+            //    }
+            //},
+            //toggleAddQuestion() {
+            //    if (this.$store.state.showAddQuestion == true) {
+            //        this.$store.state.showAddQuestion = false
+            //    } else {
+            //        this.$store.state.showAddQuestion = true
+            //    }
+            //},
             setSelectedCategory() {
                 this.$store.commit("setSelectedCategory", this.selectedIndex)
             }
@@ -157,9 +157,6 @@
             },
             selectedIndex() {
                 return this.categories.indexOf(this.selected);
-            },
-            showAddQuestion() {
-                return this.$store.state.showAddQuestion;
             }
         },
         mounted() {

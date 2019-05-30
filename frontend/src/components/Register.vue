@@ -1,5 +1,6 @@
 <template>
     <div class="layout-form">
+        <h2>Register</h2>
         <div class="form-group" :class="{error: validation.hasError('firstName')}">
             <div class="label">* First name</div>
             <div class="content"><input type="text" class="form-control" v-model="firstName" /></div>
@@ -127,10 +128,53 @@
 <style scoped>
     .form-control{
         border-radius: 4px;
+        width: 60%;
+        margin-left: 20%;
+    }
+
+    .form-group {
+
     }
 
     .message {
         color: red;
+        font-weight: 600;
+    }
+
+    .layout-form{
+        background: url(../../public/images/bg.jpg);
+        background-position: center;
+        background-size: 310vh;
+        height: 100vh;
+        font-family: 'Source Sans Pro', sans-serif;
+        color: white;
+        padding-top: 4%;
+
+    }
+
+    button{
+        background-color: var(--themeColor2); /* Green */
+        border: none;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 13px;
+        margin: 4px 2px;
+        cursor: pointer;
+        min-width: 200px;
+        border-radius: 22px;
+        font-family: 'Source Sans Pro', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin: 10px 0;
+    }
+
+    button:hover {
+        background-color: #ce4010;
+        transition: 0.4s;
     }
 
 </style>

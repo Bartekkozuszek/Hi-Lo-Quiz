@@ -1,14 +1,13 @@
 <template>
     <div class="aq">
-        <div>
-            <h5>Here you can submit your own question to the database. The question is reviewed and then added to the game. 
+            <h5>Here you can submit your own question to our database. The question is reviewed and then added to the game. 
             Remember that the answer needs to be a number.</h5>
             <form @submit.prevent="submitQuestion">
                 <h5 class="message" v-show="!isLoggedIn">* You have to log in or register in order to submit a question.</h5>
                 <label class="label">Question:</label><br />
-                <input :disabled="isLoggedIn ? false : true" required autofocus v-model="submitedQuestion" placeholder="Type your question here" /><br />
+                <input :disabled="isLoggedIn ? false : true" required autofocus v-model="submitedQuestion" placeholder=" Type your question here" /><br />
                 <label class="label">Answer:</label><br />
-                <input :disabled="isLoggedIn ? false : true" required type="number" min=0 v-model="submitedAnswer" placeholder="Type the answer here" /><br />
+                <input :disabled="isLoggedIn ? false : true" required type="number" min=0 v-model="submitedAnswer" placeholder=" Type the answer here" /><br />
                 <button type="button" @click="goBack">Cancel</button>
                 <button :disabled="isLoggedIn ? false : true" type="submit">Submit</button>
             </form>
@@ -18,7 +17,6 @@
             <modal :width=250 :height=100 class="md" name="fail">
                 <div class="md-content">Something went wrong :( Please try again.</div>
             </modal>
-        </div>
     </div>
 </template>
 
@@ -70,8 +68,11 @@
 
 <style scoped>
     .aq{
-       
-        background-color:rgba(0, 5, 20, 0.9);
+        background: url(../../public/images/bg.jpg);
+        background-position: center;
+        background-size: 310vh;
+       height: 100vh;
+        font-family: 'Source Sans Pro', sans-serif;
         padding: 1em;
     }
 
@@ -81,10 +82,18 @@
 
     .message{
         color: orangered;
+        font-style: italic;
+        font-weight:600;
     }
 
     .label {
         color: azure
+    }
+
+    input{
+        width: 20em;
+        height: 2em;
+        border-radius: 7px;
     }
 
     /*.md{
@@ -105,6 +114,31 @@
 
     #success {
         color: forestgreen;
+    }
+
+    button{
+        background-color: var(--themeColor2); /* Green */
+        border: none;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 13px;
+        margin: 4px 2px;
+        cursor: pointer;
+        min-width: 200px;
+        border-radius: 22px;
+        font-family: 'Source Sans Pro', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin: 10px 0;
+    }
+
+    button:hover {
+        background-color: #ce4010;
+        transition: 0.4s;
     }
 
 </style>
