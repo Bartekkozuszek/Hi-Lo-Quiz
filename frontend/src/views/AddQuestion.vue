@@ -1,5 +1,5 @@
 <template>
-    <div class="aq" :style="{'background-image': `url(${require('../../public/images/blue.jpg')})`}">
+    <div class="aq">
             <h5>Here you can submit your own question to our database. The question is reviewed and then added to the game. 
             Remember that the answer needs to be a number.</h5>
             <form @submit.prevent="submitQuestion">
@@ -68,6 +68,9 @@
 
 <style scoped>
     .aq{
+        background: url(../../public/images/bg.jpg);
+        background-position: center;
+        background-size: 310vh;
        height: 100vh;
         font-family: 'Source Sans Pro', sans-serif;
         padding: 1em;
