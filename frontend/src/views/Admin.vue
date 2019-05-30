@@ -29,9 +29,6 @@
             <button @click="getOneUnapprovedQuestion">Next</button>
             <button @click="deleteQuestion">Delete</button>
         </div>
-        <div>
-        </div>
-        <div id="infoBox"></div>
     </div>
 </template>
 
@@ -62,25 +59,14 @@ export default {
     watch: {
         isAdmin(newValue, oldVAlue){
             if(newValue === false){
-                alert('logged out as admin')
+                alert('You logged out!')
                 this.$router.push('/login')
             }
         }
     },
     methods: {
-        /* async getOneUnapprovedQuestion() {
-            try{
-                var result = await axios.get(this.serverURL + '/api/v1/questions?approved=false&amount=1',
-                { headers: { access_token: localStorage.access_token }})
-                
-            }catch(err){
-                console.log(err)
-            }
-            this.currentQuestionObject = result.data[0]
-            this.setData()
-        }, */
         getOneUnapprovedQuestion(){
-        axios.get(this.serverURL + '/api/v1/questions?approved=false&amount=1',
+            axios.get(this.serverURL + '/api/v1/questions?approved=false&amount=1',
             { headers: { access_token: localStorage.access_token }})
             .then(result =>{
             this.currentQuestionObject = result.data[0]
@@ -170,10 +156,8 @@ export default {
         color: red;
     }
 
-    #questionButton {
-        margin: 20px;
-    }
-    #questionButton button {
+    button {
+        margin: 20px 0 20px 0;
         width: 80px;
     }
     strong {
