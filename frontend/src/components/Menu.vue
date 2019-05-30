@@ -24,12 +24,16 @@
 										<a v-if="!isLoggedIn" href="/login">Login</a>
                                         <a v-else @click="logout">Logout</a>
 									</li>
+                                    <li>
+										<a href="/admin">Admin</a>
+									</li>
 									<li>
 										<a href="/addquestion">Submit a question</a>
 									</li>								
 									<li>
 										<a href="/highscores">Highscores</a>
 									</li>
+                                    
 
 								</ul>
 							</label>

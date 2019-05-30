@@ -7,6 +7,7 @@ import About from "./components/About.vue";
 import Register from "./components/Register.vue";
 import AddQuestion from "./views/AddQuestion.vue";
 import HighScore from "./views/HighScore.vue"
+import Admin from "./views/Admin.vue";
 
 
 
@@ -51,6 +52,11 @@ export default new Router({
       name: "about",
       component: About
     },
+    {
+      path: "/admin",
+      name: "admin",
+      component: Admin
+    }
 
   ]
 });
