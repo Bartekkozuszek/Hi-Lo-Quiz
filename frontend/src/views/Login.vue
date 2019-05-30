@@ -1,23 +1,23 @@
 <template>
-    <div>
-        <h2>Login</h2>
-        <form class="form" @submit.prevent="login">
-            <label>Username:</label><br />
-            <input required autofocus autocomplete="on" v-model="userName" placeholder="Type your username here" /><br />
-            <label>Password:</label><br />
-            <input required type="password" v-model="password" placeholder="Type your password here" /><br />
-            <footer>
-                <button type="button" @click="goBack">Cancel</button>
-                <button type="submit">OK</button>
-            </footer>
-        </form>
-        <div>
-            <router-link to="/register"><span>Register new user</span></router-link>
+        <div id="loginWindow" :style="{'background-image': `url(${require('../../public/images/blue.jpg')})`}">
+            <h2>Login</h2>
+            <form class="form" @submit.prevent="login">
+                <label>Username:</label><br />
+                <input required autofocus autocomplete="on" v-model="userName" placeholder=" Type your username here" /><br />
+                <label>Password:</label><br />
+                <input required type="password" v-model="password" placeholder=" Type your password here" /><br />
+                <footer>
+                    <button type="button" @click="goBack">Cancel</button>
+                    <button type="submit">OK</button>
+                </footer>
+            </form>
+            <div id="regLink">
+                <router-link to="/register"><span>Register new user</span></router-link>
+            </div>
+            <modal :width=250 :height=100 class="md" name="loginFail">
+                <div class="md-content">Wrong username and/or password.</div>
+            </modal>
         </div>
-        <modal :width=250 :height=100 class="md" name="loginFail">
-            <div class="md-content">Wrong username and/or password.</div>
-        </modal>
-    </div>
     
 </template>
 
@@ -61,10 +61,20 @@
 </script>
 
 <style scoped>
+    #loginWindow{
+        height: 100vh;
+        background-position: center;
+        background-size: 310vh;
+        font-family: 'Source Sans Pro', sans-serif;
+        color: white;
+
+    }
+
     input{
         width: 20em;
         height: 2em;
         margin: 1em 2em;
+        border-radius: 7px;
     }
 
     footer {
@@ -76,5 +86,35 @@
         text-align: center;
         font-weight: 600;
         overflow: auto;
+        color: chocolate;
+    }
+
+     #regLink{
+         font-size: x-large;
+     }
+
+    button{
+        background-color: var(--themeColor2); /* Green */
+        border: none;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 13px;
+        margin: 4px 2px;
+        cursor: pointer;
+        min-width: 200px;
+        border-radius: 22px;
+        font-family: 'Source Sans Pro', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin: 10px 0;
+    }
+
+    button:hover {
+        background-color: #ce4010;
+        transition: 0.4s;
     }
 </style>
