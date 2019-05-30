@@ -295,6 +295,7 @@ export default new Vuex.Store({
       id: 0,
       name: "guest",
       isPlayer: true,
+      isAdmin: false,
       wins: 5,
       losses: 7,
         rank:3,
@@ -333,6 +334,9 @@ export default new Vuex.Store({
         user: "guest"
   },
   getters: {
+    isAdmin: state => {
+      return state.currentUser.isAdmin;
+    },
     isLoggedIn: state => {
       return state.isLoggedIn;
     },
@@ -371,6 +375,7 @@ export default new Vuex.Store({
           state.currentUser.losses = payload.losses
           state.currentUser.score = payload.score
           state.currentUser.name = payload.userName
+          state.currentUser.isAdmin = payload.isAdmin
           state.currentUser.image = avatar1;
           state.sessionPlayersArray[0] = state.currentUser
           state.user = payload.userName
@@ -385,6 +390,7 @@ export default new Vuex.Store({
           state.currentUser.losses = 7
           state.currentUser.rank = 3
           state.currentUser.score = 1
+          state.currentUser.isAdmin = false
           state.gameState = 1
 
       },
