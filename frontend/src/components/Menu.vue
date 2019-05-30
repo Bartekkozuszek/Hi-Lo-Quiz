@@ -1,6 +1,6 @@
 <template>
 	<header class="header">
-		<div class="flex-container":style="{
+		<div class="flex-container" :style="{
       'background-image': `url(${require('../../public/images/blue.jpg')})`,
       'background-size':`6%`
       }">
@@ -13,7 +13,7 @@
 						<img src="../../public/images/hamburger.png">
 							<div class="dd-button"></div>
 							<input type="checkbox" class="dd-input" id="test">
-								<ul class="dd-menu":style="{'background-image': `url(${require('../../public/images/blue.jpg')})`,'background-size':`6%`}">
+								<ul class="dd-menu" :style="{'background-image': `url(${require('../../public/images/blue.jpg')})`,'background-size':`6%`}">
 									<li>
 										<a href="/about">About</a>
 									</li>
@@ -24,12 +24,16 @@
 										<a v-if="!isLoggedIn" href="/login">Login</a>
                                         <a v-else @click="logout">Logout</a>
 									</li>
+                                    <li v-if="this.$store.getters.isAdmin">
+										<a href="/admin">Admin</a>
+									</li>
 									<li>
 										<a href="/addquestion">Submit a question</a>
 									</li>								
 									<li>
 										<a href="/highscores">Highscores</a>
 									</li>
+                                    
 
 								</ul>
 							</label>
