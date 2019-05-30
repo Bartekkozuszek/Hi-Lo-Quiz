@@ -53,8 +53,22 @@ export default {
             errorMsg: null,
             serverURL: 'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com'
         }
-    }, methods: {
-        async getOneUnapprovedQuestion() {
+    },
+    computed:{
+        isAdmin(){
+            return this.$store.getters.isAdmin; 
+        } 
+    },
+    watch: {
+        isAdmin(newValue, oldVAlue){
+            if(newValue === false){
+                alert('logged out as admin')
+                this.$router.push('/login')
+            }
+        }
+    },
+    methods: {
+        /* async getOneUnapprovedQuestion() {
             try{
                 var result = await axios.get(this.serverURL + '/api/v1/questions?approved=false&amount=1',
                 { headers: { access_token: localStorage.access_token }})
@@ -64,9 +78,17 @@ export default {
             }
             this.currentQuestionObject = result.data[0]
             this.setData()
+        }, */
+        getOneUnapprovedQuestion(){
+        axios.get(this.serverURL + '/api/v1/questions?approved=false&amount=1',
+            { headers: { access_token: localStorage.access_token }})
+            .then(result =>{
+            this.currentQuestionObject = result.data[0]
+            this.setData()})
+            .catch(err => console.log(err))
         },
-        async approveQuestion(){
-            if(this.$store.getters.isLoggedIn){
+        approveQuestion(){
+            if(confirm('Are you sure you wish approve this question?')){
                 axios.put(this.serverURL + '/api/v1/questions/' + this.currentQuestionObject._id, {
                 question: this.question,
                 category: this.category,
@@ -78,32 +100,21 @@ export default {
                 { headers: { access_token: localStorage.access_token }})
                 .then((res) => {if(res.status === 200){
                 alert("Question approved!")}})
-                .catch((err)=>{
-                    console.log(err)
-                })  
+                .catch((err)=> console.log(err))  
                 this.getOneUnapprovedQuestion()
-            }else{
-                alert('No longer logged in')
-                this.clearData()
             }
-            
         },
         deleteQuestion(){
-            if(this.$store.getters.isLoggedIn){
-                if(confirm('Are you sure you wish to permanently delete this question?')){
-                    axios.delete(this.serverURL + '/api/v1/questions/' + this.currentQuestionObject._id, 
+            if(confirm('Are you sure you wish to permanently delete this question?')){
+                axios.delete(this.serverURL + '/api/v1/questions/' + this.currentQuestionObject._id, 
                 { headers: { access_token: localStorage.access_token }})
                 .then(result => {
-                    if(result.status === 200){
-                        alert("Question successfully deleted")
-                    }
+                if(result.status === 200){
+                    alert("Question successfully deleted")
+                }
                 })
                 .catch(err => console.log(err))
                 this.getOneUnapprovedQuestion()
-                }
-            }else{
-                    alert('No longer logged in')
-                this.clearData()
             }
         },
         setData(){
@@ -128,11 +139,6 @@ export default {
             this.high = null
             this.low = null
             this.isReadonly = true
-        },
-        logStuff(){
-            console.log(this.question)
-            console.log(this.currentQuestionObject.question)
-            console.log(this.currentQuestionObject.approved)
         }
     },
     beforeMount(){
@@ -178,10 +184,12 @@ export default {
         text-align: center;
         margin-top: 10px;
         margin-bottom: 2px;
+        min-width: 500px;
     }
 
     #questionText {
-        min-width: 600px;
+        min-width: 500px;
+        min-height: 100px;
         
     }
     .selected {
@@ -190,5 +198,4 @@ export default {
     .editable {
         border: solid 1px red;
     }
-  
 </style>
