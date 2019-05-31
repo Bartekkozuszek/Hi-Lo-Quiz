@@ -5,7 +5,7 @@
             <h1 id="errorMsg" v-if="errorMsg !== null">{{ errorMsg }}</h1>
         </div>
         <div id="questionBox">
-<<<<<<< HEAD
+
             <div class="questionArea">
                 <h1>Unapproved Question</h1>
                 <textarea class="questionText" v-model="question" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
@@ -16,7 +16,7 @@
                 <h1>Low</h1>
                 <textarea class="questionText" v-model="low" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
             </div>
-=======
+
             <div id="questionArea">
                 <h1>Unapproved Question:</h1>
                 <textarea id="questionText" v-model="question" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
@@ -30,8 +30,8 @@
                 <textarea v-model="low" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
                 <h1>Learn more?</h1>
                 <textarea v-model="learnMore" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
-            </div>  
->>>>>>> 85506c15abbd70ca2f4845ab48bea607a9406b58
+            </div>
+
             <div id="infoArea">
                 <p v-if="author !== null">Author: {{ author }}</p>
                 <p v-if="author !== null">Submitted by: {{ author }}</p>
