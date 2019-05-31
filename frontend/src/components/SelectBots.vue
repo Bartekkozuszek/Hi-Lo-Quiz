@@ -1,5 +1,5 @@
 <template>
-  <div id="wrap":style="{'background-image': `url(${require('../../public/images/blue.jpg')})`}" >
+  <div id="wrap" >
     <div v-if="!toggle" id="botinfo" >
       <img v-bind:src="loadedBots[num].image"
         v-bind:class="[loadedBots[num].enabled ? 'inactive' : 'active']"
@@ -63,11 +63,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #wrap {
+  background-image: url(../../public/images/blue.jpg);
   background-size: cover;
 }
 #botinfo {
   justify-content: center;
-  min-height: 85.5vh;
+  min-height: 84vh;
   text-align: center;
   width: 100%;
   margin: auto;
@@ -80,7 +81,7 @@ export default {
 padding-top:4vh;
  display:flex;
 flex-wrap: wrap;
-  min-height: 85.5vh;
+  min-height: 84vh;
   max-height: 100vh;
   text-align: center;
   width:50%;

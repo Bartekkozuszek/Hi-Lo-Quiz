@@ -38,7 +38,7 @@ p {
     font-family: 'Source Sans Pro', sans-serif;
     letter-spacing: 0.5px;
     position:relative;
-    width: 33%;
+    width: 25%;
     box-sizing: border-box;
 }
 
@@ -65,7 +65,7 @@ margin-right:0;
 }
   #bot{
 
- width: 33%;
+ width: 25%;
 
 }
 
