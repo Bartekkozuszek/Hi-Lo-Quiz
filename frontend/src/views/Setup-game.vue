@@ -251,6 +251,8 @@
 
     }
     .botContainer {
+
+
         width: 80%;
         margin-left: auto;
         margin-right: auto;
@@ -264,10 +266,6 @@
         grid-column: 2 / -2;
         height: 8vw;
         margin: 10px;
-
-
-
-
     }
     .link {
         color: white;

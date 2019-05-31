@@ -5,16 +5,16 @@
             <h1 id="errorMsg" v-if="errorMsg !== null">{{ errorMsg }}</h1>
         </div>
         <div id="questionBox">
-            <div id="questionArea">
+            <div class="questionArea">
                 <h1>Unapproved Question</h1>
-                <textarea id="questionText" v-model="question" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
+                <textarea class="questionText" v-model="question" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
                 <h1>Answer</h1>
-                <textarea v-model="answer" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
+                <textarea class="questionText" v-model="answer" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
                 <h1>High</h1>
-                <textarea v-model="high" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
+                <textarea class="questionText" v-model="high" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
                 <h1>Low</h1>
-                <textarea v-model="low" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
-            </div>  
+                <textarea class="questionText" v-model="low" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
+            </div>
             <div id="infoArea">
                 <p v-if="author !== null">Author: {{ author }}</p>
                 <p v-if="author !== null">Submitted by: {{ author }}</p>
@@ -53,8 +53,8 @@ export default {
     },
     computed:{
         isAdmin(){
-            return this.$store.getters.isAdmin; 
-        } 
+            return this.$store.getters.isAdmin;
+        }
     },
     watch: {
         isAdmin(newValue, oldVAlue){
@@ -82,17 +82,17 @@ export default {
                 high: this.high,
                 low: this.low,
                 approved: true
-                }, 
+                },
                 { headers: { access_token: localStorage.access_token }})
                 .then((res) => {if(res.status === 200){
                 alert("Question approved!")}})
-                .catch((err)=> console.log(err))  
+                .catch((err)=> console.log(err))
                 this.getOneUnapprovedQuestion()
             }
         },
         deleteQuestion(){
             if(confirm('Are you sure you wish to permanently delete this question?')){
-                axios.delete(this.serverURL + '/api/v1/questions/' + this.currentQuestionObject._id, 
+                axios.delete(this.serverURL + '/api/v1/questions/' + this.currentQuestionObject._id,
                 { headers: { access_token: localStorage.access_token }})
                 .then(result => {
                 if(result.status === 200){
@@ -135,14 +135,35 @@ export default {
 
 
 <style scoped>
+    html {
+        background: url(../../public/images/bg.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+    p {
+        color: #ffffff;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+
     * {
-        margin: 0;
-        padding: 0;
-        font-size: 20px;
-    } 
+        color: #ffffff;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
 
     #main{
+        font-family: 'Source Sans Pro', sans-serif;
         text-align: center;
+        background: url(../../public/images/bg.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
     }
     #userInfo {
         padding: 2%;
@@ -157,25 +178,58 @@ export default {
     }
 
     button {
-        margin: 20px 0 20px 0;
-        width: 80px;
+        background-color: var(--themeColor2); /* Green */
+        border: none;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 13px;
+        margin: 4px 2px;
+        cursor: pointer;
+        min-width: 200px;
+        border-radius: 22px;
+        font-family: 'Source Sans Pro', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin: 10px 0;
+    }
+    button:hover{
+        background-color: #ce4010;
+        transition: 0.4s;
     }
     strong {
+        font-family: 'Source Sans Pro', sans-serif;
         font-size: 30px;
     }
 
     textarea {
+        font-family: 'Source Sans Pro', sans-serif;
         text-align: center;
         margin-top: 10px;
         margin-bottom: 2px;
         min-width: 500px;
     }
 
-    #questionText {
-        min-width: 500px;
-        min-height: 100px;
-        
+    .questionText {
+        min-width:300px;
+        min-height: auto;
+        padding:10px 8px;
+        border-radius: 22px;
+        font-family: 'Source Sans Pro', sans-serif;
+        background:#3c47a5;
+        border: none;
+        color: #ffffff;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        text-align: center;
+        text-transform: uppercase;
+
     }
+
+
     .selected {
         background: darkgrey;
     }
