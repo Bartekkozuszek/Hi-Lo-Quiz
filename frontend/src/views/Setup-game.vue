@@ -263,8 +263,8 @@
     .playersImage {
         grid-column: 2 / -2;
         height: 8vw;
-
         margin: 10px;
+
 
 
 
