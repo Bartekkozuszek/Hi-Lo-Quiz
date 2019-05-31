@@ -41,7 +41,7 @@
                 axios.post('http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com/api/v1/questions', {
                     question: this.submitedQuestion,
                     answer: this.submitedAnswer
-                })
+                },{ headers: { access_token: localStorage.access_token }})
                     .then((resp) => {
                         if (resp.status === 201) {
                             this.showSuccess()
