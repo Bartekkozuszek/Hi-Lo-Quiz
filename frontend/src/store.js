@@ -12,11 +12,15 @@ import botr from "../public/images/avatar6.png";
 import ImageBubble from "../public/images/bubble.png";
 import ImageWantToKnowMore from "../public/images/wantToKnowMore.png";
 import axios from "axios";
+import avatar10 from "../public/images/avatar10.png";
+import avatar9 from "../public/images/avatar9.png";
+import avatar8 from "../public/images/avatar8.png";
+
 
 //const serverURL = 'http://localhost:3000'
 const serverURL = 'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com'
 
-const instance = axios.create({baseURL: serverURL,withCredentials:true});
+const instance = axios.create({baseURL: serverURL});
 
 Vue.use(Vuex, axios);
 
@@ -55,8 +59,8 @@ export default new Vuex.Store({
     },
     playerAvatars:[
         avatar1,
-        avatar2,
-        avatar3
+        avatar8,
+        avatar9
     ],
     currentQuestion: {
       userSubmitted: false,
@@ -261,7 +265,7 @@ export default new Vuex.Store({
         losses: 0,
         catchphrase: "Beep Boop",
         description: "Crashingly good",
-        image: botr,
+        image: avatar10,
         enabled: false,
         timeleft: 1337, //totalMatchTime,
         move(allMoves) {

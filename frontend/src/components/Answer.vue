@@ -71,7 +71,7 @@
           railStyle: {
             boxShadow: "var(--glow-on)"
           },
-          silent: false,
+          silent: true,
           lazy: true
         }
       };
