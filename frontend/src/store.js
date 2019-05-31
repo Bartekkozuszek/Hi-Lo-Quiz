@@ -20,7 +20,7 @@ import avatar8 from "../public/images/avatar8.png";
 //const serverURL = 'http://localhost:3000'
 const serverURL = 'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com'
 
-const instance = axios.create({baseURL: serverURL,withCredentials:true});
+const instance = axios.create({baseURL: serverURL});
 
 Vue.use(Vuex, axios);
 
