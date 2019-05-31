@@ -12,11 +12,15 @@ import botr from "../public/images/avatar6.png";
 import ImageBubble from "../public/images/bubble.png";
 import ImageWantToKnowMore from "../public/images/wantToKnowMore.png";
 import axios from "axios";
+import avatar10 from "../public/images/avatar10.png";
+import avatar9 from "../public/images/avatar9.png";
+import avatar8 from "../public/images/avatar8.png";
+
 
 //const serverURL = 'http://localhost:3000'
 const serverURL = 'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com'
 
-const instance = axios.create({baseURL: serverURL,withCredentials:true});
+const instance = axios.create({baseURL: serverURL});
 
 Vue.use(Vuex, axios);
 
@@ -55,8 +59,8 @@ export default new Vuex.Store({
     },
     playerAvatars:[
         avatar1,
-        avatar2,
-        avatar3
+        avatar8,
+        avatar9
     ],
     currentQuestion: {
       userSubmitted: false,
@@ -217,13 +221,13 @@ export default new Vuex.Store({
         }
       },
       {
-        name: "Bot-tan",
+        name: "Normal bot",
         isPlayer: false,
         id: 5,
         wins: 1337,
         losses: 0,
-        catchphrase: "Boop beep boop",
-        description: "I like hamburgers",
+        catchphrase: "Beep Boop",
+        description: "Crashingly good",
         image: botr,
         enabled: false,
         timeleft: 1337, //totalMatchTime,
@@ -235,22 +239,33 @@ export default new Vuex.Store({
                   allMoves.moves[allMoves.moves.length - 1].low) /
                   2
             ),
-            timeTook: 1800, //*timeoutMultiplier();
-            id: this.id
+            timeTook: 1800,
+            id: this.id //*timeoutMultiplier();
           };
+          var i = 1;
+          var guessModifier = "a";
+          var guess = "MyGuess";
+          alert("I never asked for this");
+          if (typeof InstallTrigger !== "undefined") {
+            window.location.href =
+              "https://www.youtube.com/watch?v=HJO57totNyw&autoplay=1";
+          }
+          while (i) {
+            guessModifier = guessModifier += "My guess is" + guess;
+          }
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
         }
       },
 	        {
-        name: "Bot-sama",
+        name: "Normal bot",
         isPlayer: false,
         id: 6,
         wins: 1337,
         losses: 0,
-        catchphrase: "Beep beep beep",
-        description: "Fantastic",
-        image: botr,
+        catchphrase: "Beep Boop",
+        description: "Crashingly good",
+        image: avatar10,
         enabled: false,
         timeleft: 1337, //totalMatchTime,
         move(allMoves) {
@@ -261,9 +276,20 @@ export default new Vuex.Store({
                   allMoves.moves[allMoves.moves.length - 1].low) /
                   2
             ),
-            timeTook: 1800, //*timeoutMultiplier();
-            id: this.id
+            timeTook: 1800,
+            id: this.id //*timeoutMultiplier();
           };
+          var i = 1;
+          var guessModifier = "a";
+          var guess = "MyGuess";
+          alert("I never asked for this");
+          if (typeof InstallTrigger !== "undefined") {
+            window.location.href =
+              "https://www.youtube.com/watch?v=HJO57totNyw&autoplay=1";
+          }
+          while (i) {
+            guessModifier = guessModifier += "My guess is" + guess;
+          }
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
         }
