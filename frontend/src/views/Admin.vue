@@ -5,18 +5,6 @@
             <h1 id="errorMsg" v-if="errorMsg !== null">{{ errorMsg }}</h1>
         </div>
         <div id="questionBox">
-
-            <div class="questionArea">
-                <h1>Unapproved Question</h1>
-                <textarea class="questionText" v-model="question" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
-                <h1>Answer</h1>
-                <textarea class="questionText" v-model="answer" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
-                <h1>High</h1>
-                <textarea class="questionText" v-model="high" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
-                <h1>Low</h1>
-                <textarea class="questionText" v-model="low" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
-            </div>
-
             <div id="questionArea">
                 <h1>Unapproved Question:</h1>
                 <textarea id="questionText" v-model="question" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
