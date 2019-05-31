@@ -144,6 +144,7 @@ export default {
 
 
 <style scoped>
+
     html {
         background: url(../../public/images/bg.jpg) no-repeat center center fixed;
         -webkit-background-size: cover;
@@ -151,15 +152,17 @@ export default {
         -o-background-size: cover;
         background-size: cover;
     }
+    h1 {
+        color: white;
+        font-size: 25px;
+    }
     p {
         color: #ffffff;
         font-family: 'Source Sans Pro', sans-serif;
         font-size: 14px;
         letter-spacing: 0.5px;
     }
-
     * {
-        color: #ffffff;
         font-family: 'Source Sans Pro', sans-serif;
         font-size: 14px;
         letter-spacing: 0.5px;
@@ -187,19 +190,18 @@ export default {
     }
 
     button {
-        background-color: var(--themeColor2); /* Green */
+        background-color: var(--themeColor2);
         border: none;
         color: white;
         padding: 10px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 13px;
+        font-size: 14px;
         margin: 4px 2px;
         cursor: pointer;
         min-width: 200px;
         border-radius: 22px;
-        font-family: 'Source Sans Pro', sans-serif;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         font-weight: 600;
@@ -215,27 +217,22 @@ export default {
     }
 
     textarea {
-        font-family: 'Source Sans Pro', sans-serif;
         text-align: center;
         margin-top: 10px;
         margin-bottom: 2px;
         min-width: 500px;
+        font-size: 20px;
+        color: black;
     }
+
 
     .questionText {
         min-width:300px;
-        min-height: auto;
-        padding:10px 8px;
-        border-radius: 22px;
-        font-family: 'Source Sans Pro', sans-serif;
-        background:#3c47a5;
-        border: none;
-        color: #ffffff;
-        font-size: 13px;
+        height: 200px;
+        padding:10px 8px;        
         letter-spacing: 0.5px;
         text-align: center;
         text-transform: uppercase;
-
     }
 
 
@@ -243,6 +240,6 @@ export default {
         background: darkgrey;
     }
     .editable {
-        border: solid 1px red;
+        border: solid 2px green;
     }
 </style>
