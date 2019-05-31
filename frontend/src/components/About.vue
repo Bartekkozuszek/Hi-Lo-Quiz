@@ -15,6 +15,8 @@
         <p>You can guess a number outside the recommended range by inputting it in the input field.</p>
         <p>If you dont make a guess before the time runs out the guess will be the last number selected (or if none selected, the lowest in the span)</p>
         <p>The bots have different ways to make their guesses, some may be highly intelligent, others may employ dirty tricks so watch out!</p>
+            <h5>License</h5>
+            <p>The avatars in this application are <a href="http://www.freepik.com">designed by GraphicMama / Freepik</a> </p>
         </div>
 
     </div>
