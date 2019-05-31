@@ -1,44 +1,44 @@
 <template>
 	<header class="header">
-		<div class="flex-container" :style="{
+        <div class="flex-container" :style="{
       'background-image': `url(${require('../../public/images/blue.jpg')})`,
       'background-size':`6%`
       }">
-			<div>
-				<img src="../../public/images/logo.png">
-				</div>
-				<div></div>
-				<div id="gg">
-					<label class="dropdown">
-						<img src="../../public/images/hamburger.png">
-							<div class="dd-button"></div>
-							<input type="checkbox" class="dd-input" id="test">
-								<ul class="dd-menu" :style="{'background-image': `url(${require('../../public/images/blue.jpg')})`,'background-size':`6%`}">
-									<li>
-										<a href="/about">About</a>
-									</li>
-									<li>
-										<a href="../">Home</a>
-									</li>
-									<li>
-										<a v-if="!isLoggedIn" href="/login">Login</a>
-                                        <a v-else @click="logout">Logout</a>
-									</li>
-                                    <li v-if="this.$store.getters.isAdmin">
-										<a href="/admin">Admin</a>
-									</li>
-									<li>
-										<a href="/addquestion">Submit a question</a>
-									</li>								
-									<li>
-										<a href="/highscores">Highscores</a>
-									</li>
-                                    
+            <div>
+                <img src="../../public/images/logo.png">
+            </div>
+            <div id="gg">
+                <label class="dropdown">
+                    <div id="nameDisplay"><h4 v-if="isLoggedIn"> {{ user }} </h4></div>
+                    <img src="../../public/images/hamburger.png">
+                    <div class="dd-button"></div>
+                    <input type="checkbox" class="dd-input" id="test">
+                    <ul class="dd-menu" :style="{'background-image': `url(${require('../../public/images/blue.jpg')})`,'background-size':`6%`}">
+                        <li>
+                            <a href="/about">About</a>
+                        </li>
+                        <li>
+                            <a href="../">Home</a>
+                        </li>
+                        <li>
+                            <a v-if="!isLoggedIn" href="/login">Login</a>
+                            <a v-else @click="logout">Logout</a>
+                        </li>
+                        <li v-if="this.$store.getters.isAdmin">
+                            <a href="/admin">Admin</a>
+                        </li>
+                        <li>
+                            <a href="/addquestion">Submit a question</a>
+                        </li>
+                        <li>
+                            <a href="/highscores">Highscores</a>
+                        </li>
 
-								</ul>
-							</label>
-						</div>
-					</div>
+
+                    </ul>
+                </label>
+            </div>
+        </div>
 				</header>
 			</template>
 <script>
@@ -48,6 +48,9 @@ export default {
         computed: {
             isLoggedIn() {
                 return this.$store.getters.isLoggedIn
+            },
+            user() {
+                return this.$store.state.user
             }
         },
         methods: {
@@ -165,4 +168,16 @@ image {
     padding: 10px 20px;
     color: white;
 }
+
+#nameDisplay {
+    color: white;
+    display: inline-block;
+    padding-right: 1vw;
+    }
+
+#nameDisplay > h4 {
+    font-size: 1em;
+
+}
+
 </style>
