@@ -221,13 +221,13 @@ export default new Vuex.Store({
         }
       },
       {
-        name: "Normal bot",
+        name: "Bot-tan",
         isPlayer: false,
         id: 5,
         wins: 1337,
         losses: 0,
-        catchphrase: "Beep Boop",
-        description: "Crashingly good",
+        catchphrase: "Boop beep boop",
+        description: "I like hamburgers",
         image: botr,
         enabled: false,
         timeleft: 1337, //totalMatchTime,
@@ -239,33 +239,22 @@ export default new Vuex.Store({
                   allMoves.moves[allMoves.moves.length - 1].low) /
                   2
             ),
-            timeTook: 1800,
-            id: this.id //*timeoutMultiplier();
+            timeTook: 1800, //*timeoutMultiplier();
+            id: this.id
           };
-          var i = 1;
-          var guessModifier = "a";
-          var guess = "MyGuess";
-          alert("I never asked for this");
-          if (typeof InstallTrigger !== "undefined") {
-            window.location.href =
-              "https://www.youtube.com/watch?v=HJO57totNyw&autoplay=1";
-          }
-          while (i) {
-            guessModifier = guessModifier += "My guess is" + guess;
-          }
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
         }
       },
 	        {
-        name: "Normal bot",
+        name: "Bot-sama",
         isPlayer: false,
         id: 6,
         wins: 1337,
         losses: 0,
-        catchphrase: "Beep Boop",
-        description: "Crashingly good",
-        image: avatar10,
+        catchphrase: "Beep beep beep",
+        description: "Fantastic",
+        image: botr,
         enabled: false,
         timeleft: 1337, //totalMatchTime,
         move(allMoves) {
@@ -276,24 +265,13 @@ export default new Vuex.Store({
                   allMoves.moves[allMoves.moves.length - 1].low) /
                   2
             ),
-            timeTook: 1800,
-            id: this.id //*timeoutMultiplier();
+            timeTook: 1800, //*timeoutMultiplier();
+            id: this.id
           };
-          var i = 1;
-          var guessModifier = "a";
-          var guess = "MyGuess";
-          alert("I never asked for this");
-          if (typeof InstallTrigger !== "undefined") {
-            window.location.href =
-              "https://www.youtube.com/watch?v=HJO57totNyw&autoplay=1";
-          }
-          while (i) {
-            guessModifier = guessModifier += "My guess is" + guess;
-          }
           console.log("botten " + this.name + "gissar: " + newMove.guess);
           return newMove;
         }
-      }
+}
     ],
     currentUser: {
       id: 0,
