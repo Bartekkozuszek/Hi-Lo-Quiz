@@ -63,12 +63,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #wrap {
+
   background-image: url(../../public/images/blue.jpg);
   background-size: cover;
 }
 #botinfo {
   justify-content: center;
-  min-height: 84vh;
+  min-height: 84.25vh;
   text-align: center;
   width: 100%;
   margin: auto;
@@ -81,7 +82,7 @@ export default {
 padding-top:4vh;
  display:flex;
 flex-wrap: wrap;
-  min-height: 84vh;
+  min-height: 84.25vh;
   max-height: 100vh;
   text-align: center;
   width:50%;
