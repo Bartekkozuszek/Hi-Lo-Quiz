@@ -6,24 +6,24 @@
             <div class="row"></div>
             <div class="col-md-12"></div>
                     <p>Select character:</p>
-            <div id="carouselExampleControls" class="carousel slide" data-interval="false">
+            <div id="carouselControl" class="carousel slide" data-interval="false">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img class="test .img-fluid" src="../../public/images/avatar1.png" alt="#">
                     </div>
                     <div class="carousel-item">
-                        <img class="test .img-fluid" src="../../public/images/avatar2.png" alt="#">
+                        <img class="test .img-fluid" src="../../public/images/avatar8.png" alt="#">
                     </div>
                     <div class="carousel-item">
-                        <img class="test .img-fluid" src="../../public/images/avatar3.png" alt="#">
+                        <img class="test .img-fluid" src="../../public/images/avatar9.png" alt="#">
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"
+                <a class="carousel-control-prev" href="#carouselControl" role="button" data-slide="prev"
                 v-on:click="indexMinus">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"
+                <a class="carousel-control-next" href="#carouselControl" role="button" data-slide="next"
                    v-on:click="indexPlus">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
@@ -39,9 +39,6 @@
             </div>
             <div class="row">
                 <div class="col-md-3 col-2 arrow_container_left">
-                    <a href="#" class="arrow_blue">
-                        <img src="../../public/images/arrow_left.png" alt="">
-                    </a>
                 </div>
                 <div class="col-md-6 col-8">
                 <div class="botContainer" v-dragscroll.x="true">
@@ -54,9 +51,6 @@
             </div>
 
                 <div class="col-md-3 col-2 arrow_container_right">
-                    <a href="#" class="arrow_blue">
-                        <img src="../../public/images/arrow_right.png" alt="">
-                    </a>
                 </div>
             </div>
             <div class="row">
@@ -179,6 +173,29 @@
         font-size: 14px;
         letter-spacing: 0.5px;
     }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        height: 100px;
+        width: 100px;
+        outline: var(--themeColor2);
+        background-size: 100%, 100%;
+        border-radius: 50%;
+        border: 1px solid var(--themeColor2);
+        background-image: none;
+    }
+
+    .carousel-control-next-icon:after
+    {
+        content: '>';
+        font-size: 55px;
+        color: var(--themeColor2);
+    }
+
+    .carousel-control-prev-icon:after {
+        content: '<';
+        font-size: 55px;
+        color: var(--themeColor2);
+    }
 
     .arrow_container_left {
         text-align: right;
@@ -189,7 +206,7 @@
     .arrow_blue {
         background: #3c47a5;
         display: inline-block;
-        padding: 7px 17px;
+        padding: 10px 17px;
         border-radius: 100%;
         margin-top: 60px;
         cursor: pointer;
@@ -314,11 +331,21 @@
         .playersImage {
             grid-column: 2 / -2;
             height: 14vw;
-
             margin: 10px;
         }
         .smallerdevice {
             display: none;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            height: 100px;
+            width: 100px;
+            outline: var(--themeColor2);
+            background-size: 100%, 100%;
+            border-radius: 50%;
+            border: var(--themeColor2);
+            background-image: none;
         }
     }
 
