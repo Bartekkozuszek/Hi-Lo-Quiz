@@ -16,7 +16,7 @@
                 <textarea v-model="high" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
                 <h1>Low:</h1>
                 <textarea v-model="low" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
-                <h1>Learn more?</h1>
+                <h1>Learn more?:</h1>
                 <textarea v-model="learnMore" :readonly="isReadonly" :class="{ editable: !isReadonly} "></textarea>
             </div>  
             <div id="infoArea">
