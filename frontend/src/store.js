@@ -60,12 +60,11 @@ export default new Vuex.Store({
     playerAvatars:[
         avatar1,
         avatar8,
-        avatar9
+        avatar9,
     ],
     currentQuestion: {
       userSubmitted: false,
       author: "guest",
-
       question: "How many developers work in the group six lobsters?",
       answer: 7,
       low: 1,
@@ -283,7 +282,7 @@ export default new Vuex.Store({
         rank:3,
         score:1,
       description: "testPlayer and template",
-      image: avatar1,
+      image: [],
       timeleft: 1337 //totalMatchTime,
     },
     moveHistory: {
