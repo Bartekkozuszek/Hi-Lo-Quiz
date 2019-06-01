@@ -179,14 +179,23 @@ export default new Vuex.Store({
         id: 3,
         wins: 100,
         losses: 300,
-        catchphrase: "Im gonna get you!",
+        catchphrase: "!false (It's funny cause it's true)",
         description: "testBot and template",
         image: avatar2,
         enabled: false,
         timeleft: 1337, //totalMatchTime,
         move(allMoves) {
-          let newMove = {
-            guess: allMoves.moves[allMoves.moves.length - 1].high - 1,
+            let newMove = {
+                guess: Math.round(Math.floor(Math.random() * (allMoves.moves[allMoves.moves.length - 1].high - 1 -
+                  (allMoves.moves[allMoves.moves.length - 1].low +
+                      (allMoves.moves[allMoves.moves.length - 1].high -
+                          allMoves.moves[allMoves.moves.length - 1].low) /
+                      2))
+              ) + (allMoves.moves[allMoves.moves.length - 1].low +
+                  (allMoves.moves[allMoves.moves.length - 1].high -
+                      allMoves.moves[allMoves.moves.length - 1].low) /
+                  2) 
+                  ),
             timeTook: 2000, //*timeoutMultiplier();
             id: this.id
           };
