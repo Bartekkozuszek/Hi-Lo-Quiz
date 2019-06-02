@@ -95,26 +95,44 @@
         data: function() {
             return {
                 selected : "random",
-                wantedImageIndex:0
+                wantedImageIndex:0,
+                clickable: true,
             }
         },
         methods: {
             indexPlus(){
-                if (this.wantedImageIndex>2){
-                    this.wantedImageIndex=0;
-                }else{
-                    this.wantedImageIndex++;
-                }
-                this.$store.state.currentUser.image=this.$store.state.playerAvatars[this.wantedImageIndex]
+                if (this.clickable === true) {
+                    this.clickable = false
+                    if (this.wantedImageIndex < 2) {
+                        this.wantedImageIndex++;
+                    } else if (this.wantedImageIndex >= 2)
+                        this.wantedImageIndex = 0;
 
+                    this.$store.state.currentUser.image = this.$store.state.playerAvatars[this.wantedImageIndex]
+                    console.log(this.wantedImageIndex)
+                    setTimeout(() => {
+                        this.clickable = true;
+                    }, 600)
+                }
             },
             indexMinus(){
-                if (this.wantedImageIndex<1){
-                    this.wantedImageIndex=3;
-                }else{
-                    this.wantedImageIndex--;
+                if (this.clickable === true) {
+                    this.clickable = false
+                    if (this.wantedImageIndex > 0) {
+                        this.wantedImageIndex--;
+                    } else if (this.wantedImageIndex <= 0)
+                        this.wantedImageIndex = 2;
+
+                    this.$store.state.currentUser.image = this.$store.state.playerAvatars[this.wantedImageIndex]
+                    console.log(this.wantedImageIndex)
                 }
-                this.$store.state.currentUser.image=this.$store.state.playerAvatars[this.wantedImageIndex]
+
+                setTimeout(() => {
+                    this.clickable = true;
+                }, 600)
+
+
+
             },
             startGame() {
                 this.$store.state.sessionPlayersArray[0]=this.$store.state.currentUser;
@@ -155,7 +173,7 @@
         },
         mounted() {
             this.$store.dispatch("loadCategories");
-        }
+        },
     };
 </script>
 
@@ -251,6 +269,8 @@
 
     }
     .botContainer {
+
+
         width: 80%;
         margin-left: auto;
         margin-right: auto;
@@ -264,10 +284,6 @@
         grid-column: 2 / -2;
         height: 8vw;
         margin: 10px;
-
-
-
-
     }
     .link {
         color: white;

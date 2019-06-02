@@ -27,6 +27,9 @@ module.exports.editQuestion = function(req) {
   if (req.body.high) {
     question.high = req.body.high
   }
+  if (req.body.learnMore) {
+    question.learnMore = req.body.learnMore
+  }
 
   question.reviewedBy = req.user && req.user.isAdmin ? req.user.userName : ''
   return question

@@ -58,6 +58,10 @@
                 return Math.ceil((this.$store.state.moveHistory.moves.length-1)/
                 this.$store.state.sessionPlayersArray.length);
             }
+        },
+        beforeMount() {
+            this.$store.dispatch("loadHighScores");
+            this.$store.dispatch("loadBotStats");
         }
     }
 </script>
