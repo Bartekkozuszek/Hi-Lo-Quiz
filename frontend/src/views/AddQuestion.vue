@@ -5,7 +5,7 @@
       Remember that the answer needs to be a number.
     </h5>
     <form @submit.prevent="submitQuestion">
-      <h5 class="message" v-show="!isLoggedIn">* You have to log in or register in order to submit a question.</h5>
+      <h5 class="message" v-if="!isLoggedIn">* You have to log in or register in order to submit a question.</h5>
       <label class="label">Question:</label><br />
       <input
         :disabled="isLoggedIn ? false : true"
