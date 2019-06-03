@@ -68,8 +68,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #wrap {
-	background-image: url(../../public/images/blue.jpg);
+	background-image: url(../../public/images/bg.jpg);
 	background-size: cover;
+	min-height: 95.5vh;
 }
 
 #botinfo {
