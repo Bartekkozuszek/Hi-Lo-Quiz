@@ -132,6 +132,16 @@
         transition: 0.4s;
     }
 
+    @media screen and (max-width: 600px) {
+        #knowMore{
+            position: absolute;
+            left: 0%;
+            width:6vw;
+            min-width: 70px;
+            top:50%;
+            z-index: 1;
+        }
+    }
 
 
 

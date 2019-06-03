@@ -1,4 +1,4 @@
-<!-- 
+<!--
 This is the header of the site,contains navigation and logotype.
 authored by Wuxxerno 2019 with contribs from the rest of the team.
 Items like the logotype and drop down menu are placed in a flex box with the space between layout.
@@ -167,7 +167,7 @@ image {
 }
 
 .dd-menu li:hover {
-    background-color: #a41a19;
+    background-color: #ce4010;
 }
 
 .dd-menu li a {

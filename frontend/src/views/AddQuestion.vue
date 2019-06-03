@@ -142,8 +142,7 @@ export default {
 .aq {
   background: url(../../public/images/bg.jpg);
   background-position: center;
-  background-size: 310vh;
-  height: 100vh;
+  height: 100%;
   font-family: 'Source Sans Pro', sans-serif;
   padding: 1em;
 }
