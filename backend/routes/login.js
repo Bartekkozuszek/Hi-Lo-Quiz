@@ -9,7 +9,7 @@ const router = express.Router()
 const User = require('../api/user/user')
 const jwtSecret = require('../jwt.js')
 
-router.post('/login', function(req, res) {
+router.post('/backend/login', function(req, res) {
   var name = req.body.userName
   var password = req.body.password
 
@@ -55,7 +55,7 @@ router.post('/login', function(req, res) {
   })
 })
 
-router.get('/logout', function(req, res) {
+router.get('/backend/logout', function(req, res) {
   let test = jwt.sign({}, 'secret')
   res.cookie('access_token', test, {
     expires: new Date(Date.now() - 10000),
@@ -64,7 +64,7 @@ router.get('/logout', function(req, res) {
   res.json({ msg: 'logged out' })
 })
 
-router.get('/relogin', async function(req, res) {
+router.get('/backend/relogin', async function(req, res) {
   let access_token_header = req.headers['access_token']
   //console.log(access_token_header)
   if (access_token_header !== undefined) {

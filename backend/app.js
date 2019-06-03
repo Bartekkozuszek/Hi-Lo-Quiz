@@ -60,7 +60,7 @@ app.use(function(req, res, next) {
 })
 
 //check if user is already logged in
-app.use('/login', require('./auth/loginAuth'))
+app.use('/backend/login', require('./auth/loginAuth'))
 
 app.use('/api', require('./auth/auth'))
 
