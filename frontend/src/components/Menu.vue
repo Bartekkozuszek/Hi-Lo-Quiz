@@ -71,6 +71,7 @@ export default {
 <style scoped>
 header {
     text-align: center;
+
 }
 
 h1 {
@@ -99,6 +100,7 @@ button:hover {
     display: flex;
     justify-content: center;
     justify-content: space-between;
+	min-height:4.5vh;
 }
 
 img {
