@@ -1,63 +1,69 @@
+<!-- 
+This is the header of the site,contains navigation and logotype.
+authored by Wuxxerno 2019 with contribs from the rest of the team.
+Items like the logotype and drop down menu are placed in a flex box with the space between layout.
+If you want items to be next to each other you can place them both in a wrapper div.
+ -->
 <template>
 	<header class="header">
-        <div class="flex-container" :style="{
+		<div class="flex-container" :style="{
       'background-image': `url(${require('../../public/images/blue.jpg')})`,
       'background-size':`6%`
       }">
-            <div>
-                <img src="../../public/images/logo.png">
-            </div>
-            <div id="gg">
-                <label class="dropdown">
-                    <div id="nameDisplay"><h4 v-if="isLoggedIn"> {{ user }} </h4></div>
-                    <img src="../../public/images/hamburger.png">
-                    <div class="dd-button"></div>
-                    <input type="checkbox" class="dd-input" id="test">
-                    <ul class="dd-menu" :style="{'background-image': `url(${require('../../public/images/blue.jpg')})`,'background-size':`6%`}">
-                        <li>
-                            <a href="/about">About</a>
-                        </li>
-                        <li>
-                            <a href="../">Home</a>
-                        </li>
-                        <li>
-                            <a v-if="!isLoggedIn" href="/login">Login</a>
-                            <a v-else @click="logout">Logout</a>
-                        </li>
-                        <li v-if="this.$store.getters.isAdmin">
-                            <a href="/admin">Admin</a>
-                        </li>
-                        <li>
-                            <a href="/addquestion">Submit a question</a>
-                        </li>
-                        <li>
-                            <a href="/highscores">Highscores</a>
-                        </li>
-
-
-                    </ul>
-                </label>
-            </div>
-        </div>
+			<div>
+				<img src="../../public/images/logo.png">
+				</div>
+				<div id="rightWrap">
+					<label class="dropdown">
+						<div id="nameDisplay">
+							<h4 v-if="isLoggedIn"> {{ user }} </h4>
+						</div>
+						<img src="../../public/images/hamburger.png">
+							<div class="dd-button"></div>
+							<input type="checkbox" class="dd-input" id="test">
+								<ul class="dd-menu" :style="{'background-image': `url(${require('../../public/images/blue.jpg')})`,'background-size':`6%`}">
+									<li>
+										<a href="/about">About</a>
+									</li>
+									<li>
+										<a href="../">Home</a>
+									</li>
+									<li>
+										<a v-if="!isLoggedIn" href="/login">Login</a>
+										<a v-else @click="logout">Logout</a>
+									</li>
+									<li v-if="this.$store.getters.isAdmin">
+										<a href="/admin">Admin</a>
+									</li>
+									<li>
+										<a href="/addquestion">Submit a question</a>
+									</li>
+									<li>
+										<a href="/highscores">Highscores</a>
+									</li>
+								</ul>
+							</label>
+						</div>
+					</div>
 				</header>
 			</template>
 <script>
 export default {
-    name: "Menu",
-        props: {},
-        computed: {
-            isLoggedIn() {
-                return this.$store.getters.isLoggedIn
-            },
-            user() {
-                return this.$store.state.user
-            }
-        },
-        methods: {
-            logout() {
-                this.$store.dispatch('logout')
-            }
-        }
+	name: "Menu",
+	props: {},
+	computed: {
+		isLoggedIn() {
+			return this.$store.getters.isLoggedIn
+		},
+		user() {
+			return this.$store.state.user
+		}
+	},
+	methods: {
+		logout() {
+			this.$store.dispatch('logout')
+		}
+	}
 };
 </script>
 
