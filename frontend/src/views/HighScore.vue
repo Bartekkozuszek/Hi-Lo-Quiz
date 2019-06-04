@@ -108,10 +108,16 @@
 </script>
 
 <style scoped>
+    html {
+        background: url(../../public/images/bg.jpg) ;
+        position: absolute;
+        width:100%;
+        height:100%;
 
+    }
 
     .Hs{
-        background: url(../../public/images/bg.jpg) no-repeat center center fixed;
+        background: url(../../public/images/bg.jpg);
         position: absolute;
         width:100%;
         height:100%;
