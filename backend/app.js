@@ -7,6 +7,8 @@ var cors = require('cors')
 const whitelist = [
   'http://localhost:8080',
   'http://localhost:8081',
+  'http://13.48.83.5:3000',
+  '13.48.83.5:3000',
   'http://testnode-env.8dhjre8pre.eu-central-1.elasticbeanstalk.com'
 ]
 const corsOptions = {
@@ -58,7 +60,7 @@ app.use(function(req, res, next) {
 })
 
 //check if user is already logged in
-app.use('/login', require('./auth/loginAuth'))
+app.use('/backend/login', require('./auth/loginAuth'))
 
 app.use('/api', require('./auth/auth'))
 
@@ -72,5 +74,9 @@ app.use('/api/v1/users', require('./routes/api/users'))
 app.use('/api/v1/bots', require('./routes/api/bots'))
 
 app.use('/api/v1/games', require('./routes/api/games'))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+})
 
 module.exports = app

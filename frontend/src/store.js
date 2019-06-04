@@ -291,7 +291,7 @@ export default new Vuex.Store({
         rank:3,
         score:1,
       description: "testPlayer and template",
-      image: [],
+      image: avatar1,
       timeleft: 1337 //totalMatchTime,
     },
     moveHistory: {
@@ -631,7 +631,7 @@ export default new Vuex.Store({
       root.style.setProperty("--animationTime", state.timeoutMultiplier);
       },
       async login({ commit }, payload) {
-          await instance.post('/login', {
+          await instance.post('/backend/login', {
               userName: payload.userName,
               password: payload.password
 
@@ -642,7 +642,7 @@ export default new Vuex.Store({
               }).catch((err) => console.log(err))
       },
       logout({ commit }) {
-          instance.get("/logout")
+          instance.get("/backend/logout")
               .then((r) => {
                   commit('logout')
                   //console.log(r.data.msg)
@@ -651,7 +651,7 @@ export default new Vuex.Store({
       },
       async tryAutoLogin({ commit }) {
         try {
-          var reLoginResponse = await instance.get('/relogin',
+          var reLoginResponse = await instance.get('/backend/relogin',
             {
               headers: {
                 access_token: localStorage.access_token
