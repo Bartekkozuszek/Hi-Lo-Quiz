@@ -291,7 +291,7 @@ export default new Vuex.Store({
         rank:3,
         score:1,
       description: "testPlayer and template",
-      image: [],
+      image: avatar1,
       timeleft: 1337 //totalMatchTime,
     },
     moveHistory: {
