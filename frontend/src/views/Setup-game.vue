@@ -100,6 +100,7 @@
             }
         },
         methods: {
+
             indexPlus(){
                 if (this.clickable === true) {
                     this.clickable = false
@@ -173,6 +174,7 @@
         },
         mounted() {
             this.$store.dispatch("loadCategories");
+            this.$store.state.currentUser.image = this.$store.state.playerAvatars[0];
         },
     };
 </script>
